@@ -8,4 +8,5 @@ result: Hospitalizaciones −8,5%
 url: https://en.wikipedia.org/wiki/Mincome
 source: Mincome · Canadian Public Policy
 order: 1
+image: /evidence/case-canada.jpg
 ---

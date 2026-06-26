@@ -8,4 +8,5 @@ result: Desnutrición infantil 42% → 10%
 url: https://centreforpublicimpact.org/public-impact-fundamentals/basic-income-grant-big-in-namibia/
 source: BIG Coalition · Centre for Public Impact
 order: 3
+image: /evidence/case-namibia.jpg
 ---

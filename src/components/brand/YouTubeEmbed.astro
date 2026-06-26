@@ -1,0 +1,44 @@
+---
+interface Props { id: string; title: string; poster: string; }
+const { id, title, poster } = Astro.props;
+---
+<div class="yt" data-yt-id={id}>
+  <button class="yt__btn" type="button" aria-label={`Reproducir video: ${title}`}>
+    <img class="yt__poster" src={poster} alt={title} loading="lazy" width="960" height="540" />
+    <span class="yt__play" aria-hidden="true">
+      <svg viewBox="0 0 68 48" width="72" height="51">
+        <path d="M66.5 7.7c-.8-2.9-2.5-5.2-5.4-6C55.8.3 34 0 34 0S12.2.3 6.9 1.7C4 2.5 2.3 4.8 1.5 7.7.1 13 0 24 0 24s.1 11 1.5 16.3c.8 2.9 2.5 5.2 5.4 6C12.2 47.7 34 48 34 48s21.8-.3 27.1-1.7c2.9-.8 4.6-3.1 5.4-6C67.9 35 68 24 68 24s-.1-11-1.5-16.3z" fill="#0C1A13"/>
+        <path d="M27 34l18-10-18-10v20z" fill="#2BE06F"/>
+      </svg>
+    </span>
+  </button>
+</div>
+<script>
+  function setupYT() {
+    document.querySelectorAll(".yt[data-yt-id]").forEach((node) => {
+      const el = node as HTMLElement;
+      const btn = el.querySelector(".yt__btn");
+      if (!btn || el.dataset.bound) return;
+      el.dataset.bound = "1";
+      btn.addEventListener("click", () => {
+        const f = document.createElement("iframe");
+        f.src = `https://www.youtube-nocookie.com/embed/${el.dataset.ytId}?autoplay=1`;
+        f.title = "YouTube";
+        f.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+        f.allowFullscreen = true;
+        el.replaceChildren(f);
+      });
+    });
+  }
+  document.addEventListener("astro:page-load", setupYT);
+</script>
+<style>
+  .yt { position: relative; aspect-ratio: 16 / 9; border-radius: var(--radius-md); overflow: hidden; background: var(--ink-900); box-shadow: var(--shadow-lg); }
+  .yt__btn { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; cursor: pointer; background: none; }
+  .yt :global(iframe) { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .yt__poster { width: 100%; height: 100%; object-fit: cover; opacity: 0.82; transition: opacity var(--dur-base) var(--ease-out); }
+  .yt__btn:hover .yt__poster { opacity: 1; }
+  .yt__play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+  .yt__play svg { filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.45)); transition: transform var(--dur-base) var(--ease-overshoot); }
+  .yt__btn:hover .yt__play svg { transform: scale(1.12); }
+</style>

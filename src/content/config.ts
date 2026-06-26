@@ -61,6 +61,7 @@ const evidence = defineCollection({
     result: z.string().optional(),  // dato clave (casos)
     url: z.string(),
     source: z.string().optional(),  // nombre de la fuente
+    image: z.string().optional(),   // billboard del caso o portada del recurso
     order: z.number(),
   }),
 });

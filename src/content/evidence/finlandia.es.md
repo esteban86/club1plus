@@ -8,4 +8,5 @@ result: Más bienestar, menos estrés
 url: https://toolbox.finland.fi/life-society/finlands-basic-income-experiment-2017-2018/
 source: Kela · Gobierno de Finlandia
 order: 2
+image: /evidence/case-finlandia.jpg
 ---
