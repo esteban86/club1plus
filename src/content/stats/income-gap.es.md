@@ -1,8 +1,8 @@
 ---
 lang: es
-label: Las mujeres en Colombia reciben menos ingresos por su trabajo
-value: 12
-display: "-12.1%"
+label: Habitantes de Medellín en pobreza monetaria (≈600 mil personas)
+value: 25
+display: "1 de cada 4"
 source: DANE
 order: 1
 ---

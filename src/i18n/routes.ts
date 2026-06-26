@@ -5,6 +5,7 @@ export const ROUTES = {
   home:          { es: "/",              en: "/en/" },
   modelo:        { es: "/modelo",        en: "/en/model" },
   impacto:       { es: "/impacto",       en: "/en/impact" },
+  evidencia:     { es: "/evidencia",     en: "/en/evidence" },
   beneficiarias: { es: "/beneficiarias", en: "/en/stories" },
   nosotros:      { es: "/nosotros",      en: "/en/about" },
   donar:         { es: "/donar",         en: "/en/donate" },

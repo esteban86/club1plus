@@ -1,8 +1,8 @@
 ---
 lang: en
-label: Beneficiaries evaluated by social-impact experts
+label: Monthly monetary poverty line in Medellín (2023)
 value: 100
-display: "36"
-source: Cubo Social
+display: "$510,000 COP"
+source: DANE
 order: 3
 ---

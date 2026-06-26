@@ -1,8 +1,8 @@
 ---
 lang: en
-label: Women in Colombia receive less income for their work
-value: 12
-display: "-12.1%"
+label: Medellín residents living in monetary poverty (~600k people)
+value: 25
+display: "1 in 4"
 source: DANE
 order: 1
 ---

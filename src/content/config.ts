@@ -25,7 +25,7 @@ const stories = defineCollection({
     lang,
     name: z.string(),
     role: z.string(),
-    quote: z.string(),
+    quote: z.string().optional(),
     location: z.string().optional(),
     photo: z.string().optional(),
     order: z.number(),
@@ -49,9 +49,25 @@ const partners = defineCollection({
   schema: z.object({ lang, name: z.string(), url: z.string().optional(), order: z.number() }),
 });
 
+// Casos de renta básica y lecturas/recursos recomendados (página Evidencia).
+const evidence = defineCollection({
+  type: "content",
+  schema: z.object({
+    lang,
+    kind: z.enum(["case", "resource"]),
+    title: z.string(),
+    meta: z.string(),               // lugar + años (caso) o autor/tipo (recurso)
+    summary: z.string(),
+    result: z.string().optional(),  // dato clave (casos)
+    url: z.string(),
+    source: z.string().optional(),  // nombre de la fuente
+    order: z.number(),
+  }),
+});
+
 const team = defineCollection({
   type: "content",
   schema: z.object({ lang, name: z.string(), role: z.string(), photo: z.string().optional(), order: z.number() }),
 });
 
-export const collections = { tiers, stories, stats, partners, team };
+export const collections = { tiers, stories, stats, partners, team, evidence };

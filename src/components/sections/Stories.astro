@@ -16,7 +16,7 @@ const heading = lang === "es" ? "Ellas son la cara del cambio." : "They are the 
       {stories.map((s) => (
         <article class="story reveal">
           <AvatarRing src={s.data.photo} alt={s.data.name} size={88} treatment="ring" name={s.data.name} />
-          <blockquote class="story__quote">"{s.data.quote}"</blockquote>
+          {s.data.quote && <blockquote class="story__quote">“{s.data.quote}”</blockquote>}
           <p class="story__name">{s.data.name}</p>
           <p class="story__role">{s.data.role}{s.data.location ? ` · ${s.data.location}` : ""}</p>
         </article>

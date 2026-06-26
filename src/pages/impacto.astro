@@ -1,9 +1,13 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Impact from "../components/sections/Impact.astro";
+import Results from "../components/sections/Results.astro";
+import Goals from "../components/sections/Goals.astro";
 import DonateCTA from "../components/sections/DonateCTA.astro";
 ---
-<BaseLayout routeKey="impacto" title="Impacto" description="Evaluación de resultados de nuestras beneficiarias, con datos del DANE y expertos en impacto social.">
+<BaseLayout routeKey="impacto" title="Impacto" description="La pobreza en Medellín en datos, los resultados reales de nuestras 53 beneficiarias y nuestras metas para 2026.">
   <Impact />
+  <Results />
+  <Goals />
   <DonateCTA />
 </BaseLayout>

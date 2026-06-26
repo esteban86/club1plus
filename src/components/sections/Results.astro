@@ -1,0 +1,75 @@
+---
+import Overline from "../brand/Overline.astro";
+import StatBar from "../brand/StatBar.astro";
+import { getLangFromUrl } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const d = lang === "es"
+  ? {
+      over: "Resultados reales",
+      title: "53 mujeres ya recibieron una renta básica de $400.000.",
+      lead: "Hicimos seguimiento a cómo invirtieron su aporte. En promedio, lo destinaron así:",
+      bars: [
+        { label: "Alimentación", value: 28, display: "28%" },
+        { label: "Emprendimiento", value: 18, display: "18%" },
+        { label: "Ahorro", value: 16, display: "16%" },
+        { label: "Hijos, salud y educación", value: 15, display: "15%" },
+        { label: "Otros gastos", value: 23, display: "23%" },
+      ],
+      jobLabel: "Desempleo antes del apoyo",
+      jobBefore: "59,5%",
+      jobAfter: "18,9%",
+      jobAfterLabel: "enfocadas en su propio negocio después",
+    }
+  : {
+      over: "Real results",
+      title: "53 women have already received a $400,000 COP basic income.",
+      lead: "We tracked how they invested it. On average, this is where it went:",
+      bars: [
+        { label: "Food", value: 28, display: "28%" },
+        { label: "Entrepreneurship", value: 18, display: "18%" },
+        { label: "Savings", value: 16, display: "16%" },
+        { label: "Children, health & education", value: 15, display: "15%" },
+        { label: "Other expenses", value: 23, display: "23%" },
+      ],
+      jobLabel: "Unemployment before the support",
+      jobBefore: "59.5%",
+      jobAfter: "18.9%",
+      jobAfterLabel: "focused on their own business afterwards",
+    };
+---
+<section class="ground-ink section">
+  <div class="container">
+    <Overline tone="green">{d.over}</Overline>
+    <h2 class="display res__title">{d.title}</h2>
+    <p class="res__lead">{d.lead}</p>
+    <div class="res__grid">
+      <div class="res__bars">
+        {d.bars.map((b) => <StatBar label={b.label} value={b.value} display={b.display} tone="dark" />)}
+      </div>
+      <div class="res__job">
+        <span class="res__job-label">{d.jobLabel}</span>
+        <div class="res__job-figures">
+          <span class="res__job-before">{d.jobBefore}</span>
+          <span class="res__job-arrow">→</span>
+          <span class="res__job-after">{d.jobAfter}</span>
+        </div>
+        <span class="res__job-after-label">{d.jobAfterLabel}</span>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .res__title { font-size: clamp(28px, 4.5vw, 44px); color: var(--paper-50); max-width: 20ch; margin-top: 14px; line-height: 1.1; }
+  .res__lead { font-family: var(--font-body); font-weight: 500; font-size: clamp(15px, 2vw, 18px); color: var(--text-on-dark); opacity: 0.9; max-width: 50ch; margin-top: 14px; }
+  .res__grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 48px; margin-top: 44px; align-items: center; }
+  .res__bars { display: flex; flex-direction: column; gap: 22px; }
+  .res__job { background: var(--surface-dark-raised); border: 1px solid var(--border-dark); border-radius: var(--radius-md); padding: 28px; display: flex; flex-direction: column; gap: 10px; }
+  .res__job-label { font-family: var(--font-mono); font-weight: 700; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-on-dark-muted); }
+  .res__job-figures { display: flex; align-items: baseline; gap: 14px; }
+  .res__job-before { font-family: var(--font-display); font-weight: 900; font-size: 40px; letter-spacing: -0.02em; color: var(--text-on-dark-muted); text-decoration: line-through; }
+  .res__job-arrow { font-family: var(--font-display); font-weight: 800; font-size: 28px; color: var(--green-400); }
+  .res__job-after { font-family: var(--font-display); font-weight: 900; font-size: 48px; letter-spacing: -0.02em; color: var(--green-400); }
+  .res__job-after-label { font-family: var(--font-body); font-weight: 500; font-size: 14px; color: var(--text-on-dark); }
+  @media (max-width: 820px) { .res__grid { grid-template-columns: 1fr; gap: 28px; } }
+</style>

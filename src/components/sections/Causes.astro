@@ -1,0 +1,62 @@
+---
+import Overline from "../brand/Overline.astro";
+import CircledWord from "../brand/CircledWord.astro";
+import { getLangFromUrl } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const d = lang === "es"
+  ? {
+      over: "Causas estructurales",
+      before: "La pobreza no es casualidad, es ",
+      circ: "estructural.",
+      lead: "En Medellín cinco barreras se refuerzan entre sí. Nuestro modelo ataca varias a la vez.",
+      causes: [
+        { t: "Informalidad laboral crónica", d: "Trabajo sin contrato ni seguridad social." },
+        { t: "Programas sociales desarticulados", d: "Solo el 56% de los hogares recibe transferencias." },
+        { t: "Escasa movilidad social", d: "Apenas el 40% de los jóvenes de estratos 1 y 2 termina el bachillerato." },
+        { t: "Choques económicos recurrentes", d: "El 38% de los hogares no tiene un fondo de emergencia." },
+        { t: "Débil asociatividad productiva", d: "El 70% cuenta con poco capital semilla y acompañamiento." },
+      ],
+    }
+  : {
+      over: "Structural causes",
+      before: "Poverty isn't chance, it's ",
+      circ: "structural.",
+      lead: "In Medellín five barriers reinforce each other. Our model tackles several at once.",
+      causes: [
+        { t: "Chronic informal work", d: "Jobs with no contract or social security." },
+        { t: "Fragmented social programs", d: "Only 56% of households receive transfers." },
+        { t: "Low social mobility", d: "Just 40% of youth in the lowest income brackets finish high school." },
+        { t: "Recurring economic shocks", d: "38% of households have no emergency fund." },
+        { t: "Weak productive association", d: "70% have little seed capital or guidance." },
+      ],
+    };
+---
+<section class="ground-paper section">
+  <div class="container">
+    <Overline tone="muted">{d.over}</Overline>
+    <h2 class="display causes__title">{d.before}<CircledWord>{d.circ}</CircledWord></h2>
+    <p class="causes__lead">{d.lead}</p>
+    <ol class="causes__list">
+      {d.causes.map((c, i) => (
+        <li class="cause reveal">
+          <span class="cause__n">{String(i + 1).padStart(2, "0")}</span>
+          <div class="cause__body">
+            <h3 class="cause__t">{c.t}</h3>
+            <p class="cause__d">{c.d}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+<style>
+  .causes__title { font-size: clamp(28px, 4.5vw, 44px); color: var(--text-strong); margin-top: 14px; max-width: 20ch; line-height: 1.1; padding-bottom: 0.1em; }
+  .causes__lead { font-family: var(--font-body); font-weight: 500; font-size: clamp(15px, 2vw, 18px); color: var(--text-muted); max-width: 52ch; margin-top: 16px; }
+  .causes__list { list-style: none; margin: 40px 0 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px 40px; }
+  .cause { display: flex; gap: 18px; align-items: flex-start; padding: 22px 0; border-top: 1px solid var(--border-light); }
+  .cause__n { font-family: var(--font-mono); font-weight: 700; font-size: 15px; color: var(--green-600); padding-top: 3px; }
+  .cause__t { font-family: var(--font-display); font-weight: 800; font-size: 19px; color: var(--text-strong); }
+  .cause__d { font-family: var(--font-body); font-weight: 500; font-size: 14.5px; line-height: 1.5; color: var(--text-muted); margin-top: 4px; }
+  @media (max-width: 720px) { .causes__list { grid-template-columns: 1fr; gap: 0; } }
+</style>

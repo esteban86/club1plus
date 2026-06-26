@@ -1,8 +1,8 @@
 ---
 lang: en
-label: Monetary poverty below per-capita income (2021)
-value: 36
-display: "$352,480"
-source: DANE
+label: Female-headed households in poverty, vs 26% of male-headed ones
+value: 34
+display: "34.3%"
+source: DANE · Medellín
 order: 2
 ---
