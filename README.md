@@ -7,7 +7,7 @@ Donación vía Treli (sin backend). Fiel al design system "El Club del 1+".
 
 ```bash
 npm install
-npm run dev      # http://localhost:4321/club1+/
+npm run dev      # http://localhost:4321/club1plus/
 npm run check    # tipos (astro check)
 npm test         # vitest
 npm run build    # genera dist/
@@ -15,10 +15,10 @@ npm run build    # genera dist/
 
 ## Despliegue (GitHub Pages)
 
-1. Crear el repo en GitHub. **Aviso:** GitHub no admite `+` en el nombre; `club1+`
-   se convierte en `club1-`. Confirmá el nombre real del repo.
-2. En `astro.config.mjs`, fijá `GH_USER` y `REPO` con los valores reales (único lugar;
-   `robots.txt` y el sitemap se derivan de ahí automáticamente).
+1. Crear el repo en GitHub con el nombre **`club1plus`** (evita el `+`, no soportado
+   en nombres de repo de GitHub).
+2. En `astro.config.mjs`, fijá `GH_USER` con tu usuario/org de GitHub (`REPO` ya es
+   `club1plus`; es el único lugar — `robots.txt` y el sitemap se derivan de ahí).
 3. En el repo: Settings → Pages → Source = **GitHub Actions**.
 4. Push a `main`: el workflow `.github/workflows/deploy.yml` construye y publica.
 

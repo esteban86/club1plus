@@ -2,9 +2,8 @@ import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 
 // ── ÚNICO lugar para ajustar el despliegue en GitHub Pages ──
-// Repo objetivo: "club1+" (GitHub puede convertir "+" → "-": confirmar al crear el repo).
 const GH_USER = "USUARIO";        // TODO: usuario/org de GitHub
-const REPO = "club1+";            // TODO: confirmar nombre real del repo
+const REPO = "club1plus";         // repo en GitHub (evita el "+", no soportado en nombres)
 export const SITE = `https://${GH_USER}.github.io`;
 export const BASE = `/${REPO}`;
 

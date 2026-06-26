@@ -7,7 +7,7 @@ const DICTS: Record<Lang, Record<string, string>> = { es, en };
 /** Detecta el idioma a partir del primer segmento de la ruta (tras la base). */
 export function getLangFromUrl(url: URL): Lang {
   const seg = url.pathname.split("/").filter(Boolean);
-  // base puede ser el primer segmento (p.ej. "club1+"); buscamos "en" en cualquiera de los dos primeros.
+  // base puede ser el primer segmento (p.ej. "club1plus"); buscamos "en" en cualquiera de los dos primeros.
   if (seg[0] === "en" || seg[1] === "en") return "en";
   return "es";
 }
