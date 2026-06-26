@@ -19,7 +19,9 @@ const copy = lang === "es"
       recurringOnce: "Es un aporte único, sin cobros recurrentes.",
       customTitle: "¿Prefieres aportar otro valor?",
       customCta: "Súmate con este valor",
-      customPlaceholder: "50.000",
+      customPlaceholder: "250.000",
+      customMin: "5000",
+      customStep: "5000",
       customAria: "Monto de tu aporte en pesos colombianos",
     }
   : {
@@ -30,7 +32,9 @@ const copy = lang === "es"
       recurringOnce: "One-time contribution, no recurring charges.",
       customTitle: "Prefer to give another amount?",
       customCta: "Join with this amount",
-      customPlaceholder: "50,000",
+      customPlaceholder: "100",
+      customMin: "10",
+      customStep: "5",
       customAria: "Your contribution amount",
     };
 const tierData = tiers.map((t) => ({
@@ -80,7 +84,7 @@ const tierData = tiers.map((t) => ({
       <div class="custom__row">
         <div class="custom__field">
           <span class="custom__currency" aria-hidden="true">$</span>
-          <input class="custom__input" type="number" inputmode="numeric" min="5000" step="1000"
+          <input class="custom__input" type="number" inputmode="numeric" min={copy.customMin} step={copy.customStep}
                  placeholder={copy.customPlaceholder} aria-label={copy.customAria} data-custom-amount />
           <span class="custom__per" data-custom-per data-monthly={copy.per} data-once={copy.perOnce}>{copy.per}</span>
         </div>
