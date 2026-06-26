@@ -11,4 +11,4 @@ export const ROUTES = {
 } as const;
 
 export type RouteKey = keyof typeof ROUTES;
-export const LANGS: Lang[] = ["es", "en"];
+export const LANGS: readonly Lang[] = ["es", "en"];

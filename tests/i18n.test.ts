@@ -12,9 +12,13 @@ describe("i18n utils", () => {
     const t = useTranslations("es");
     expect(t("nav.donate")).toBe("Sé socio");
   });
-  it("hace fallback a es si falta la clave en en", () => {
+  it("una clave conocida en en devuelve su valor en inglés (no el español)", () => {
     const t = useTranslations("en");
-    expect(typeof t("nav.donate")).toBe("string");
+    expect(t("nav.donate")).toBe("Become a member");
+  });
+  it("una clave inexistente cae al propio key (último fallback)", () => {
+    const t = useTranslations("en");
+    expect(t("clave.inexistente")).toBe("clave.inexistente");
   });
   it("resuelve la ruta de una página por idioma", () => {
     expect(getRoute("modelo", "es")).toBe("/modelo");
