@@ -11,8 +11,9 @@ const all = (await getCollection("evidence", (e) => e.data.lang === lang)).sort(
 const cases = all.filter((e) => e.data.kind === "case");
 const resources = all.filter((e) => e.data.kind === "resource");
 
-const VIDEO_ID = "_gTgloPR0Aw";
-const VIDEO_TITLE = "What's the best way to lift people out of poverty? · TED-Ed";
+const video = lang === "es"
+  ? { id: "JSxUCeXS_6c", title: "¿Por qué es tan difícil salir de la pobreza? · TED-Ed", poster: base + "/evidence/video-poster-es.jpg" }
+  : { id: "_gTgloPR0Aw", title: "What's the best way to lift people out of poverty? · TED-Ed", poster: base + "/evidence/video-poster.jpg" };
 
 const copy = lang === "es"
   ? { over: "Evidencia", before: "Dar dinero, sin condiciones, ", hl: "funciona.",
@@ -30,8 +31,8 @@ const copy = lang === "es"
 
     <h2 class="ev__sub ev__sub--dark">{copy.videoH}</h2>
     <div class="ev__video">
-      <YouTubeEmbed id={VIDEO_ID} title={VIDEO_TITLE} poster={base + "/evidence/video-poster.jpg"} />
-      <p class="ev__video-cap">{VIDEO_TITLE}</p>
+      <YouTubeEmbed id={video.id} title={video.title} poster={video.poster} />
+      <p class="ev__video-cap">{video.title}</p>
     </div>
 
     <h2 class="ev__sub ev__sub--dark">{copy.casesH}</h2>
