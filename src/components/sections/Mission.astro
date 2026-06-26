@@ -1,0 +1,47 @@
+---
+import Overline from "../brand/Overline.astro";
+import Highlight from "../brand/Highlight.astro";
+import CircledWord from "../brand/CircledWord.astro";
+import Card from "../brand/Card.astro";
+import { getLangFromUrl } from "../../i18n/utils";
+const lang = getLangFromUrl(Astro.url);
+const data = lang === "es"
+  ? { over: "El modelo", t1: "Creamos un startup social ", hl: "que asocia amigos", t2: " para construir ", circ: "salidas reales.",
+      steps: [
+        { n: "01", t: "Sumas tu +", d: "Aportas una cantidad recurrente cada mes. Sin condiciones, con transparencia total." },
+        { n: "02", t: "Asociamos amigos", d: "Tu aporte se suma al de cientos de amigos comprometidos en un mismo fondo." },
+        { n: "03", t: "Renta básica", d: "Una madre cabeza de familia recibe un ingreso mensual estable para emprender." },
+        { n: "04", t: "Crean riqueza", d: "Ellas generan ingresos por cuenta propia y rompen la trampa de la pobreza." },
+      ] }
+  : { over: "The model", t1: "We built a social startup ", hl: "that brings friends together", t2: " to build ", circ: "real ways out.",
+      steps: [
+        { n: "01", t: "Add your +", d: "You give a recurring amount each month. No conditions, full transparency." },
+        { n: "02", t: "We pool friends", d: "Your contribution joins hundreds of committed friends in one fund." },
+        { n: "03", t: "Basic income", d: "A female head of household receives a stable monthly income to build her business." },
+        { n: "04", t: "They create wealth", d: "They generate their own income and break the poverty trap." },
+      ] };
+---
+<section class="ground-ink plus-texture-green section">
+  <div class="container">
+    <Overline tone="green">{data.over}</Overline>
+    <h2 class="display mission__title">{data.t1}<Highlight variant="green">{data.hl}</Highlight>{data.t2}<CircledWord color="var(--green-400)">{data.circ}</CircledWord></h2>
+    <div class="mission__grid">
+      {data.steps.map((s) => (
+        <Card tone="dark" pad={24} class="reveal">
+          <div class="mission__n">{s.n}</div>
+          <h3 class="mission__h">{s.t}</h3>
+          <p class="mission__d">{s.d}</p>
+        </Card>
+      ))}
+    </div>
+  </div>
+</section>
+<style>
+  .mission__title { font-size: clamp(30px, 5vw, 46px); color: var(--paper-50); max-width: 22ch; margin-top: 16px; line-height: 1.1; }
+  .mission__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 52px; }
+  .mission__n { font-family: var(--font-mono); font-weight: 700; font-size: 13px; color: var(--green-400); letter-spacing: 0.1em; }
+  .mission__h { font-family: var(--font-display); font-weight: 800; font-size: 21px; color: var(--paper-50); margin: 14px 0 8px; }
+  .mission__d { font-family: var(--font-body); font-weight: 500; font-size: 14.5px; line-height: 1.5; color: var(--text-on-dark-muted); }
+  @media (max-width: 900px) { .mission__grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) { .mission__grid { grid-template-columns: 1fr; } }
+</style>

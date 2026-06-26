@@ -1,0 +1,31 @@
+---
+import Button from "../brand/Button.astro";
+import Highlight from "../brand/Highlight.astro";
+import Overline from "../brand/Overline.astro";
+import ChevronPill from "../brand/ChevronPill.astro";
+import { getLangFromUrl, useTranslations, getRoute } from "../../i18n/utils";
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const copy = lang === "es"
+  ? { over: "Startup social · Medellín, Colombia", lead: "Asociamos amigos para dar una renta básica mensual a madres cabeza de familia. Sumas un aporte recurrente. Ellas construyen su salida de la pobreza.", before: "La mejor forma de eliminar la pobreza es creando ", hl: "riqueza." }
+  : { over: "Social startup · Medellín, Colombia", lead: "We bring friends together to fund a monthly basic income for female heads of household. You add a recurring contribution. They build their way out of poverty.", before: "The best way to end poverty is by creating ", hl: "wealth." };
+---
+<section class="ground-green hero">
+  <div class="container">
+    <Overline tone="dark">{copy.over}</Overline>
+    <h1 class="display hero__title">{copy.before}<Highlight>{copy.hl}</Highlight></h1>
+    <p class="hero__lead">{copy.lead}</p>
+    <div class="hero__actions">
+      <Button href={base + getRoute("donar", lang)} variant="dark" size="lg">{t("nav.donate")}</Button>
+      <Button href={base + getRoute("modelo", lang)} variant="outline" size="lg">{t("cta.learn")}</Button>
+      <ChevronPill count={3} variant="dark" />
+    </div>
+  </div>
+</section>
+<style>
+  .hero { padding-block: clamp(56px, 9vw, 84px); }
+  .hero__title { font-size: clamp(44px, 7vw, 84px); line-height: 1.1; margin-top: 20px; max-width: 16ch; padding-bottom: 0.1em; }
+  .hero__lead { font-family: var(--font-body); font-weight: 500; font-size: clamp(17px, 2.2vw, 20px); line-height: 1.5; color: var(--ink-900); opacity: 0.86; margin-top: 18px; max-width: 46ch; }
+  .hero__actions { display: flex; align-items: center; gap: 16px; margin-top: 36px; flex-wrap: wrap; }
+</style>
