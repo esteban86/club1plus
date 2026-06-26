@@ -3,7 +3,7 @@ lang: es
 name: Mecenas
 symbol: spark
 amount: $150.000
-note: Impulsas a una familia
+note: Cuatro mecenas, una madre
 accent: marigold
 featured: false
 order: 3

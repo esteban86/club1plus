@@ -10,7 +10,7 @@ const tiers = defineCollection({
     symbol: z.enum(["plus", "rise", "spark", "equals", "ring"]),
     amount: z.string(),
     note: z.string(),
-    accent: z.enum(["green", "coral", "marigold"]),
+    accent: z.enum(["green", "coral", "marigold", "ink"]),
     featured: z.boolean().default(false),
     perks: z.array(z.string()),
     order: z.number(),

@@ -3,7 +3,7 @@ lang: es
 name: Amigo
 symbol: plus
 amount: $20.000
-note: Sumas tu + cada mes
+note: Tu + se suma al de cientos
 accent: green
 featured: false
 order: 1

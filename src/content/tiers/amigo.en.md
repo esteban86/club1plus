@@ -3,7 +3,7 @@ lang: en
 name: Friend
 symbol: plus
 amount: $5
-note: Add your + every month
+note: Your + joins hundreds
 accent: green
 featured: false
 order: 1

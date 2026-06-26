@@ -3,7 +3,7 @@ lang: en
 name: Patron
 symbol: spark
 amount: $40
-note: You power a whole family
+note: Four patrons, one mother
 accent: marigold
 featured: false
 order: 3

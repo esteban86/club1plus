@@ -2,8 +2,8 @@
 lang: en
 name: Ally
 symbol: rise
-amount: $13
-note: The most common contribution
+amount: $15
+note: 10 allies, one mother
 accent: coral
 featured: true
 order: 2

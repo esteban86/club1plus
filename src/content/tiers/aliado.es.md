@@ -2,8 +2,8 @@
 lang: es
 name: Aliado
 symbol: rise
-amount: $50.000
-note: El aporte más común
+amount: $60.000
+note: 10 aliados, una madre
 accent: coral
 featured: true
 order: 2
