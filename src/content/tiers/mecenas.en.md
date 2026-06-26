@@ -2,7 +2,7 @@
 lang: en
 name: Patron
 symbol: spark
-amount: $40/mo
+amount: $40
 note: You power a whole family
 accent: marigold
 featured: false

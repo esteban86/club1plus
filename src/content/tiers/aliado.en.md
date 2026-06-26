@@ -2,7 +2,7 @@
 lang: en
 name: Ally
 symbol: rise
-amount: $13/mo
+amount: $13
 note: The most common contribution
 accent: coral
 featured: true

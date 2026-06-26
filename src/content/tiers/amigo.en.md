@@ -2,7 +2,7 @@
 lang: en
 name: Friend
 symbol: plus
-amount: $5/mo
+amount: $5
 note: Add your + every month
 accent: green
 featured: false
