@@ -1,0 +1,54 @@
+@import "./tokens.css";
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font: var(--text-body-role);
+  color: var(--text-body);
+  background: var(--surface-base);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img, svg, video { display: block; max-width: 100%; }
+a { color: inherit; }
+h1, h2, h3, p { margin: 0; }
+ul { margin: 0; padding: 0; }
+
+/* Focus visible — anillo verde de marca */
+:focus-visible { outline: none; box-shadow: var(--focus-shadow); border-radius: var(--radius-xs); }
+
+/* Skip link accesible */
+.skip-link {
+  position: absolute; left: 8px; top: -48px; z-index: 100;
+  background: var(--ink-900); color: var(--green-400);
+  font: var(--text-overline); text-transform: uppercase;
+  padding: 10px 16px; border-radius: var(--radius-pill);
+  transition: top var(--dur-base) var(--ease-out);
+}
+.skip-link:focus { top: 8px; }
+
+/* Layout helpers */
+.container { max-width: var(--maxw-content); margin-inline: auto; padding-inline: clamp(20px, 5vw, 40px); }
+.section { padding-block: clamp(56px, 9vw, 88px); }
+.ground-green { background: var(--green-400); color: var(--ink-900); }
+.ground-ink   { background: var(--ink-800);  color: var(--text-on-dark); }
+.ground-paper { background: var(--paper-50);  color: var(--text-body); }
+.ground-paper-100 { background: var(--paper-100); color: var(--text-body); }
+.plus-texture-green { background-image: var(--pattern-plus-green); }
+.plus-texture-ink   { background-image: var(--pattern-plus-ink); }
+
+/* Display headline helper */
+.display {
+  font-family: var(--font-display); font-weight: 900;
+  line-height: var(--lh-tight); letter-spacing: -0.03em; color: inherit;
+}
+
+/* Reveal-on-scroll (activado por JS añadiendo .is-in) */
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-overshoot); }
+.reveal.is-in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+  .reveal { opacity: 1; transform: none; }
+}

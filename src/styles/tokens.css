@@ -1,0 +1,230 @@
+/* tokens — portado de .ds-source/tokens (sin @import de fuentes) */
+/* Colors — El Club del 1%
+   Brand axis: electric spring green + deep forest ink, with a warm
+   complementary pair (coral + marigold) drawn from the warmth of the
+   beneficiaries' photography. Green leads; warmth is a seasoning. */
+
+:root {
+  /* ---- Brand green (primary) ---- */
+  --green-50:  #E6FCEE;
+  --green-100: #C2F7D6;
+  --green-200: #8DEFB3;
+  --green-300: #54E78D;
+  --green-400: #2BE06F;  /* hero green — the signature */
+  --green-500: #19C95E;  /* default interactive green */
+  --green-600: #11A94E;  /* hover */
+  --green-700: #0C8740;  /* press / on light */
+  --green-800: #0A6633;
+
+  /* ---- Forest ink (dark neutral, green-tinted — never pure black) ---- */
+  --ink-900: #0C1A13;  /* deepest — text on green, deep bg */
+  --ink-800: #0F1F17;  /* primary dark surface */
+  --ink-700: #13261C;  /* raised dark surface / cards on dark */
+  --ink-600: #1B3327;  /* hairlines & borders on dark */
+  --ink-500: #2A4736;  /* muted strokes on dark */
+  --ink-400: #4A6B57;  /* muted text on dark */
+  --ink-300: #7FA38E;  /* secondary text on dark */
+
+  /* ---- Paper (light neutral, warm-cool off white) ---- */
+  --paper-0:   #FFFFFF;
+  --paper-50:  #F4F6F2;  /* default light surface */
+  --paper-100: #ECEFE9;  /* light card / billboard background */
+  --paper-200: #DDE3D8;  /* light borders */
+  --paper-300: #C2CBBA;
+
+  /* ---- Warm complementary accents (use sparingly) ---- */
+  --coral-400: #FF6B4A;   /* alerts, urgency, energy */
+  --coral-500: #F2502E;
+  --marigold-400: #FFC23D; /* highlights, optimism, money */
+  --marigold-500: #F2A916;
+
+  /* ---- Semantic feedback ---- */
+  --success: var(--green-500);
+  --warning: var(--marigold-500);
+  --danger:  var(--coral-500);
+  --info:    #3DA9FF;
+
+  /* ============ SEMANTIC ALIASES ============ */
+
+  /* Surfaces */
+  --surface-base:    var(--paper-50);    /* default page bg (light) */
+  --surface-card:    var(--paper-0);
+  --surface-sunken:  var(--paper-100);
+  --surface-dark:    var(--ink-800);     /* default dark page bg */
+  --surface-dark-raised: var(--ink-700);
+  --surface-brand:   var(--green-400);   /* the all-green slide/hero */
+
+  /* Text on light */
+  --text-strong:  var(--ink-900);
+  --text-body:    #233A2C;
+  --text-muted:   #56705E;
+  --text-faint:   #87977E;
+
+  /* Text on dark */
+  --text-on-dark-strong: var(--paper-50);
+  --text-on-dark:        #CFE0D4;
+  --text-on-dark-muted:  var(--ink-300);
+  --text-on-dark-brand:  var(--green-400);
+
+  /* Text on brand green */
+  --text-on-brand: var(--ink-900);
+
+  /* Borders & lines */
+  --border-light:  var(--paper-200);
+  --border-dark:   var(--ink-600);
+  --rule-on-green: rgba(12, 26, 19, 0.45);  /* the framing hairlines on green slides */
+
+  /* Interactive */
+  --action:        var(--green-500);
+  --action-hover:  var(--green-600);
+  --action-press:  var(--green-700);
+  --action-on:     var(--ink-900);
+
+  /* The signature "marker highlight" pair (keyword emphasis) */
+  --marker-dark-bg:   var(--ink-900);   /* dark box behind text on green/light */
+  --marker-dark-fg:   var(--green-400);
+  --marker-green-bg:  var(--green-400); /* green box behind text on dark */
+  --marker-green-fg:  var(--ink-900);
+
+  /* Focus ring */
+  --focus-ring: var(--green-400);
+}
+/* Typography — El Club del 1%
+   One voice: a heavy geometric grotesque (Hanken Grotesk) carries display AND
+   body. Headlines run black/extrabold and tight; body stays medium and open.
+   Space Mono handles data, dates, handles and fine print. */
+
+:root {
+  --font-display: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-body:    "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-mono:    "Space Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Weights */
+  --fw-regular:  400; /* @kind font */
+  --fw-medium:   500; /* @kind font */
+  --fw-semibold: 600; /* @kind font */
+  --fw-bold:     700; /* @kind font */
+  --fw-extra:    800; /* @kind font */
+  --fw-black:    900; /* @kind font */
+
+  /* Type scale (fluid-ish, px). Display is heavy + tight; body is open. */
+  --fs-display-2xl: 76px;  /* billboard / "BREAK" "CASH" */
+  --fs-display-xl:  60px;
+  --fs-display-lg:  46px;  /* post headline "Creamos un startup social" */
+  --fs-display-md:  36px;
+  --fs-heading-lg:  28px;
+  --fs-heading-md:  23px;
+  --fs-heading-sm:  19px;
+  --fs-body-lg:     18px;
+  --fs-body:        16px;
+  --fs-body-sm:     14px;
+  --fs-caption:     12.5px;
+  --fs-overline:    11px;  /* "Club del 1%" header label, "@clubdel1_" */
+
+  /* Line heights */
+  --lh-tight:   0.98;  /* @kind font */
+  --lh-snug:    1.08;  /* @kind font */
+  --lh-heading: 1.15;  /* @kind font */
+  --lh-body:    1.5;   /* @kind font */
+  --lh-relaxed: 1.65;  /* @kind font */
+
+  /* Letter spacing */
+  --ls-display: -0.02em;  /* @kind font */
+  --ls-tight:   -0.01em;  /* @kind font */
+  --ls-normal:  0;        /* @kind font */
+  --ls-wide:    0.04em;   /* @kind font */
+  --ls-overline: 0.12em;  /* @kind font */
+
+  /* Semantic roles (font shorthand) */
+  --text-display:  var(--fw-black) var(--fs-display-lg)/var(--lh-tight) var(--font-display); /* @kind font */
+  --text-h1:       var(--fw-extra) var(--fs-heading-lg)/var(--lh-heading) var(--font-display); /* @kind font */
+  --text-h2:       var(--fw-bold) var(--fs-heading-md)/var(--lh-heading) var(--font-display); /* @kind font */
+  --text-h3:       var(--fw-bold) var(--fs-heading-sm)/var(--lh-snug) var(--font-display); /* @kind font */
+  --text-body-role: var(--fw-medium) var(--fs-body)/var(--lh-body) var(--font-body); /* @kind font */
+  --text-overline: var(--fw-bold) var(--fs-overline)/1 var(--font-mono); /* @kind font */
+}
+/* Spacing — El Club del 1%
+   8px base rhythm. Generous outer padding on posts/slides; tight stacking
+   inside headline blocks. */
+
+:root {
+  --space-0:  0;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* Semantic */
+  --gap-inline:    var(--space-2);
+  --gap-stack:     var(--space-4);
+  --pad-control:   var(--space-3) var(--space-5);  /* button padding */
+  --pad-card:      var(--space-6);
+  --pad-post:      var(--space-10);   /* the big outer margin on a 1:1 post */
+  --pad-section:   var(--space-20);
+
+  /* Max content widths */
+  --maxw-prose:   62ch;
+  --maxw-content: 1120px;
+  --maxw-narrow:  640px;
+}
+/* Radius — El Club del 1%
+   The brand is mostly square corners (sharp marker boxes, billboards) with
+   FULLY-ROUND pills for buttons/badges. Mid radii are rare. */
+
+:root {
+  --radius-none: 0;
+  --radius-xs:   4px;
+  --radius-sm:   8px;
+  --radius-md:   12px;   /* cards, inputs */
+  --radius-lg:   18px;
+  --radius-xl:   28px;
+  --radius-pill: 999px;  /* buttons, chips, chevron pills, logo badge */
+  --radius-circle: 50%;  /* avatars, story rings */
+}
+/* Effects — El Club del 1%
+   Shadows are restrained (the brand leans flat, high-contrast). A green glow
+   is reserved for emphasis on dark. Motion is quick and confident with a
+   slight overshoot on entrances. */
+
+:root {
+  /* Elevation (light surfaces) */
+  --shadow-sm:  0 1px 2px rgba(12, 26, 19, 0.06), 0 1px 3px rgba(12, 26, 19, 0.08);
+  --shadow-md:  0 4px 12px rgba(12, 26, 19, 0.10), 0 2px 4px rgba(12, 26, 19, 0.06);
+  --shadow-lg:  0 16px 40px rgba(12, 26, 19, 0.16), 0 4px 12px rgba(12, 26, 19, 0.08);
+
+  /* Brand glow — emphasis only, on dark */
+  --glow-green: 0 0 0 4px rgba(43, 224, 111, 0.18), 0 8px 30px rgba(43, 224, 111, 0.25);
+
+  /* Focus */
+  --focus-shadow: 0 0 0 3px rgba(43, 224, 111, 0.45);
+
+  /* Hand-drawn ellipse ring (the "circled keyword") — emulated as outline */
+  --ring-emphasis: 2px solid var(--ink-900); /* @kind other */
+
+  /* Motion */
+  --ease-out:      cubic-bezier(0.16, 1, 0.3, 1); /* @kind other */
+  --ease-in-out:   cubic-bezier(0.65, 0, 0.35, 1); /* @kind other */
+  --ease-overshoot: cubic-bezier(0.34, 1.56, 0.64, 1);  /* @kind other */
+  --dur-fast:   120ms; /* @kind other */
+  --dur-base:   200ms; /* @kind other */
+  --dur-slow:   360ms; /* @kind other */
+
+  /* Protection gradient for text over photos (top + bottom scrims) */
+  --scrim-bottom: linear-gradient(to top, rgba(12,26,19,0.85) 0%, rgba(12,26,19,0) 60%); /* @kind other */
+  --scrim-top:    linear-gradient(to bottom, rgba(12,26,19,0.7) 0%, rgba(12,26,19,0) 55%); /* @kind other */
+  /* Duotone green wash for photos */
+  --duotone-green: linear-gradient(rgba(43,224,111,0.55), rgba(43,224,111,0.55)); /* @kind other */
+
+  /* The "+" identity motif — repeating plus texture (suma / comunidad / crecer).
+     Tile it as a background-image on flat surfaces. */
+  --pattern-plus-ink:   url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cg stroke='%230C1A13' stroke-width='2.4' stroke-linecap='round' opacity='0.13'%3E%3Cline x1='22' y1='14' x2='22' y2='30'/%3E%3Cline x1='14' y1='22' x2='30' y2='22'/%3E%3C/g%3E%3C/svg%3E"); /* @kind other */
+  --pattern-plus-green: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cg stroke='%232BE06F' stroke-width='2.4' stroke-linecap='round' opacity='0.16'%3E%3Cline x1='22' y1='14' x2='22' y2='30'/%3E%3Cline x1='14' y1='22' x2='30' y2='22'/%3E%3C/g%3E%3C/svg%3E"); /* @kind other */
+}
