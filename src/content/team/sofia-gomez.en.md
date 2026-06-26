@@ -1,7 +1,7 @@
 ---
 lang: en
 name: Sofía Gómez
-role: Founding team
+role: Refounding team
 photo: /team/sofia.jpg
 order: 6
 ---

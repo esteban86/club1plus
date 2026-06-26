@@ -1,7 +1,7 @@
 ---
 lang: en
 name: Clímaco Duque
-role: Founding team
+role: Refounding team
 photo: /team/climaco.jpg
 order: 3
 ---

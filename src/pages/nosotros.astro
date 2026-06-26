@@ -2,7 +2,6 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Overline from "../components/brand/Overline.astro";
 import AvatarRing from "../components/brand/AvatarRing.astro";
-import DonateCTA from "../components/sections/DonateCTA.astro";
 import { getCollection } from "astro:content";
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const team = (await getCollection("team", (e) => e.data.lang === "es")).sort((a, b) => a.data.order - b.data.order);
@@ -31,7 +30,6 @@ const partners = (await getCollection("partners", (e) => e.data.lang === "es")).
       </ul>
     </div>
   </section>
-  <DonateCTA />
 </BaseLayout>
 <style>
   .about__title { font-size: clamp(30px, 5vw, 52px); color: var(--text-strong); max-width: 20ch; margin-top: 14px; padding-bottom: 0.1em; }

@@ -1,7 +1,7 @@
 ---
 lang: en
 name: Cielo Holguín
-role: Founding team
+role: Refounding team
 photo: /team/cielo.jpg
 order: 5
 ---

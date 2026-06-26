@@ -1,7 +1,7 @@
 ---
 lang: en
 name: Juan Cuesta
-role: Founding team
+role: Refounding team
 photo: /team/juan.jpg
 order: 1
 ---

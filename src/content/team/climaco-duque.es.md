@@ -1,7 +1,7 @@
 ---
 lang: es
 name: Clímaco Duque
-role: Equipo fundador
+role: Equipo refundador
 photo: /team/climaco.jpg
 order: 3
 ---

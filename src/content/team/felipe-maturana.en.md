@@ -1,7 +1,7 @@
 ---
 lang: en
 name: Felipe Maturana
-role: Founding team
+role: Refounding team
 photo: /team/felipe.jpg
 order: 4
 ---

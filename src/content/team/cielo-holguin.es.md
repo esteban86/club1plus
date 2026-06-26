@@ -1,7 +1,7 @@
 ---
 lang: es
 name: Cielo Holguín
-role: Equipo fundador
+role: Equipo refundador
 photo: /team/cielo.jpg
 order: 5
 ---

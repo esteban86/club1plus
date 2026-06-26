@@ -1,7 +1,7 @@
 ---
 lang: es
 name: Sofía Gómez
-role: Equipo fundador
+role: Equipo refundador
 photo: /team/sofia.jpg
 order: 6
 ---

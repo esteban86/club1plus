@@ -1,7 +1,7 @@
 ---
 lang: en
 name: Esteban Restrepo
-role: Founding team
+role: Refounding team
 photo: /team/esteban.jpg
 order: 2
 ---

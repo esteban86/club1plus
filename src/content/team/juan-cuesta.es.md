@@ -1,7 +1,7 @@
 ---
 lang: es
 name: Juan Cuesta
-role: Equipo fundador
+role: Equipo refundador
 photo: /team/juan.jpg
 order: 1
 ---
