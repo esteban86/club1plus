@@ -69,6 +69,10 @@ const items: { k: RouteKey; label: string }[] = [
   .nav__mobile { display: none; flex-direction: column; gap: 4px; padding: 12px clamp(20px,5vw,40px) 20px; border-top: 1px solid var(--border-light); }
   .nav__mobile a { font-family: var(--font-display); font-weight: 700; font-size: 17px; text-decoration: none; color: var(--text-body); padding: 10px 0; }
   .nav__mobile-donate { color: var(--green-700) !important; }
+  .nav__mobile-lang { margin-top: 10px; }
+  /* La píldora de idioma vive en otro componente (LanguageSwitcher): :global para alcanzarla,
+     acotada al menú móvil. Tap target cómodo de 44px solo en móvil. */
+  .nav__mobile-lang :global(.lang) { display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; }
   @media (max-width: 860px) {
     .nav__links, .nav__actions { display: none; }
     .nav__toggle { display: inline-flex; }
