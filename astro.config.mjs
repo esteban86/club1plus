@@ -1,6 +1,5 @@
 import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
-import icon from "astro-icon";
 
 // ── ÚNICO lugar para ajustar el despliegue en GitHub Pages ──
 // Repo objetivo: "club1+" (GitHub puede convertir "+" → "-": confirmar al crear el repo).
@@ -18,5 +17,5 @@ export default defineConfig({
     locales: ["es", "en"],
     routing: { prefixDefaultLocale: false },
   },
-  integrations: [icon(), sitemap()],
+  integrations: [sitemap()],
 });

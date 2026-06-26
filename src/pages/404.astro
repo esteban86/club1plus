@@ -8,12 +8,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     <div class="container nf__inner">
       <p class="display nf__big">404</p>
       <h1 class="nf__h">Esta página se nos perdió.</h1>
-      <Button href={base + "/"} variant="primary" size="lg">Volver al inicio</Button>
+      <p class="nf__h-en">This page got lost.</p>
+      <div class="nf__actions">
+        <Button href={base + "/"} variant="primary" size="lg">Volver al inicio</Button>
+        <Button href={base + "/en/"} variant="outline-on-dark" size="lg">Back home</Button>
+      </div>
     </div>
   </section>
 </BaseLayout>
 <style>
   .nf__inner { text-align: center; }
   .nf__big { font-size: clamp(80px, 18vw, 180px); color: var(--green-400); line-height: 1; }
-  .nf__h { font-family: var(--font-display); font-weight: 800; font-size: clamp(22px, 4vw, 32px); color: var(--paper-50); margin: 8px 0 28px; }
+  .nf__h { font-family: var(--font-display); font-weight: 800; font-size: clamp(22px, 4vw, 32px); color: var(--paper-50); margin: 8px 0 4px; }
+  .nf__h-en { font-family: var(--font-body); font-weight: 500; font-size: clamp(15px, 2.5vw, 18px); color: var(--text-on-dark-muted); margin: 0 0 28px; }
+  .nf__actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 </style>

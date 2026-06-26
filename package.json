@@ -14,9 +14,7 @@
     "@astrojs/sitemap": "^3.7.3",
     "@fontsource-variable/hanken-grotesk": "^5.2.8",
     "@fontsource/space-mono": "^5.2.9",
-    "@iconify-json/lucide": "^1.2.114",
-    "astro": "^5.18.2",
-    "astro-icon": "^1.1.5"
+    "astro": "^5.18.2"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",

@@ -48,4 +48,4 @@ npm run build    # genera dist/
 
 ## Stack
 
-Astro 5 · TypeScript · @astrojs/sitemap · astro-icon · Vitest · GitHub Actions.
+Astro 5 · TypeScript · @astrojs/sitemap · @fontsource · Vitest · GitHub Actions.

@@ -28,6 +28,10 @@ const jsonLd = {
   description: t("site.description"),
   areaServed: "CO",
   sameAs: ["https://instagram.com/clubdel1_"],
+  potentialAction: {
+    "@type": "DonateAction",
+    target: new URL(base + getRoute("donar", lang), Astro.site).href,
+  },
 };
 ---
 <!doctype html>
