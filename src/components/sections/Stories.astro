@@ -1,0 +1,34 @@
+---
+import Overline from "../brand/Overline.astro";
+import AvatarRing from "../brand/AvatarRing.astro";
+import { getCollection } from "astro:content";
+import { getLangFromUrl } from "../../i18n/utils";
+const lang = getLangFromUrl(Astro.url);
+const stories = (await getCollection("stories", (e) => e.data.lang === lang)).sort((a, b) => a.data.order - b.data.order);
+const over = lang === "es" ? "Protagonistas" : "Protagonists";
+const heading = lang === "es" ? "Ellas son la cara del cambio." : "They are the face of change.";
+---
+<section class="ground-ink section">
+  <div class="container">
+    <Overline tone="green">{over}</Overline>
+    <h2 class="display stories__title">{heading}</h2>
+    <div class="stories__grid">
+      {stories.map((s) => (
+        <article class="story reveal">
+          <AvatarRing src={s.data.photo} alt={s.data.name} size={88} treatment="ring" name={s.data.name} />
+          <blockquote class="story__quote">"{s.data.quote}"</blockquote>
+          <p class="story__name">{s.data.name}</p>
+          <p class="story__role">{s.data.role}{s.data.location ? ` · ${s.data.location}` : ""}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+<style>
+  .stories__title { font-size: clamp(28px, 4.5vw, 44px); color: var(--paper-50); margin-top: 14px; max-width: 18ch; line-height: 1.1; }
+  .stories__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 28px; margin-top: 44px; }
+  .story { background: var(--surface-dark-raised); border: 1px solid var(--border-dark); border-radius: var(--radius-md); padding: 28px; }
+  .story__quote { font-family: var(--font-display); font-weight: 800; font-size: 19px; line-height: 1.3; color: var(--paper-50); margin: 18px 0 14px; }
+  .story__name { font-family: var(--font-display); font-weight: 800; font-size: 15px; color: var(--green-400); }
+  .story__role { font-family: var(--font-body); font-size: 13px; color: var(--text-on-dark-muted); margin-top: 2px; }
+</style>
