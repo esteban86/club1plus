@@ -1,5 +1,5 @@
 /* tokens — portado de .ds-source/tokens (sin @import de fuentes) */
-/* Colors — El Club del 1%
+/* Colors — El Club del 1+
    Brand axis: electric spring green + deep forest ink, with a warm
    complementary pair (coral + marigold) drawn from the warmth of the
    beneficiaries' photography. Green leads; warmth is a seasoning. */
@@ -89,7 +89,7 @@
   /* Focus ring */
   --focus-ring: var(--green-400);
 }
-/* Typography — El Club del 1%
+/* Typography — El Club del 1+
    One voice: a heavy geometric grotesque (Hanken Grotesk) carries display AND
    body. Headlines run black/extrabold and tight; body stays medium and open.
    Space Mono handles data, dates, handles and fine print. */
@@ -119,7 +119,7 @@
   --fs-body:        16px;
   --fs-body-sm:     14px;
   --fs-caption:     12.5px;
-  --fs-overline:    11px;  /* "Club del 1%" header label, "@clubdel1_" */
+  --fs-overline:    11px;  /* "El Club del 1+" header label, "@clubdel1_" */
 
   /* Line heights */
   --lh-tight:   0.98;  /* @kind font */
@@ -143,7 +143,7 @@
   --text-body-role: var(--fw-medium) var(--fs-body)/var(--lh-body) var(--font-body); /* @kind font */
   --text-overline: var(--fw-bold) var(--fs-overline)/1 var(--font-mono); /* @kind font */
 }
-/* Spacing — El Club del 1%
+/* Spacing — El Club del 1+
    8px base rhythm. Generous outer padding on posts/slides; tight stacking
    inside headline blocks. */
 
@@ -175,7 +175,7 @@
   --maxw-content: 1120px;
   --maxw-narrow:  640px;
 }
-/* Radius — El Club del 1%
+/* Radius — El Club del 1+
    The brand is mostly square corners (sharp marker boxes, billboards) with
    FULLY-ROUND pills for buttons/badges. Mid radii are rare. */
 
@@ -189,7 +189,7 @@
   --radius-pill: 999px;  /* buttons, chips, chevron pills, logo badge */
   --radius-circle: 50%;  /* avatars, story rings */
 }
-/* Effects — El Club del 1%
+/* Effects — El Club del 1+
    Shadows are restrained (the brand leans flat, high-contrast). A green glow
    is reserved for emphasis on dark. Motion is quick and confident with a
    slight overshoot on entrances. */

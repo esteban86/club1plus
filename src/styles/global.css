@@ -12,11 +12,16 @@ body {
 }
 img, svg, video { display: block; max-width: 100%; }
 a { color: inherit; }
-h1, h2, h3, p { margin: 0; }
+h1, h2, h3, h4, h5, h6, p { margin: 0; }
 ul { margin: 0; padding: 0; }
 
-/* Focus visible — anillo verde de marca */
-:focus-visible { outline: none; box-shadow: var(--focus-shadow); border-radius: var(--radius-xs); }
+/* Focus visible — anillo verde de marca. Sin border-radius propio: el box-shadow
+   sigue el radio del propio elemento (las pills mantienen su forma al enfocarse). */
+:focus-visible { outline: none; box-shadow: var(--focus-shadow); }
+/* Fallback para forced-colors / alto contraste, donde el box-shadow se descarta */
+@media (forced-colors: active) {
+  :focus-visible { outline: 3px solid; box-shadow: none; }
+}
 
 /* Skip link accesible */
 .skip-link {
@@ -44,11 +49,13 @@ ul { margin: 0; padding: 0; }
   line-height: var(--lh-tight); letter-spacing: -0.03em; color: inherit;
 }
 
-/* Reveal-on-scroll (activado por JS añadiendo .is-in) */
-.reveal { opacity: 0; transform: translateY(16px); transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-overshoot); }
-.reveal.is-in { opacity: 1; transform: none; }
+/* Reveal-on-scroll. Mejora progresiva: solo se oculta cuando hay JS (html.js,
+   añadido por un script inline en el <head>). Sin JS el contenido es visible. */
+.reveal { transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-overshoot); }
+html.js .reveal { opacity: 0; transform: translateY(16px); }
+html.js .reveal.is-in { opacity: 1; transform: none; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
-  .reveal { opacity: 1; transform: none; }
+  html.js .reveal, html.js .reveal.is-in { opacity: 1; transform: none; }
 }
