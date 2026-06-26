@@ -5,14 +5,34 @@ import BrandSymbol from "../brand/BrandSymbol.astro";
 import Button from "../brand/Button.astro";
 import { getCollection } from "astro:content";
 import { getLangFromUrl } from "../../i18n/utils";
-import { treliLink } from "../../lib/donate";
+import { treliLink, CUSTOM_TRELI } from "../../lib/donate";
 
 const lang = getLangFromUrl(Astro.url);
 const tiers = (await getCollection("tiers", (e) => e.data.lang === lang)).sort((a, b) => a.data.order - b.data.order);
 const accentVar: Record<string, string> = { green: "var(--green-500)", coral: "var(--coral-500)", marigold: "var(--marigold-500)" };
 const copy = lang === "es"
-  ? { over: "Súmate", before: "Elige cómo ", hl: "sumar.", featured: "★ Más elegido", monthly: "Mensual", once: "Único", per: "/ mes", join: "Súmate como", freqLabel: "Frecuencia del aporte" }
-  : { over: "Join", before: "Choose how to ", hl: "add.", featured: "★ Most chosen", monthly: "Monthly", once: "One-time", per: "/ mo", join: "Join as", freqLabel: "Contribution frequency" };
+  ? {
+      over: "Súmate", before: "Elige cómo ", hl: "sumar.", featured: "★ Más elegido",
+      monthly: "Mensual", once: "Único", per: "/ mes", perOnce: "única vez", join: "Súmate como",
+      freqLabel: "Frecuencia del aporte",
+      recurringMonthly: "Tu aporte se debita automáticamente cada mes hasta que lo canceles. Cancelas cuando quieras.",
+      recurringOnce: "Es un aporte único, sin cobros recurrentes.",
+      customTitle: "¿Prefieres aportar otro valor?",
+      customCta: "Súmate con este valor",
+      customPlaceholder: "50.000",
+      customAria: "Monto de tu aporte en pesos colombianos",
+    }
+  : {
+      over: "Join", before: "Choose how to ", hl: "add.", featured: "★ Most chosen",
+      monthly: "Monthly", once: "One-time", per: "/ mo", perOnce: "one-time", join: "Join as",
+      freqLabel: "Contribution frequency",
+      recurringMonthly: "Your contribution is charged automatically every month until you cancel. Cancel anytime.",
+      recurringOnce: "One-time contribution, no recurring charges.",
+      customTitle: "Prefer to give another amount?",
+      customCta: "Join with this amount",
+      customPlaceholder: "50,000",
+      customAria: "Your contribution amount",
+    };
 const tierData = tiers.map((t) => ({
   ...t.data,
   slug: t.slug,
@@ -30,6 +50,7 @@ const tierData = tiers.map((t) => ({
         <button data-freq="one-time" aria-pressed="false">{copy.once}</button>
       </div>
     </div>
+    <p class="tiers__recurring" data-recurring data-monthly={copy.recurringMonthly} data-once={copy.recurringOnce}>{copy.recurringMonthly}</p>
     <div class="tiers__grid">
       {tierData.map((t) => (
         <div class:list={["tier", { "tier--featured": t.featured }]} style={`--accent:${accentVar[t.accent]}`}>
@@ -37,7 +58,7 @@ const tierData = tiers.map((t) => ({
           <BrandSymbol symbol={t.symbol} size={44} color="var(--accent)" title={t.name} />
           <h3 class="tier__name">{t.name}</h3>
           <p class="tier__note">{t.note}</p>
-          <div class="tier__price"><span class="tier__amount">{t.amount}</span><span class="tier__per">{copy.per}</span></div>
+          <div class="tier__price"><span class="tier__amount">{t.amount}</span><span class="tier__per" data-tier-per data-monthly={copy.per} data-once={copy.perOnce}>{copy.per}</span></div>
           <ul class="tier__perks">
             {t.perks.map((p) => (<li><BrandSymbol symbol="plus" size={14} color="var(--accent)" /> {p}</li>))}
           </ul>
@@ -49,25 +70,59 @@ const tierData = tiers.map((t) => ({
             data-url-monthly={t.urlMonthly}
             data-url-onetime={t.urlOneTime}
             target="_blank"
-          >{copy.join} {t.name}</Button>
+          >{`${copy.join} ${t.name}`}</Button>
         </div>
       ))}
+    </div>
+
+    <div class="custom">
+      <p class="custom__title">{copy.customTitle}</p>
+      <div class="custom__row">
+        <div class="custom__field">
+          <span class="custom__currency" aria-hidden="true">$</span>
+          <input class="custom__input" type="number" inputmode="numeric" min="5000" step="1000"
+                 placeholder={copy.customPlaceholder} aria-label={copy.customAria} data-custom-amount />
+          <span class="custom__per" data-custom-per data-monthly={copy.per} data-once={copy.perOnce}>{copy.per}</span>
+        </div>
+        <Button href={CUSTOM_TRELI} variant="dark" target="_blank" data-custom-cta>{copy.customCta}</Button>
+      </div>
     </div>
   </div>
 </section>
 
 <script>
+  import { customTreliLink } from "../../lib/donate";
+
   function setupTiers() {
     const toggle = document.querySelector("[data-freq-toggle]");
     if (!toggle) return;
     let freq: "monthly" | "one-time" = "monthly";
-    const apply = () => {
+
+    const customCta = document.querySelector<HTMLAnchorElement>("a[data-custom-cta]");
+    const customInput = document.querySelector<HTMLInputElement>("[data-custom-amount]");
+    // Todo elemento con data-monthly/data-once conmuta su texto al cambiar la frecuencia
+    // (aviso recurrente, sufijos "/ mes" de los tiers y del monto libre).
+    const swappables = document.querySelectorAll<HTMLElement>("[data-monthly][data-once]");
+
+    const applyTierLinks = () => {
       document.querySelectorAll("a[data-tier]").forEach((node) => {
         const a = node as HTMLAnchorElement;
         const url = freq === "monthly" ? a.dataset.urlMonthly : a.dataset.urlOnetime;
         if (url) a.setAttribute("href", url);
       });
     };
+    const applyCustom = () => {
+      if (!customCta) return;
+      const amount = customInput ? parseInt(customInput.value, 10) : NaN;
+      customCta.href = customTreliLink(Number.isNaN(amount) ? 0 : amount, freq);
+    };
+    const applyText = () => {
+      swappables.forEach((el) => {
+        const next = freq === "monthly" ? el.dataset.monthly : el.dataset.once;
+        if (next != null) el.textContent = next;
+      });
+    };
+
     toggle.querySelectorAll("button[data-freq]").forEach((node) => {
       const btn = node as HTMLButtonElement;
       btn.addEventListener("click", () => {
@@ -77,19 +132,24 @@ const tierData = tiers.map((t) => ({
           b.classList.toggle("is-on", on);
           b.setAttribute("aria-pressed", String(on));
         });
-        apply();
+        applyTierLinks();
+        applyCustom();
+        applyText();
       });
     });
+    customInput?.addEventListener("input", applyCustom);
+    applyCustom();
   }
   document.addEventListener("astro:page-load", setupTiers);
 </script>
 
 <style>
-  .tiers__head { text-align: center; max-width: 32ch; margin: 0 auto 40px; }
+  .tiers__head { text-align: center; max-width: 32ch; margin: 0 auto 18px; }
   .tiers__title { font-size: clamp(28px, 4.5vw, 42px); color: var(--ink-900); margin-top: 14px; padding-bottom: 0.1em; }
   .tiers__toggle { display: inline-flex; background: var(--paper-200); border-radius: var(--radius-pill); padding: 4px; margin-top: 22px; }
   .tiers__toggle button { font-family: var(--font-display); font-weight: 700; font-size: 14px; border: 0; background: transparent; color: var(--text-muted); padding: 8px 18px; border-radius: var(--radius-pill); cursor: pointer; }
   .tiers__toggle button.is-on { background: var(--ink-900); color: var(--paper-50); }
+  .tiers__recurring { text-align: center; font-family: var(--font-body); font-size: 13.5px; line-height: 1.5; color: var(--text-muted); max-width: 52ch; margin: 0 auto 36px; }
   .tiers__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: stretch; }
   .tier { position: relative; display: flex; flex-direction: column; background: var(--paper-0); border: 1px solid var(--paper-200); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); padding: 28px; }
   .tier--featured { border: 2px solid var(--accent); box-shadow: var(--shadow-lg); transform: translateY(-8px); }
@@ -101,5 +161,19 @@ const tierData = tiers.map((t) => ({
   .tier__per { font-family: var(--font-body); font-weight: 600; font-size: 14px; color: var(--text-muted); }
   .tier__perks { list-style: none; display: flex; flex-direction: column; gap: 10px; flex: 1; margin-bottom: 24px; }
   .tier__perks li { display: flex; align-items: flex-start; gap: 9px; font-family: var(--font-body); font-weight: 500; font-size: 14px; color: var(--text-body); }
+
+  /* Aporte de monto libre */
+  .custom { margin-top: 24px; background: var(--paper-0); border: 1px solid var(--paper-200); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); padding: 24px 28px; display: flex; flex-direction: column; gap: 16px; }
+  .custom__title { font-family: var(--font-display); font-weight: 800; font-size: 18px; color: var(--ink-900); }
+  .custom__row { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .custom__field { flex: 1 1 240px; display: flex; align-items: center; gap: 8px; background: var(--paper-50); border: 2px solid var(--paper-200); border-radius: var(--radius-pill); padding: 8px 20px; }
+  .custom__field:focus-within { border-color: var(--green-400); }
+  .custom__currency { font-family: var(--font-display); font-weight: 900; font-size: 22px; color: var(--ink-900); }
+  .custom__input { flex: 1; min-width: 0; border: 0; background: transparent; font-family: var(--font-display); font-weight: 800; font-size: 22px; color: var(--ink-900); }
+  .custom__input:focus-visible { box-shadow: none; }
+  .custom__input::placeholder { color: var(--text-faint); font-weight: 600; }
+  .custom__per { font-family: var(--font-body); font-weight: 600; font-size: 14px; color: var(--text-muted); white-space: nowrap; }
+
   @media (max-width: 820px) { .tiers__grid { grid-template-columns: 1fr; } .tier--featured { transform: none; } }
+  @media (max-width: 560px) { .custom__row { flex-direction: column; align-items: stretch; } }
 </style>
