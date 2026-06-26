@@ -1,0 +1,18 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Tiers from "../../components/sections/Tiers.astro";
+---
+<BaseLayout routeKey="donar" title="Become a member" description="Join the Club. Pick your recurring contribution and become a committed friend. Secure payment via Treli.">
+  <section class="ground-green section donar-head">
+    <div class="container">
+      <h1 class="display donar-head__title">Turn your + into the light of change.</h1>
+      <p class="donar-head__lead">Choose how much to add each month. Payment is secure and recurring via Treli; cancel anytime.</p>
+    </div>
+  </section>
+  <Tiers />
+</BaseLayout>
+<style>
+  .donar-head { padding-bottom: 0; }
+  .donar-head__title { font-size: clamp(34px, 6vw, 60px); color: var(--ink-900); max-width: 16ch; padding-bottom: 0.1em; }
+  .donar-head__lead { font-family: var(--font-body); font-weight: 500; font-size: clamp(16px, 2vw, 19px); color: var(--ink-900); opacity: 0.86; max-width: 48ch; margin-top: 14px; }
+</style>
