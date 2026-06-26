@@ -62,13 +62,15 @@ const jsonLd = {
     </main>
     <Footer />
     <script>
+      let io: IntersectionObserver | null = null;
       function initReveal() {
-        const io = new IntersectionObserver((entries) => {
+        io?.disconnect();
+        io = new IntersectionObserver((entries) => {
           for (const e of entries) {
-            if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); }
+            if (e.isIntersecting) { e.target.classList.add("is-in"); io?.unobserve(e.target); }
           }
         }, { rootMargin: "0px 0px -10% 0px" });
-        document.querySelectorAll(".reveal:not(.is-in)").forEach((el) => io.observe(el));
+        document.querySelectorAll(".reveal:not(.is-in)").forEach((el) => io!.observe(el));
       }
       document.addEventListener("astro:page-load", initReveal);
     </script>

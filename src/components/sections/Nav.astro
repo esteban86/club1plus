@@ -23,7 +23,7 @@ const items: { k: RouteKey; label: string }[] = [
       <LogoBadge size={40} variant="green" />
       <span class="nav__name">El Club del 1+</span>
     </a>
-    <nav class="nav__links" aria-label="Primary">
+    <nav class="nav__links" aria-label={t("nav.primaryLabel")}>
       {items.map((i) => <a href={link(i.k)}>{i.label}</a>)}
     </nav>
     <div class="nav__actions">
@@ -34,7 +34,7 @@ const items: { k: RouteKey; label: string }[] = [
       <span></span><span></span><span></span>
     </button>
   </div>
-  <nav id="nav-mobile" class="nav__mobile" hidden aria-label="Mobile">
+  <nav id="nav-mobile" class="nav__mobile" hidden aria-label={t("nav.mobileLabel")}>
     {items.map((i) => <a href={link(i.k)}>{i.label}</a>)}
     <a class="nav__mobile-donate" href={link("donar")}>{t("nav.donate")}</a>
   </nav>
@@ -55,7 +55,7 @@ const items: { k: RouteKey; label: string }[] = [
 </script>
 
 <style>
-  .nav { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--paper-50) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border-light); }
+  .nav { position: sticky; top: 0; z-index: 50; background: var(--paper-50); background: color-mix(in srgb, var(--paper-50) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border-light); }
   .nav__bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
   .nav__logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-strong); }
   .nav__name { font-family: var(--font-display); font-weight: 900; letter-spacing: -0.02em; font-size: 18px; }

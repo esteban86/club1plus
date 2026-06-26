@@ -8,6 +8,8 @@
   "nav.about": "About",
   "nav.donate": "Become a member",
   "nav.menu": "Menu",
+  "nav.primaryLabel": "Primary",
+  "nav.mobileLabel": "Mobile menu",
   "nav.langLabel": "Español",
   "cta.join": "Join",
   "cta.learn": "See the model",
