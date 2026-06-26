@@ -1,0 +1,34 @@
+---
+import LogoBadge from "../brand/LogoBadge.astro";
+import Button from "../brand/Button.astro";
+import { getLangFromUrl, useTranslations, getRoute } from "../../i18n/utils";
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const year = 2026;
+---
+<section class="ground-green cta plus-texture-ink">
+  <div class="container cta__inner">
+    <h2 class="display cta__title">{t("footer.tagline")}</h2>
+    <Button href={base + getRoute("donar", lang)} variant="dark" size="lg">{t("nav.donate")}</Button>
+  </div>
+</section>
+<footer class="ground-ink foot">
+  <div class="container foot__inner">
+    <div class="foot__brand">
+      <LogoBadge size={48} variant="dark" />
+      <p class="foot__rights">© {year} · {t("footer.rights")}</p>
+    </div>
+    <a class="foot__ig" href="https://instagram.com/clubdel1_" target="_blank" rel="noopener noreferrer">@clubdel1_</a>
+  </div>
+</footer>
+<style>
+  .cta { padding-block: clamp(48px, 8vw, 80px); }
+  .cta__inner { display: flex; flex-direction: column; align-items: flex-start; gap: 28px; }
+  .cta__title { font-size: clamp(30px, 5vw, 50px); max-width: 18ch; padding-bottom: 0.1em; }
+  .foot { padding-block: 40px; }
+  .foot__inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+  .foot__brand { display: flex; align-items: center; gap: 14px; }
+  .foot__rights { font-family: var(--font-mono); font-size: 12.5px; color: var(--text-on-dark-muted); }
+  .foot__ig { font-family: var(--font-mono); font-weight: 700; text-transform: uppercase; letter-spacing: var(--ls-overline); font-size: var(--fs-overline); color: var(--green-400); text-decoration: none; }
+</style>

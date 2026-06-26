@@ -1,0 +1,76 @@
+---
+import "../styles/global.css";
+import { ClientRouter } from "astro:transitions";
+import Nav from "../components/sections/Nav.astro";
+import Footer from "../components/sections/Footer.astro";
+import { getLangFromUrl, useTranslations, getRoute, otherLang } from "../i18n/utils";
+import type { RouteKey } from "../i18n/routes";
+
+interface Props { routeKey: RouteKey; title?: string; description?: string; }
+const { routeKey, title, description } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const pageTitle = title ? `${title} · ${t("site.title")}` : `${t("site.title")} · ${t("site.tagline")}`;
+const desc = description ?? t("site.description");
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const canonical = new URL(base + getRoute(routeKey, lang), Astro.site).href;
+const altOther = new URL(base + getRoute(routeKey, otherLang(lang)), Astro.site).href;
+const xDefault = new URL(base + getRoute(routeKey, "es"), Astro.site).href;
+const ogImage = new URL(base + "/og-default.png", Astro.site).href;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "NGO",
+  name: "El Club del 1+",
+  alternateName: "El Club del 1 más",
+  url: new URL(base + "/", Astro.site).href,
+  description: t("site.description"),
+  areaServed: "CO",
+  sameAs: ["https://instagram.com/clubdel1_"],
+};
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>document.documentElement.classList.add("js");</script>
+    <title>{pageTitle}</title>
+    <meta name="description" content={desc} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang={lang} href={canonical} />
+    <link rel="alternate" hreflang={otherLang(lang)} href={altOther} />
+    <link rel="alternate" hreflang="x-default" href={xDefault} />
+    <link rel="icon" href={base + "/favicon.svg"} type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content={lang === "es" ? "es_CO" : "en_US"} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#2BE06F" />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <ClientRouter />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{t("a11y.skip")}</a>
+    <Nav routeKey={routeKey} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <script>
+      function initReveal() {
+        const io = new IntersectionObserver((entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); }
+          }
+        }, { rootMargin: "0px 0px -10% 0px" });
+        document.querySelectorAll(".reveal:not(.is-in)").forEach((el) => io.observe(el));
+      }
+      document.addEventListener("astro:page-load", initReveal);
+    </script>
+  </body>
+</html>

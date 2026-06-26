@@ -1,0 +1,76 @@
+---
+import LogoBadge from "../brand/LogoBadge.astro";
+import Button from "../brand/Button.astro";
+import LanguageSwitcher from "./LanguageSwitcher.astro";
+import { getLangFromUrl, useTranslations, getRoute } from "../../i18n/utils";
+import type { RouteKey } from "../../i18n/routes";
+interface Props { routeKey: RouteKey; }
+const { routeKey } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const link = (k: RouteKey) => base + getRoute(k, lang);
+const items: { k: RouteKey; label: string }[] = [
+  { k: "modelo", label: t("nav.model") },
+  { k: "impacto", label: t("nav.impact") },
+  { k: "beneficiarias", label: t("nav.stories") },
+  { k: "nosotros", label: t("nav.about") },
+];
+---
+<header class="nav">
+  <div class="container nav__bar">
+    <a class="nav__logo" href={link("home")} aria-label={t("site.title")}>
+      <LogoBadge size={40} variant="green" />
+      <span class="nav__name">El Club del 1+</span>
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      {items.map((i) => <a href={link(i.k)}>{i.label}</a>)}
+    </nav>
+    <div class="nav__actions">
+      <LanguageSwitcher routeKey={routeKey} />
+      <Button href={link("donar")} variant="primary" size="sm">{t("nav.donate")}</Button>
+    </div>
+    <button class="nav__toggle" aria-expanded="false" aria-controls="nav-mobile" aria-label={t("nav.menu")}>
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav id="nav-mobile" class="nav__mobile" hidden aria-label="Mobile">
+    {items.map((i) => <a href={link(i.k)}>{i.label}</a>)}
+    <a class="nav__mobile-donate" href={link("donar")}>{t("nav.donate")}</a>
+  </nav>
+</header>
+
+<script>
+  function setupNav() {
+    const toggle = document.querySelector(".nav__toggle");
+    const menu = document.getElementById("nav-mobile");
+    if (!toggle || !menu) return;
+    toggle.addEventListener("click", () => {
+      const open = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", String(!open));
+      (menu as HTMLElement).hidden = open;
+    });
+  }
+  document.addEventListener("astro:page-load", setupNav);
+</script>
+
+<style>
+  .nav { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--paper-50) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border-light); }
+  .nav__bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
+  .nav__logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-strong); }
+  .nav__name { font-family: var(--font-display); font-weight: 900; letter-spacing: -0.02em; font-size: 18px; }
+  .nav__links { display: flex; gap: 22px; }
+  .nav__links a { font-family: var(--font-display); font-weight: 700; font-size: 15px; text-decoration: none; color: var(--text-body); }
+  .nav__links a:hover { color: var(--green-700); }
+  .nav__actions { display: flex; align-items: center; gap: 12px; }
+  .nav__toggle { display: none; flex-direction: column; gap: 4px; background: none; border: 0; padding: 8px; cursor: pointer; }
+  .nav__toggle span { width: 22px; height: 2.5px; background: var(--ink-900); border-radius: 2px; }
+  .nav__mobile { display: none; flex-direction: column; gap: 4px; padding: 12px clamp(20px,5vw,40px) 20px; border-top: 1px solid var(--border-light); }
+  .nav__mobile a { font-family: var(--font-display); font-weight: 700; font-size: 17px; text-decoration: none; color: var(--text-body); padding: 10px 0; }
+  .nav__mobile-donate { color: var(--green-700) !important; }
+  @media (max-width: 860px) {
+    .nav__links, .nav__actions { display: none; }
+    .nav__toggle { display: inline-flex; }
+    .nav__mobile:not([hidden]) { display: flex; }
+  }
+</style>

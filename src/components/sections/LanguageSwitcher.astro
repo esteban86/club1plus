@@ -1,0 +1,16 @@
+---
+import { getLangFromUrl, otherLang, getRoute, useTranslations } from "../../i18n/utils";
+import type { RouteKey } from "../../i18n/routes";
+interface Props { routeKey: RouteKey; }
+const { routeKey } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const target = otherLang(lang);
+const t = useTranslations(lang);
+const href = import.meta.env.BASE_URL.replace(/\/$/, "") + getRoute(routeKey, target);
+---
+<a class="lang" href={href} hreflang={target} lang={target} aria-label={t("nav.langLabel")}>
+  {t("nav.langLabel")}
+</a>
+<style>
+  .lang { font-family: var(--font-mono); font-weight: 700; font-size: var(--fs-overline); letter-spacing: var(--ls-overline); text-transform: uppercase; text-decoration: none; padding: 6px 10px; border-radius: var(--radius-pill); border: 1.5px solid currentColor; }
+</style>

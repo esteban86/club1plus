@@ -1,8 +1,6 @@
 ---
-import "../styles/global.css";
+import BaseLayout from "../layouts/BaseLayout.astro";
 ---
-<!doctype html>
-<html lang="es">
-  <head><meta charset="utf-8" /><title>El Club del 1+</title></head>
-  <body class="ground-green"><h1 class="display">creando riqueza.</h1></body>
-</html>
+<BaseLayout routeKey="home">
+  <section class="section container"><h1 class="display">El Club del 1+</h1></section>
+</BaseLayout>
