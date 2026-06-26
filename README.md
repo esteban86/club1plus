@@ -41,10 +41,8 @@ npm run build    # genera dist/
 ## Pendientes (flags)
 
 - Fuente real de marca (hoy: Hanken Grotesk, sustitución del design system).
-- URLs reales de Treli por tier.
-- Imagen OG diseñada 1200×630 (`public/og-default.png` es un placeholder).
+- URLs reales de Treli por tier (incluido el link de monto libre).
 - Fotos reales de beneficiarias/equipo (campo `photo` en las colecciones; hoy se muestran iniciales).
-- Confirmar usuario/repo de GitHub en `astro.config.mjs`.
 
 ## Stack
 
