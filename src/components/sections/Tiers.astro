@@ -182,5 +182,11 @@ const tierData = tiers.map((t) => ({
 
   @media (max-width: 980px) { .tiers__grid { grid-template-columns: repeat(2, 1fr); } .tier--featured { transform: none; } }
   @media (max-width: 520px) { .tiers__grid { grid-template-columns: 1fr; } }
-  @media (max-width: 560px) { .custom__row { flex-direction: column; align-items: stretch; } }
+  /* En columna, el flex-basis de 240px se volvería ALTURA (óvalo gigante) y el ancho intrínseco
+     del campo se desbordaba de la tarjeta; se fija a contenido en alto y 100% en ancho. */
+  @media (max-width: 560px) {
+    .custom__row { flex-direction: column; align-items: stretch; }
+    .custom__field { flex: 0 0 auto; width: 100%; min-width: 0; box-sizing: border-box; }
+    .custom__row :global(.btn) { width: 100%; }
+  }
 </style>
