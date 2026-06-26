@@ -1,0 +1,19 @@
+---
+interface Props { count?: number; variant?: "dark" | "green" | "outline"; size?: "sm" | "md" | "lg"; }
+const { count = 3, variant = "dark", size = "md" } = Astro.props;
+const S = { sm: { box: 36, icon: 14, pad: "0 14px" }, md: { box: 48, icon: 18, pad: "0 20px" }, lg: { box: 62, icon: 24, pad: "0 26px" } }[size]!;
+const chevrons = Array.from({ length: count }, (_, i) => i);
+---
+<span class:list={["chev", `chev--${variant}`]} style={`height:${S.box}px;min-width:${S.box}px;padding:${S.pad}`} aria-hidden="true">
+  {chevrons.map((i) => (
+    <svg width={S.icon} height={S.icon} viewBox="0 0 24 24" fill="none" style={`opacity:${1 - i * 0.18};margin-left:${i === 0 ? 0 : -S.icon * 0.35}px`}>
+      <path d="M8 5l7 7-7 7" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  ))}
+</span>
+<style>
+  .chev { display: inline-flex; align-items: center; justify-content: center; border-radius: var(--radius-pill); }
+  .chev--dark { background: var(--ink-900); color: var(--green-400); }
+  .chev--green { background: var(--green-400); color: var(--ink-900); }
+  .chev--outline { background: transparent; color: var(--ink-900); border: 2px solid var(--ink-900); }
+</style>

@@ -1,0 +1,16 @@
+---
+interface Props { size?: number; variant?: "green" | "dark"; class?: string; }
+const { size = 72, variant = "green", class: cls = "" } = Astro.props;
+const green = variant === "green";
+const bg = green ? "var(--green-400)" : "var(--ink-800)";
+const fg = green ? "var(--ink-900)" : "var(--green-400)";
+---
+<svg width={size} height={size} viewBox="0 0 200 200" role="img" aria-label="El Club del 1+" class={cls}>
+  <circle cx="100" cy="100" r={green ? 100 : 96} fill={bg} stroke={green ? "none" : "var(--green-400)"} stroke-width={green ? 0 : 8} />
+  <text x="66" y="131" text-anchor="middle" font-family="var(--font-display)" font-weight="900" font-size="104" letter-spacing="-4" fill={fg}>1</text>
+  <g fill={fg}>
+    <rect x="108" y="66" width="19" height="58" rx="4" />
+    <rect x="88" y="86" width="59" height="19" rx="4" />
+  </g>
+  <text x="100" y="173" text-anchor="middle" font-family="var(--font-display)" font-weight="800" font-size="34" letter-spacing="0.5" fill={fg}>club</text>
+</svg>
