@@ -2,7 +2,7 @@
 lang: en
 name: Patron
 symbol: spark
-amount: $40
+amount: $25
 note: Four patrons, one mother
 accent: marigold
 featured: false

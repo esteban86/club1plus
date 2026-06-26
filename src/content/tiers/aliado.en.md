@@ -2,7 +2,7 @@
 lang: en
 name: Ally
 symbol: rise
-amount: $15
+amount: $10
 note: 10 allies, one mother
 accent: coral
 featured: true
