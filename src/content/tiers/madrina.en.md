@@ -2,7 +2,7 @@
 lang: en
 name: Sponsor
 symbol: ring
-amount: $100
+amount: $200
 note: One mother, fully funded
 accent: ink
 featured: false

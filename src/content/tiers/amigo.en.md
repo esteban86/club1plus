@@ -2,7 +2,7 @@
 lang: en
 name: Friend
 symbol: plus
-amount: $5
+amount: $10
 note: Your + joins hundreds
 accent: green
 featured: false
