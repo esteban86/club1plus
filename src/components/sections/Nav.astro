@@ -37,6 +37,7 @@ const items: { k: RouteKey; label: string }[] = [
   <nav id="nav-mobile" class="nav__mobile" hidden aria-label={t("nav.mobileLabel")}>
     {items.map((i) => <a href={link(i.k)}>{i.label}</a>)}
     <a class="nav__mobile-donate" href={link("donar")}>{t("nav.donate")}</a>
+    <div class="nav__mobile-lang"><LanguageSwitcher routeKey={routeKey} /></div>
   </nav>
 </header>
 
@@ -63,7 +64,7 @@ const items: { k: RouteKey; label: string }[] = [
   .nav__links a { font-family: var(--font-display); font-weight: 700; font-size: 15px; text-decoration: none; color: var(--text-body); }
   .nav__links a:hover { color: var(--green-700); }
   .nav__actions { display: flex; align-items: center; gap: 12px; }
-  .nav__toggle { display: none; flex-direction: column; gap: 4px; background: none; border: 0; padding: 8px; cursor: pointer; }
+  .nav__toggle { display: none; flex-direction: column; align-items: center; justify-content: center; gap: 4px; background: none; border: 0; padding: 8px; min-width: 44px; min-height: 44px; cursor: pointer; }
   .nav__toggle span { width: 22px; height: 2.5px; background: var(--ink-900); border-radius: 2px; }
   .nav__mobile { display: none; flex-direction: column; gap: 4px; padding: 12px clamp(20px,5vw,40px) 20px; border-top: 1px solid var(--border-light); }
   .nav__mobile a { font-family: var(--font-display); font-weight: 700; font-size: 17px; text-decoration: none; color: var(--text-body); padding: 10px 0; }
