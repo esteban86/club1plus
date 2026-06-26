@@ -1,0 +1,16 @@
+---
+lang: es
+name: Aliado
+symbol: rise
+amount: $50.000
+note: El aporte más común
+accent: coral
+featured: true
+order: 2
+perks:
+  - Todo lo de Amigo
+  - Conoces a una beneficiaria
+  - Carné de socio
+urlMonthly: ""   # TODO: URL Treli real
+urlOneTime: ""   # TODO: URL Treli real
+---

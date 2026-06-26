@@ -1,0 +1,57 @@
+import { defineCollection, z } from "astro:content";
+
+const lang = z.enum(["es", "en"]);
+
+const tiers = defineCollection({
+  type: "content",
+  schema: z.object({
+    lang,
+    name: z.string(),
+    symbol: z.enum(["plus", "rise", "spark", "equals", "ring"]),
+    amount: z.string(),
+    note: z.string(),
+    accent: z.enum(["green", "coral", "marigold"]),
+    featured: z.boolean().default(false),
+    perks: z.array(z.string()),
+    order: z.number(),
+    urlMonthly: z.string().default(""),
+    urlOneTime: z.string().default(""),
+  }),
+});
+
+const stories = defineCollection({
+  type: "content",
+  schema: z.object({
+    lang,
+    name: z.string(),
+    role: z.string(),
+    quote: z.string(),
+    location: z.string().optional(),
+    photo: z.string().optional(),
+    order: z.number(),
+  }),
+});
+
+const stats = defineCollection({
+  type: "content",
+  schema: z.object({
+    lang,
+    label: z.string(),
+    value: z.number(),
+    display: z.string(),
+    source: z.string().optional(),
+    order: z.number(),
+  }),
+});
+
+const partners = defineCollection({
+  type: "content",
+  schema: z.object({ lang, name: z.string(), url: z.string().optional(), order: z.number() }),
+});
+
+const team = defineCollection({
+  type: "content",
+  schema: z.object({ lang, name: z.string(), role: z.string(), photo: z.string().optional(), order: z.number() }),
+});
+
+export const collections = { tiers, stories, stats, partners, team };
