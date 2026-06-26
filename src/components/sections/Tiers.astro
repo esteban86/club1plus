@@ -1,0 +1,105 @@
+---
+import Overline from "../brand/Overline.astro";
+import Highlight from "../brand/Highlight.astro";
+import BrandSymbol from "../brand/BrandSymbol.astro";
+import Button from "../brand/Button.astro";
+import { getCollection } from "astro:content";
+import { getLangFromUrl } from "../../i18n/utils";
+import { treliLink } from "../../lib/donate";
+
+const lang = getLangFromUrl(Astro.url);
+const tiers = (await getCollection("tiers", (e) => e.data.lang === lang)).sort((a, b) => a.data.order - b.data.order);
+const accentVar: Record<string, string> = { green: "var(--green-500)", coral: "var(--coral-500)", marigold: "var(--marigold-500)" };
+const copy = lang === "es"
+  ? { over: "Súmate", before: "Elige cómo ", hl: "sumar.", featured: "★ Más elegido", monthly: "Mensual", once: "Único", per: "/ mes", join: "Súmate como" }
+  : { over: "Join", before: "Choose how to ", hl: "add.", featured: "★ Most chosen", monthly: "Monthly", once: "One-time", per: "/ mo", join: "Join as" };
+const tierData = tiers.map((t) => ({
+  ...t.data,
+  slug: t.slug,
+  urlMonthly: treliLink({ slug: t.slug, urlMonthly: t.data.urlMonthly, urlOneTime: t.data.urlOneTime }, "monthly"),
+  urlOneTime: treliLink({ slug: t.slug, urlMonthly: t.data.urlMonthly, urlOneTime: t.data.urlOneTime }, "one-time"),
+}));
+---
+<section class="ground-paper-100 section">
+  <div class="container">
+    <div class="tiers__head">
+      <Overline color="var(--coral-500)">{copy.over}</Overline>
+      <h2 class="display tiers__title">{copy.before}<Highlight variant="coral">{copy.hl}</Highlight></h2>
+      <div class="tiers__toggle" role="group" aria-label="frecuencia" data-freq-toggle>
+        <button class="is-on" data-freq="monthly" aria-pressed="true">{copy.monthly}</button>
+        <button data-freq="one-time" aria-pressed="false">{copy.once}</button>
+      </div>
+    </div>
+    <div class="tiers__grid">
+      {tierData.map((t) => (
+        <div class:list={["tier", { "tier--featured": t.featured }]} style={`--accent:${accentVar[t.accent]}`}>
+          {t.featured && <span class="tier__flag">{copy.featured}</span>}
+          <BrandSymbol symbol={t.symbol} size={44} color="var(--accent)" title={t.name} />
+          <h3 class="tier__name">{t.name}</h3>
+          <p class="tier__note">{t.note}</p>
+          <div class="tier__price"><span class="tier__amount">{t.amount}</span><span class="tier__per">{copy.per}</span></div>
+          <ul class="tier__perks">
+            {t.perks.map((p) => (<li><BrandSymbol symbol="plus" size={14} color="var(--accent)" /> {p}</li>))}
+          </ul>
+          <Button
+            href={t.urlMonthly}
+            variant={t.featured ? "primary" : "outline"}
+            full
+            data-tier={t.slug}
+            data-url-monthly={t.urlMonthly}
+            data-url-onetime={t.urlOneTime}
+            target="_blank"
+          >{copy.join} {t.name}</Button>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  function setupTiers() {
+    const toggle = document.querySelector("[data-freq-toggle]");
+    if (!toggle) return;
+    let freq: "monthly" | "one-time" = "monthly";
+    const apply = () => {
+      document.querySelectorAll("a[data-tier]").forEach((node) => {
+        const a = node as HTMLAnchorElement;
+        const url = freq === "monthly" ? a.dataset.urlMonthly : a.dataset.urlOnetime;
+        if (url) a.setAttribute("href", url);
+      });
+    };
+    toggle.querySelectorAll("button[data-freq]").forEach((node) => {
+      const btn = node as HTMLButtonElement;
+      btn.addEventListener("click", () => {
+        freq = btn.dataset.freq === "one-time" ? "one-time" : "monthly";
+        toggle.querySelectorAll("button").forEach((b) => {
+          const on = b === btn;
+          b.classList.toggle("is-on", on);
+          b.setAttribute("aria-pressed", String(on));
+        });
+        apply();
+      });
+    });
+  }
+  document.addEventListener("astro:page-load", setupTiers);
+</script>
+
+<style>
+  .tiers__head { text-align: center; max-width: 32ch; margin: 0 auto 40px; }
+  .tiers__title { font-size: clamp(28px, 4.5vw, 42px); color: var(--ink-900); margin-top: 14px; padding-bottom: 0.1em; }
+  .tiers__toggle { display: inline-flex; background: var(--paper-200); border-radius: var(--radius-pill); padding: 4px; margin-top: 22px; }
+  .tiers__toggle button { font-family: var(--font-display); font-weight: 700; font-size: 14px; border: 0; background: transparent; color: var(--text-muted); padding: 8px 18px; border-radius: var(--radius-pill); cursor: pointer; }
+  .tiers__toggle button.is-on { background: var(--ink-900); color: var(--paper-50); }
+  .tiers__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: stretch; }
+  .tier { position: relative; display: flex; flex-direction: column; background: var(--paper-0); border: 1px solid var(--paper-200); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); padding: 28px; }
+  .tier--featured { border: 2px solid var(--accent); box-shadow: var(--shadow-lg); transform: translateY(-8px); }
+  .tier__flag { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: var(--accent); color: var(--ink-900); font-family: var(--font-display); font-weight: 800; font-size: 12px; padding: 5px 14px; border-radius: var(--radius-pill); white-space: nowrap; }
+  .tier__name { font-family: var(--font-display); font-weight: 800; font-size: 22px; color: var(--ink-900); margin: 18px 0 2px; }
+  .tier__note { font-family: var(--font-body); font-size: 13.5px; color: var(--text-muted); }
+  .tier__price { display: flex; align-items: baseline; gap: 6px; margin: 20px 0 18px; }
+  .tier__amount { font-family: var(--font-display); font-weight: 900; font-size: 34px; letter-spacing: -0.02em; color: var(--accent); }
+  .tier__per { font-family: var(--font-body); font-weight: 600; font-size: 14px; color: var(--text-muted); }
+  .tier__perks { list-style: none; display: flex; flex-direction: column; gap: 10px; flex: 1; margin-bottom: 24px; }
+  .tier__perks li { display: flex; align-items: flex-start; gap: 9px; font-family: var(--font-body); font-weight: 500; font-size: 14px; color: var(--text-body); }
+  @media (max-width: 820px) { .tiers__grid { grid-template-columns: 1fr; } .tier--featured { transform: none; } }
+</style>
