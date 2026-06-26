@@ -1,0 +1,11 @@
+---
+interface Props { variant?: "dark" | "green" | "coral"; }
+const { variant = "dark" } = Astro.props;
+---
+<span class:list={["hl", `hl--${variant}`]}><slot /></span>
+<style>
+  .hl { box-decoration-break: clone; -webkit-box-decoration-break: clone; padding: 0 0.22em; margin: 0 -0.04em; font-weight: 800; line-height: inherit; }
+  .hl--dark { background: var(--ink-900); color: var(--green-400); }
+  .hl--green { background: var(--green-400); color: var(--ink-900); }
+  .hl--coral { background: var(--coral-400); color: var(--ink-900); }
+</style>

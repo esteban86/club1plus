@@ -1,0 +1,13 @@
+---
+interface Props { tone?: "auto" | "green" | "dark" | "muted"; color?: string; class?: string; }
+const { tone = "auto", color, class: cls = "" } = Astro.props;
+const style = color ? `color:${color}` : undefined;
+---
+<span class:list={["overline", `overline--${tone}`, cls]} style={style}><slot /></span>
+<style>
+  .overline { font-family: var(--font-mono); font-weight: 700; font-size: var(--fs-overline); letter-spacing: var(--ls-overline); text-transform: uppercase; }
+  .overline--auto { color: currentColor; }
+  .overline--green { color: var(--green-400); }
+  .overline--dark { color: var(--ink-900); }
+  .overline--muted { color: var(--text-muted); }
+</style>
