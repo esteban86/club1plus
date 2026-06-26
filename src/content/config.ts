@@ -70,4 +70,10 @@ const team = defineCollection({
   schema: z.object({ lang, name: z.string(), role: z.string(), photo: z.string().optional(), order: z.number() }),
 });
 
-export const collections = { tiers, stories, stats, partners, team, evidence };
+// Fundadores originales del Club del 1% (el equipo refundador retomó su legado como 1+).
+const founders = defineCollection({
+  type: "content",
+  schema: z.object({ lang, name: z.string(), role: z.string(), photo: z.string().optional(), order: z.number() }),
+});
+
+export const collections = { tiers, stories, stats, partners, team, evidence, founders };

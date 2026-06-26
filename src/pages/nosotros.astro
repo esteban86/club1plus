@@ -4,15 +4,31 @@ import Overline from "../components/brand/Overline.astro";
 import AvatarRing from "../components/brand/AvatarRing.astro";
 import { getCollection } from "astro:content";
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const founders = (await getCollection("founders", (e) => e.data.lang === "es")).sort((a, b) => a.data.order - b.data.order);
 const team = (await getCollection("team", (e) => e.data.lang === "es")).sort((a, b) => a.data.order - b.data.order);
 const partners = (await getCollection("partners", (e) => e.data.lang === "es")).sort((a, b) => a.data.order - b.data.order);
 ---
-<BaseLayout routeKey="nosotros" title="Nosotros" description="No somos millonarios, somos amigos comprometidos. Conoce al equipo y a nuestros aliados.">
+<BaseLayout routeKey="nosotros" title="Nosotros" description="El Club del 1% fue fundado por un grupo de amigos; un nuevo equipo tomó el testigo y lo refundó como El Club del 1+. Conoce la historia, al equipo y a nuestros aliados.">
   <section class="ground-paper section">
     <div class="container">
       <Overline tone="muted">Nosotros</Overline>
       <h1 class="display about__title">No somos millonarios, somos amigos comprometidos.</h1>
-      <h2 class="about__sub">Equipo</h2>
+      <p class="about__lead">El Club del 1% nació de la visión de un grupo de amigos que demostró que asociarse para dar una renta básica podía cambiar vidas en Medellín. En 2026 tomamos el testigo y lo refundamos como <strong>El Club del 1+</strong> — evolucionando el modelo, profesionalizando la operación y sumando energías con quienes lo hicieron posible.</p>
+
+      <h2 class="about__sub">Fundadores del Club del 1%</h2>
+      <div class="about__team">
+        {founders.map((m) => (
+          <figure class="member">
+            <AvatarRing src={m.data.photo ? base + m.data.photo : undefined} alt={m.data.name} size={96} treatment="ring" name={m.data.name} />
+            <figcaption class="member__cap">
+              <span class="member__name">{m.data.name}</span>
+              <span class="member__role">{m.data.role}</span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+
+      <h2 class="about__sub">Equipo refundador</h2>
       <div class="about__team">
         {team.map((m) => (
           <figure class="member">
@@ -24,6 +40,7 @@ const partners = (await getCollection("partners", (e) => e.data.lang === "es")).
           </figure>
         ))}
       </div>
+
       <h2 class="about__sub">Aliados</h2>
       <ul class="about__partners">
         {partners.map((p) => <li>{p.data.url ? <a href={p.data.url} target="_blank" rel="noopener noreferrer">{p.data.name}</a> : p.data.name}</li>)}
@@ -33,6 +50,8 @@ const partners = (await getCollection("partners", (e) => e.data.lang === "es")).
 </BaseLayout>
 <style>
   .about__title { font-size: clamp(30px, 5vw, 52px); color: var(--text-strong); max-width: 20ch; margin-top: 14px; padding-bottom: 0.1em; }
+  .about__lead { font-family: var(--font-body); font-weight: 500; font-size: clamp(16px, 2.2vw, 19px); line-height: 1.55; color: var(--text-body); max-width: 60ch; margin-top: 20px; }
+  .about__lead strong { font-weight: 800; color: var(--text-strong); }
   .about__sub { font-family: var(--font-display); font-weight: 800; font-size: 24px; color: var(--text-strong); margin: 48px 0 20px; }
   .about__team { display: flex; flex-wrap: wrap; gap: 28px; }
   .member { margin: 0; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; width: 140px; }
