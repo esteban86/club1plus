@@ -199,8 +199,11 @@ Las **secciones** componen estos brand components + contenido de las collections
 
 ## 9. Despliegue
 
-- `astro.config.mjs`: `site: 'https://USUARIO.github.io'`, `base: '/REPO'`
-  (claramente marcados para completar con el repo real).
+- `astro.config.mjs`: `site: 'https://USUARIO.github.io'`, `base: '/club1+'`
+  (un solo lugar configurable, claramente marcado).
+  **Aviso:** GitHub **no admite `+`** en nombres de repo (solo `-`, `_`, `.`); lo más
+  probable es que `club1+` se convierta en `club1-`. Confirmar la URL real del repo al
+  crearlo y ajustar `base`/`site` si cambió. (Alternativa sin problema: `club1plus`.)
 - **GitHub Actions** (`.github/workflows/deploy.yml`) usando `withastro/action` +
   `actions/deploy-pages`: build en push a `main` → deploy a Pages.
 - `.nojekyll` implícito por la action. Migrable a dominio propio (`clubdel1.org`) luego
@@ -239,8 +242,13 @@ Las **secciones** componen estos brand components + contenido de las collections
 
 ## 13. Flags a confirmar con el usuario
 
-- **Fuente real** de la marca (Hanken Grotesk es sustitución del DS).
-- **URLs reales de Treli** por tier (mensual/único).
-- **Nombre del repo / usuario GitHub** para `base` y `site`.
-- **Iconset** (el DS sugiere Lucide como sustitución).
-- Set final de páginas (separar Equipo/Alianzas o fusionar Modelo+Impacto).
+- **Fuente real** de la marca → *pendiente*; se usa **Hanken Grotesk** (sustitución del DS).
+- **URLs reales de Treli** por tier → *pendiente*; se usan **placeholders marcados**
+  (`// TODO: URL Treli real`).
+- **Repo / usuario GitHub** → repo **`club1+`** (⚠️ GitHub puede convertirlo a `club1-`;
+  `base` queda en un solo lugar para ajustar). Usuario GitHub: *pendiente* (placeholder
+  `USUARIO` en `site`).
+- **Iconset** → **Lucide** (sustitución del DS), embebido como SVG inline (sin script,
+  coherente con el objetivo de ~0 JS).
+- **Set de páginas** → confirmado el set de 6 (Home, Modelo, Impacto, Beneficiarias,
+  Nosotros, Donar) + 404.
