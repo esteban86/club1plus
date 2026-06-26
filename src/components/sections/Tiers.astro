@@ -11,8 +11,8 @@ const lang = getLangFromUrl(Astro.url);
 const tiers = (await getCollection("tiers", (e) => e.data.lang === lang)).sort((a, b) => a.data.order - b.data.order);
 const accentVar: Record<string, string> = { green: "var(--green-500)", coral: "var(--coral-500)", marigold: "var(--marigold-500)" };
 const copy = lang === "es"
-  ? { over: "Súmate", before: "Elige cómo ", hl: "sumar.", featured: "★ Más elegido", monthly: "Mensual", once: "Único", per: "/ mes", join: "Súmate como" }
-  : { over: "Join", before: "Choose how to ", hl: "add.", featured: "★ Most chosen", monthly: "Monthly", once: "One-time", per: "/ mo", join: "Join as" };
+  ? { over: "Súmate", before: "Elige cómo ", hl: "sumar.", featured: "★ Más elegido", monthly: "Mensual", once: "Único", per: "/ mes", join: "Súmate como", freqLabel: "Frecuencia del aporte" }
+  : { over: "Join", before: "Choose how to ", hl: "add.", featured: "★ Most chosen", monthly: "Monthly", once: "One-time", per: "/ mo", join: "Join as", freqLabel: "Contribution frequency" };
 const tierData = tiers.map((t) => ({
   ...t.data,
   slug: t.slug,
@@ -25,7 +25,7 @@ const tierData = tiers.map((t) => ({
     <div class="tiers__head">
       <Overline color="var(--coral-500)">{copy.over}</Overline>
       <h2 class="display tiers__title">{copy.before}<Highlight variant="coral">{copy.hl}</Highlight></h2>
-      <div class="tiers__toggle" role="group" aria-label="frecuencia" data-freq-toggle>
+      <div class="tiers__toggle" role="group" aria-label={copy.freqLabel} data-freq-toggle>
         <button class="is-on" data-freq="monthly" aria-pressed="true">{copy.monthly}</button>
         <button data-freq="one-time" aria-pressed="false">{copy.once}</button>
       </div>
