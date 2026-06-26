@@ -1,0 +1,18 @@
+---
+interface Props { src?: string; alt?: string; size?: number; treatment?: "ring" | "disc" | "plain"; name?: string; }
+const { src, alt = "", size = 96, treatment = "ring", name } = Astro.props;
+const initial = (name ?? "·").slice(0, 1);
+---
+<span class:list={["avatar", `avatar--${treatment}`]} style={`width:${size}px;height:${size}px`}>
+  <span class="avatar__inner">
+    {src ? <img src={src} alt={alt} loading="lazy" decoding="async" /> : <span class="avatar__ph" style={`font-size:${Math.round(size * 0.34)}px`}>{initial}</span>}
+  </span>
+</span>
+<style>
+  .avatar { position: relative; display: inline-block; flex: none; border-radius: var(--radius-circle); }
+  .avatar--disc { background: var(--green-400); padding: 8%; }
+  .avatar__inner { display: block; width: 100%; height: 100%; border-radius: var(--radius-circle); overflow: hidden; background: var(--ink-700); }
+  .avatar--ring .avatar__inner { border: 4px solid var(--green-400); }
+  .avatar__inner img { width: 100%; height: 100%; object-fit: cover; }
+  .avatar__ph { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; font-family: var(--font-display); font-weight: 800; color: var(--text-on-dark-muted); }
+</style>

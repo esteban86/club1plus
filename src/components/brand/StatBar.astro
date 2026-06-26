@@ -1,0 +1,24 @@
+---
+interface Props { label: string; value?: number; display?: string; tone?: "light" | "dark"; fill?: string; }
+const { label, value = 50, display, tone = "light", fill = "var(--green-400)" } = Astro.props;
+const pct = Math.max(0, Math.min(100, value));
+const onDark = tone === "dark";
+---
+<div class:list={["stat", { "stat--dark": onDark }]}>
+  <div class="stat__top">
+    <span class="stat__label">{label}</span>
+    <span class="stat__value">{display ?? `${pct}%`}</span>
+  </div>
+  <div class="stat__track"><div class="stat__fill" style={`width:${pct}%;background:${fill}`}></div></div>
+</div>
+<style>
+  .stat { font-family: var(--font-body); }
+  .stat__top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+  .stat__label { font-weight: 700; font-size: 15px; color: var(--text-body); }
+  .stat__value { font-family: var(--font-display); font-weight: 900; font-size: 22px; letter-spacing: -0.02em; color: var(--text-strong); }
+  .stat__track { height: 14px; border-radius: var(--radius-pill); background: var(--paper-200); overflow: hidden; }
+  .stat__fill { height: 100%; border-radius: var(--radius-pill); transition: width var(--dur-slow) var(--ease-out); }
+  .stat--dark .stat__label { color: var(--text-on-dark); }
+  .stat--dark .stat__value { color: var(--green-400); }
+  .stat--dark .stat__track { background: var(--ink-600); }
+</style>

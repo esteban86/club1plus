@@ -1,0 +1,16 @@
+---
+interface Props { tone?: "light" | "sunken" | "dark" | "brand"; pad?: number; interactive?: boolean; class?: string; }
+const { tone = "light", pad = 24, interactive = false, class: cls = "" } = Astro.props;
+---
+<div class:list={["card", `card--${tone}`, { "card--interactive": interactive }, cls]} style={`padding:${pad}px`}>
+  <slot />
+</div>
+<style>
+  .card { border-radius: var(--radius-md); }
+  .card--light { background: var(--surface-card); color: var(--text-strong); border: 1px solid var(--border-light); box-shadow: var(--shadow-sm); }
+  .card--sunken { background: var(--surface-sunken); color: var(--text-strong); border: 1px solid var(--border-light); }
+  .card--dark { background: var(--surface-dark-raised); color: var(--text-on-dark-strong); border: 1px solid var(--border-dark); }
+  .card--brand { background: var(--surface-brand); color: var(--ink-900); }
+  .card--interactive { transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out); cursor: pointer; }
+  .card--interactive:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+</style>
