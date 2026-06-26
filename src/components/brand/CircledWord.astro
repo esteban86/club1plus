@@ -3,8 +3,10 @@ interface Props { color?: string; }
 const { color = "var(--ink-900)" } = Astro.props;
 ---
 <span class="circled">
-  <svg viewBox="0 0 200 80" preserveAspectRatio="none" aria-hidden="true" class="circled__ring">
-    <ellipse cx="100" cy="40" rx="96" ry="34" fill="none" stroke={color} stroke-width="2.4" transform="rotate(-2 100 40)" />
+  <!-- color en la propia <svg> (no en el span) para no teñir el texto del slot;
+       el trazo usa currentColor → var() resuelve de forma fiable en todos los navegadores. -->
+  <svg viewBox="0 0 200 80" preserveAspectRatio="none" aria-hidden="true" class="circled__ring" style={`color:${color}`}>
+    <ellipse cx="100" cy="40" rx="96" ry="34" fill="none" stroke="currentColor" stroke-width="2.4" transform="rotate(-2 100 40)" />
   </svg>
   <span class="circled__text"><slot /></span>
 </span>
