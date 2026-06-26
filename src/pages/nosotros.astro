@@ -4,6 +4,7 @@ import Overline from "../components/brand/Overline.astro";
 import AvatarRing from "../components/brand/AvatarRing.astro";
 import DonateCTA from "../components/sections/DonateCTA.astro";
 import { getCollection } from "astro:content";
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const team = (await getCollection("team", (e) => e.data.lang === "es")).sort((a, b) => a.data.order - b.data.order);
 const partners = (await getCollection("partners", (e) => e.data.lang === "es")).sort((a, b) => a.data.order - b.data.order);
 ---
@@ -16,7 +17,7 @@ const partners = (await getCollection("partners", (e) => e.data.lang === "es")).
       <div class="about__team">
         {team.map((m) => (
           <figure class="member">
-            <AvatarRing src={m.data.photo} alt={m.data.name} size={96} treatment="ring" name={m.data.name} />
+            <AvatarRing src={m.data.photo ? base + m.data.photo : undefined} alt={m.data.name} size={96} treatment="ring" name={m.data.name} />
             <figcaption class="member__cap">
               <span class="member__name">{m.data.name}</span>
               <span class="member__role">{m.data.role}</span>
