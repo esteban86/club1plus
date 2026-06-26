@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Overline from "../components/brand/Overline.astro";
+import AvatarRing from "../components/brand/AvatarRing.astro";
+import DonateCTA from "../components/sections/DonateCTA.astro";
+import { getCollection } from "astro:content";
+const team = (await getCollection("team", (e) => e.data.lang === "es")).sort((a, b) => a.data.order - b.data.order);
+const partners = (await getCollection("partners", (e) => e.data.lang === "es")).sort((a, b) => a.data.order - b.data.order);
+---
+<BaseLayout routeKey="nosotros" title="Nosotros" description="No somos millonarios, somos amigos comprometidos. Conoce al equipo y a nuestros aliados.">
+  <section class="ground-paper section">
+    <div class="container">
+      <Overline tone="muted">Nosotros</Overline>
+      <h1 class="display about__title">No somos millonarios, somos amigos comprometidos.</h1>
+      <h2 class="about__sub">Equipo</h2>
+      <div class="about__team">
+        {team.map((m) => <AvatarRing src={m.data.photo} alt={m.data.name} size={96} treatment="ring" name={m.data.name} />)}
+      </div>
+      <h2 class="about__sub">Aliados</h2>
+      <ul class="about__partners">
+        {partners.map((p) => <li>{p.data.url ? <a href={p.data.url} target="_blank" rel="noopener noreferrer">{p.data.name}</a> : p.data.name}</li>)}
+      </ul>
+    </div>
+  </section>
+  <DonateCTA />
+</BaseLayout>
+<style>
+  .about__title { font-size: clamp(30px, 5vw, 52px); color: var(--text-strong); max-width: 20ch; margin-top: 14px; padding-bottom: 0.1em; }
+  .about__sub { font-family: var(--font-display); font-weight: 800; font-size: 24px; color: var(--text-strong); margin: 48px 0 20px; }
+  .about__team { display: flex; flex-wrap: wrap; gap: 28px; }
+  .about__partners { list-style: none; display: flex; flex-wrap: wrap; gap: 16px 28px; font-family: var(--font-display); font-weight: 800; font-size: 20px; color: var(--text-body); }
+  .about__partners a { text-decoration: none; }
+</style>
