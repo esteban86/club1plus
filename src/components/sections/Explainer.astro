@@ -9,35 +9,239 @@ import Button from "../brand/Button.astro";
 import { getLangFromUrl, getRoute } from "../../i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
+const isEn = lang === "en";
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const donar = base + getRoute("donar", lang);
 const benef = base + getRoute("beneficiarias", lang);
 
-const expenses = ["Arriendo", "Comida", "Servicios", "Transporte", "Deuda de fiado"];
-const evidence: { sym: "rise" | "ring" | "plus" | "spark"; t: string; d: string }[] = [
-  { sym: "rise", t: "Lo invierten", d: "Mercancía, un puesto, una máquina. El ingreso propio sube y se sostiene." },
-  { sym: "ring", t: "No dejan de trabajar", d: "El mito de la “pereza” no se sostiene: trabajan igual o más, con un plan." },
-  { sym: "plus", t: "Los hijos ganan", d: "Mejor alimentación y más permanencia escolar — la trampa no pasa a la siguiente generación." },
-  { sym: "spark", t: "Dignidad y decisión", d: "Cada familia sabe mejor que nadie qué necesita primero. El efectivo lo respeta." },
+const numLocale = isEn ? "en-US" : "es-CO";
+const fmtPesos = "$" + (352480).toLocaleString(numLocale);
+
+const D = {
+  es: {
+    scroll: "Desliza",
+    heroTitleA: "La pobreza no es un hueco.",
+    heroTitleB: "Es una ",
+    heroTitleC: "trampa.",
+    heroLead:
+      "Por qué salir de la pobreza en Colombia no es cuestión de esfuerzo — y cómo una renta básica en efectivo rompe el ciclo. Desliza.",
+    cifrasOver: "El punto de partida",
+    cifrasHPre: "¿Qué significa ser ",
+    cifrasHWord: "pobre",
+    cifrasHPost: " en cifras?",
+    cifrasLeadA:
+      "En Colombia, el DANE traza una línea. Si los ingresos del hogar por persona no alcanzan ",
+    cifrasLeadStrong: "$352.480 al mes",
+    cifrasLeadB: ", esa familia vive en ",
+    cifrasLeadCircle: "pobreza monetaria.",
+    cifrasLeadC: " No es una opinión: es no poder cubrir lo básico.",
+    meterLineLab: "Línea de pobreza · " + fmtPesos,
+    meterLabs: ["Un ingreso digno", "Bajo la línea", "Pobreza extrema"],
+    stat1: "de los colombianos vive en pobreza monetaria — 1 de cada 3.",
+    stat2: "en pobreza extrema: ni siquiera alcanza para alimentarse bien.",
+    stat3: "el umbral mensual por persona (DANE). Debajo de ahí empieza la trampa.",
+    cifrasSrc: "Fuente · DANE, pobreza monetaria",
+    liqOver: "El malentendido",
+    liqHPre: "No es que falte ",
+    liqHWord: "esfuerzo.",
+    liqHPost: " Falta liquidez.",
+    liqLeadA:
+      "Una madre que vende mecato en el metrocable trabaja todo el día. El problema no es su voluntad: es que cada peso que entra ya tiene dueño antes de llegar. Sin un colchón, ",
+    liqLeadStrong: "es imposible invertir en lo que la sacaría adelante",
+    liqLeadB: " — más mercancía, una herramienta, un curso, la matrícula de un hijo.",
+    expenses: ["Arriendo", "Comida", "Servicios", "Transporte", "Deuda de fiado"],
+    expensesGhost: "Para invertir → $0",
+    trapOver: "El mecanismo",
+    trapH: "La trampa, en un círculo",
+    trapLeadA:
+      "Cada etapa alimenta la siguiente y todo vuelve a empezar. Pulsa el botón para inyectar una ",
+    trapLeadStrong: "renta básica",
+    trapLeadB: " y mira qué pasa con el ciclo.",
+    nodes: [
+      { bt: "Ingreso bajo", bs: "No alcanza el mes", et: "Estabilidad", es: "Algo llega cada mes" },
+      { bt: "Cero liquidez", bs: "Imposible ahorrar", et: "Puede planear", es: "Y arriesgar un poco" },
+      { bt: "No puede invertir", bs: "Ni negocio ni estudio", et: "Invierte", es: "Mercancía, estudio" },
+      { bt: "Sigue igual", bs: "Nada cambia", et: "Ingreso propio", es: "Crece y se queda" },
+    ],
+    centerOff: "EN BUCLE",
+    subOff: "SIN SALIDA",
+    centerOn: "EN ESPIRAL",
+    subOn: "HACIA ARRIBA",
+    btnOff: "Añadir renta básica",
+    btnOn: "↺ Quitar la renta básica",
+    femOver: "Quién carga el peso",
+    femHPre: "La pobreza tiene ",
+    femHWord: "cara de mujer.",
+    femLeadA:
+      "Las madres cabeza de familia sostienen el hogar con menos. En Colombia, las mujeres reciben ",
+    femLeadStrong: "12,1% menos ingreso",
+    femLeadB: " que los hombres por el mismo trabajo, y la trampa se cierra más fuerte sobre ellas.",
+    femBarMen: "Ingreso · hombres",
+    femBarWomen: "Ingreso · mujeres",
+    femBarWomenVal: "−12,1%",
+    femSrc: "Fuente · DANE",
+    femCard: "Más de la mitad de los hogares en pobreza extrema dependen de una mujer sola.",
+    cashOver: "La pregunta incómoda",
+    cashHPre: "¿Y si simplemente damos ",
+    cashHWord: "efectivo?",
+    cashLeadA:
+      "Suena ingenuo. Pero cuando se entrega dinero sin condiciones a familias en pobreza, la evidencia mundial dice algo claro: ",
+    cashLeadStrong: "no se malgasta.",
+    cashLeadB: " Se transforma.",
+    evidence: [
+      { t: "Lo invierten", d: "Mercancía, un puesto, una máquina. El ingreso propio sube y se sostiene." },
+      { t: "No dejan de trabajar", d: "El mito de la “pereza” no se sostiene: trabajan igual o más, con un plan." },
+      { t: "Los hijos ganan", d: "Mejor alimentación y más permanencia escolar — la trampa no pasa a la siguiente generación." },
+      { t: "Dignidad y decisión", d: "Cada familia sabe mejor que nadie qué necesita primero. El efectivo lo respeta." },
+    ],
+    certOver: "La salida",
+    certHPre: "Lo que cambia es la ",
+    certHWord: "certeza.",
+    certLeadA: "Una renta básica ",
+    certLeadStrong: "mensual y predecible",
+    certLeadB:
+      " no es un regalo: es el colchón que permite dejar de apagar incendios y empezar a planear. Ahí el círculo deja de girar y se convierte en una espiral hacia arriba.",
+    steps: [
+      { t: "Estabilidad", d: "Sé que algo llega cada mes." },
+      { t: "Puedo planear", d: "Y arriesgarme a invertir." },
+      { t: "Ingreso propio", d: "Un negocio que crece." },
+      { t: "Salida real", d: "Que se queda y se hereda." },
+    ],
+    modelOver: "Aquí entras tú",
+    modelHA: "Una familia no puede sola.",
+    modelHWord: "Muchos amigos, sí.",
+    modelLead:
+      "El Club del 1+ junta el aporte recurrente de cientos de amigos comprometidos en un fondo, y lo convierte en renta básica para madres cabeza de familia. Así de simple.",
+    eqYou: "Tú",
+    eqFriends: "Cientos de amigos",
+    eqResult: "Riqueza que sale de la pobreza",
+    ctaJoin: "Súmate al Club",
+    ctaMeet: "Conoce a las beneficiarias",
+    tagline: "La mejor forma de eliminar la pobreza es creando riqueza.",
+    handle: "El Club del 1+ · @clubdel1_",
+    disclaimer:
+      "Cifras de pobreza monetaria y brecha de ingresos: DANE (umbral per cápita citado por El Club del 1+). El comportamiento de las transferencias monetarias no condicionadas resume hallazgos generales de la literatura sobre el tema; no representa un estudio único. Pieza ilustrativa de divulgación.",
+  },
+  en: {
+    scroll: "Scroll",
+    heroTitleA: "Poverty isn't a hole.",
+    heroTitleB: "It's a ",
+    heroTitleC: "trap.",
+    heroLead:
+      "Why escaping poverty in Colombia isn't a matter of effort — and how an unconditional cash income breaks the cycle. Scroll.",
+    cifrasOver: "The starting point",
+    cifrasHPre: "What does being ",
+    cifrasHWord: "poor",
+    cifrasHPost: " look like in numbers?",
+    cifrasLeadA:
+      "In Colombia, DANE draws a line. If a household's income per person falls below ",
+    cifrasLeadStrong: "COP $352,480 a month",
+    cifrasLeadB: ", that family lives in ",
+    cifrasLeadCircle: "monetary poverty.",
+    cifrasLeadC: " It's not an opinion: it's being unable to cover the basics.",
+    meterLineLab: "Poverty line · " + fmtPesos,
+    meterLabs: ["A living income", "Below the line", "Extreme poverty"],
+    stat1: "of Colombians live in monetary poverty — 1 in 3.",
+    stat2: "in extreme poverty: not even enough to eat well.",
+    stat3: "the monthly threshold per person (DANE). Below it, the trap begins.",
+    cifrasSrc: "Source · DANE, monetary poverty",
+    liqOver: "The misunderstanding",
+    liqHPre: "It isn't a lack of ",
+    liqHWord: "effort.",
+    liqHPost: " It's a lack of liquidity.",
+    liqLeadA:
+      "A mother selling snacks on the metrocable works all day. The problem isn't her will: every peso that comes in is already spoken for before it arrives. With no cushion, ",
+    liqLeadStrong: "it's impossible to invest in what would move her forward",
+    liqLeadB: " — more stock, a tool, a course, a child's tuition.",
+    expenses: ["Rent", "Food", "Utilities", "Transport", "Store-credit debt"],
+    expensesGhost: "Left to invest → $0",
+    trapOver: "The mechanism",
+    trapH: "The trap, as a circle",
+    trapLeadA:
+      "Each stage feeds the next, and it all starts over. Press the button to inject a ",
+    trapLeadStrong: "basic income",
+    trapLeadB: " and watch what happens to the cycle.",
+    nodes: [
+      { bt: "Low income", bs: "Doesn't cover the month", et: "Stability", es: "Something arrives monthly" },
+      { bt: "Zero liquidity", bs: "Saving is impossible", et: "Can plan", es: "And take a small risk" },
+      { bt: "Can't invest", bs: "No business, no study", et: "Invests", es: "Stock, study" },
+      { bt: "Stays the same", bs: "Nothing changes", et: "Own income", es: "Grows and stays" },
+    ],
+    centerOff: "IN A LOOP",
+    subOff: "NO WAY OUT",
+    centerOn: "SPIRAL UP",
+    subOn: "GOING UP",
+    btnOff: "Add basic income",
+    btnOn: "↺ Remove basic income",
+    femOver: "Who carries the weight",
+    femHPre: "Poverty has a ",
+    femHWord: "woman's face.",
+    femLeadA:
+      "Female heads of household sustain the home with less. In Colombia, women earn ",
+    femLeadStrong: "12.1% less income",
+    femLeadB: " than men for the same work, and the trap closes tighter around them.",
+    femBarMen: "Income · men",
+    femBarWomen: "Income · women",
+    femBarWomenVal: "−12.1%",
+    femSrc: "Source · DANE",
+    femCard: "More than half of households in extreme poverty depend on a woman alone.",
+    cashOver: "The uncomfortable question",
+    cashHPre: "What if we simply give ",
+    cashHWord: "cash?",
+    cashLeadA:
+      "It sounds naïve. But when money is handed unconditionally to families in poverty, the global evidence is clear: ",
+    cashLeadStrong: "it isn't wasted.",
+    cashLeadB: " It's transformed.",
+    evidence: [
+      { t: "They invest it", d: "Stock, a stall, a machine. Their own income rises and holds." },
+      { t: "They don't stop working", d: "The “laziness” myth doesn't hold: they work as much or more, with a plan." },
+      { t: "Their children gain", d: "Better nutrition and more time in school — the trap doesn't pass to the next generation." },
+      { t: "Dignity and choice", d: "Every family knows best what it needs first. Cash respects that." },
+    ],
+    certOver: "The way out",
+    certHPre: "What changes is ",
+    certHWord: "certainty.",
+    certLeadA: "A ",
+    certLeadStrong: "monthly, predictable",
+    certLeadB:
+      " basic income isn't a gift: it's the cushion that lets you stop putting out fires and start planning. That's when the circle stops spinning and becomes an upward spiral.",
+    steps: [
+      { t: "Stability", d: "I know something arrives each month." },
+      { t: "I can plan", d: "And risk investing." },
+      { t: "Own income", d: "A business that grows." },
+      { t: "A real way out", d: "One that stays and is passed on." },
+    ],
+    modelOver: "This is where you come in",
+    modelHA: "One family can't do it alone.",
+    modelHWord: "Many friends can.",
+    modelLead:
+      "El Club del 1+ pools the recurring contributions of hundreds of committed friends into a fund, and turns it into basic income for female heads of household. It's that simple.",
+    eqYou: "You",
+    eqFriends: "Hundreds of friends",
+    eqResult: "Wealth that lifts out of poverty",
+    ctaJoin: "Join the Club",
+    ctaMeet: "Meet the beneficiaries",
+    tagline: "The best way to end poverty is by creating wealth.",
+    handle: "El Club del 1+ · @clubdel1_",
+    disclaimer:
+      "Monetary-poverty and income-gap figures: DANE (per-capita threshold cited by El Club del 1+). The behavior of unconditional cash transfers summarizes general findings from the literature on the subject; it does not represent a single study. Illustrative explainer piece.",
+  },
+};
+const c = isEn ? D.en : D.es;
+
+const expenses = c.expenses;
+const evSyms: ("rise" | "ring" | "plus" | "spark")[] = ["rise", "ring", "plus", "spark"];
+const evidence = evSyms.map((sym, i) => ({ sym, ...c.evidence[i] }));
+const meterDims = [
+  { h: 200, color: "var(--green-400)", below: false },
+  { h: 96, color: "var(--coral-400)", below: true },
+  { h: 52, color: "var(--coral-500)", below: true },
 ];
-const steps = [
-  { n: "01", t: "Estabilidad", d: "Sé que algo llega cada mes." },
-  { n: "02", t: "Puedo planear", d: "Y arriesgarme a invertir." },
-  { n: "03", t: "Ingreso propio", d: "Un negocio que crece." },
-  { n: "04", t: "Salida real", d: "Que se queda y se hereda." },
-];
-const meters = [
-  { lab: "Un ingreso digno", h: 200, c: "var(--green-400)", below: false },
-  { lab: "Bajo la línea", h: 96, c: "var(--coral-400)", below: true },
-  { lab: "Pobreza extrema", h: 52, c: "var(--coral-500)", below: true },
-];
-// nodos del bucle: textos para los dos estados
-const nodes = [
-  { cls: "n0", bt: "Ingreso bajo", bs: "No alcanza el mes", et: "Estabilidad", es: "Algo llega cada mes" },
-  { cls: "n1", bt: "Cero liquidez", bs: "Imposible ahorrar", et: "Puede planear", es: "Y arriesgar un poco" },
-  { cls: "n2", bt: "No puede invertir", bs: "Ni negocio ni estudio", et: "Invierte", es: "Mercancía, estudio" },
-  { cls: "n3", bt: "Sigue igual", bs: "Nada cambia", et: "Ingreso propio", es: "Crece y se queda" },
-];
+const meters = meterDims.map((m, i) => ({ ...m, lab: c.meterLabs[i] }));
+const stepNums = ["01", "02", "03", "04"];
+const steps = c.steps.map((s, i) => ({ n: stepNums[i], ...s }));
+const nodeCls = ["n0", "n1", "n2", "n3"];
+const nodes = c.nodes.map((n, i) => ({ cls: nodeCls[i], ...n }));
 ---
 <div class="ec-prog" data-prog aria-hidden="true"></div>
 
@@ -45,49 +249,49 @@ const nodes = [
 <section class="ground-ink plus-texture-green ec-sec ec-hero">
   <div class="ec-wrap ec-center">
     <span class="reveal" style="display:inline-block"><LogoBadge size={84} variant="dark" /></span>
-    <h1 class="display ec-hero__title reveal">La pobreza no es un hueco.<br />Es una <span class="ec-grn">trampa.</span></h1>
-    <p class="ec-lead ec-lead--dark reveal" style="margin-inline:auto">Por qué salir de la pobreza en Colombia no es cuestión de esfuerzo — y cómo una renta básica en efectivo rompe el ciclo. Desliza.</p>
-    <div class="ec-scroll reveal"><span class="ec-scroll__t">Desliza</span><span class="ec-scroll__a">↓</span></div>
+    <h1 class="display ec-hero__title reveal">{c.heroTitleA}<br />{c.heroTitleB}<span class="ec-grn">{c.heroTitleC}</span></h1>
+    <p class="ec-lead ec-lead--dark reveal" style="margin-inline:auto">{c.heroLead}</p>
+    <div class="ec-scroll reveal"><span class="ec-scroll__t">{c.scroll}</span><span class="ec-scroll__a">↓</span></div>
   </div>
 </section>
 
 <!-- 1 · CIFRAS -->
 <section class="ground-paper ec-sec">
   <div class="ec-wrap">
-    <span class="reveal"><Overline color="var(--coral-500)">El punto de partida</Overline></span>
-    <h2 class="display ec-h reveal">¿Qué significa ser <Highlight variant="coral">pobre</Highlight> en cifras?</h2>
-    <p class="ec-lead reveal">En Colombia, el DANE traza una línea. Si los ingresos del hogar por persona no alcanzan <strong>$352.480 al mes</strong>, esa familia vive en <CircledWord>pobreza monetaria.</CircledWord> No es una opinión: es no poder cubrir lo básico.</p>
+    <span class="reveal"><Overline color="var(--coral-500)">{c.cifrasOver}</Overline></span>
+    <h2 class="display ec-h reveal">{c.cifrasHPre}<Highlight variant="coral">{c.cifrasHWord}</Highlight>{c.cifrasHPost}</h2>
+    <p class="ec-lead reveal">{c.cifrasLeadA}<strong>{c.cifrasLeadStrong}</strong>{c.cifrasLeadB}<CircledWord>{c.cifrasLeadCircle}</CircledWord>{c.cifrasLeadC}</p>
 
     <div class="meter reveal">
-      <div class="meter__line"><span class="meter__line-lab">Línea de pobreza · $352.480</span></div>
+      <div class="meter__line"><span class="meter__line-lab">{c.meterLineLab}</span></div>
       {meters.map((m) => (
         <div class="meter__col">
-          <div class="meter__bar" style={`--h:${m.h}px;background:${m.c}`}></div>
+          <div class="meter__bar" style={`--h:${m.h}px;background:${m.color}`}></div>
           <span class="meter__lab" style={m.below ? "color:var(--coral-500)" : ""}>{m.lab}</span>
         </div>
       ))}
     </div>
 
     <div class="ec-stats">
-      <div class="ec-stat reveal"><div class="ec-stat__big" style="color:var(--coral-500)"><span data-countup data-to="33" data-suffix="%">33%</span></div><p class="ec-stat__lab">de los colombianos vive en pobreza monetaria — 1 de cada 3.</p></div>
-      <div class="ec-stat reveal"><div class="ec-stat__big" style="color:var(--coral-500)"><span data-countup data-to="12" data-suffix="%">12%</span></div><p class="ec-stat__lab">en pobreza extrema: ni siquiera alcanza para alimentarse bien.</p></div>
-      <div class="ec-stat reveal"><div class="ec-stat__big" style="color:var(--ink-900)"><span data-countup data-to="352480" data-prefix="$">$352.480</span></div><p class="ec-stat__lab">el umbral mensual por persona (DANE). Debajo de ahí empieza la trampa.</p></div>
+      <div class="ec-stat reveal"><div class="ec-stat__big" style="color:var(--coral-500)"><span data-countup data-to="33" data-suffix="%" data-locale={numLocale}>33%</span></div><p class="ec-stat__lab">{c.stat1}</p></div>
+      <div class="ec-stat reveal"><div class="ec-stat__big" style="color:var(--coral-500)"><span data-countup data-to="12" data-suffix="%" data-locale={numLocale}>12%</span></div><p class="ec-stat__lab">{c.stat2}</p></div>
+      <div class="ec-stat reveal"><div class="ec-stat__big" style="color:var(--ink-900)"><span data-countup data-to="352480" data-prefix="$" data-locale={numLocale}>{fmtPesos}</span></div><p class="ec-stat__lab">{c.stat3}</p></div>
     </div>
-    <p class="ec-src reveal">Fuente · DANE, pobreza monetaria</p>
+    <p class="ec-src reveal">{c.cifrasSrc}</p>
   </div>
 </section>
 
 <!-- 2 · LIQUIDEZ -->
 <section class="ground-green ec-sec">
   <div class="ec-wrap">
-    <span class="reveal"><Overline tone="dark">El malentendido</Overline></span>
-    <h2 class="display ec-h reveal">No es que falte <Highlight variant="dark">esfuerzo.</Highlight> Falta liquidez.</h2>
-    <p class="ec-lead reveal" style="color:var(--ink-900);opacity:.85">Una madre que vende mecato en el metrocable trabaja todo el día. El problema no es su voluntad: es que cada peso que entra ya tiene dueño antes de llegar. Sin un colchón, <strong>es imposible invertir en lo que la sacaría adelante</strong> — más mercancía, una herramienta, un curso, la matrícula de un hijo.</p>
+    <span class="reveal"><Overline tone="dark">{c.liqOver}</Overline></span>
+    <h2 class="display ec-h reveal">{c.liqHPre}<Highlight variant="dark">{c.liqHWord}</Highlight>{c.liqHPost}</h2>
+    <p class="ec-lead reveal" style="color:var(--ink-900);opacity:.85">{c.liqLeadA}<strong>{c.liqLeadStrong}</strong>{c.liqLeadB}</p>
     <div class="ec-chips reveal">
       {expenses.map((t) => (
         <span class="ec-chip"><BrandSymbol symbol="equals" size={15} color="var(--green-400)" /> {t}</span>
       ))}
-      <span class="ec-chip ec-chip--ghost">Para invertir → $0</span>
+      <span class="ec-chip ec-chip--ghost">{c.expensesGhost}</span>
     </div>
   </div>
 </section>
@@ -95,12 +299,14 @@ const nodes = [
 <!-- 3 · TRAP LOOP -->
 <section class="ground-ink ec-sec">
   <div class="ec-wrap ec-center">
-    <span class="reveal"><Overline tone="green">El mecanismo</Overline></span>
-    <h2 class="display ec-h reveal" style="color:var(--paper-50)">La trampa, en un círculo</h2>
-    <p class="ec-lead ec-lead--dark reveal" style="margin-inline:auto">Cada etapa alimenta la siguiente y todo vuelve a empezar. Pulsa el botón para inyectar una <strong class="ec-grn">renta básica</strong> y mira qué pasa con el ciclo.</p>
+    <span class="reveal"><Overline tone="green">{c.trapOver}</Overline></span>
+    <h2 class="display ec-h reveal" style="color:var(--paper-50)">{c.trapH}</h2>
+    <p class="ec-lead ec-lead--dark reveal" style="margin-inline:auto">{c.trapLeadA}<strong class="ec-grn">{c.trapLeadStrong}</strong>{c.trapLeadB}</p>
   </div>
   <div class="ec-wrap">
-    <div class="loop reveal" data-loop>
+    <div class="loop reveal" data-loop
+      data-center-off={c.centerOff} data-center-on={c.centerOn}
+      data-sub-off={c.subOff} data-sub-on={c.subOn} data-btn-on={c.btnOn}>
       <div class="loop__diagram">
         <svg viewBox="0 0 360 360" class="loop__svg" aria-hidden="true">
           <defs>
@@ -113,8 +319,8 @@ const nodes = [
           <path d="M50 180 A130 130 0 0 1 180 50" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" marker-end="url(#trapArrow)" />
           <circle r="11" fill="var(--ink-900)"><animateMotion dur="6s" repeatCount="indefinite"><mpath href="#trapCircle" /></animateMotion></circle>
           <circle r="11" fill="none" stroke="currentColor" stroke-width="4"><animateMotion dur="6s" repeatCount="indefinite"><mpath href="#trapCircle" /></animateMotion></circle>
-          <text class="loop__center" x="180" y="172" text-anchor="middle" font-family="var(--font-display)" font-weight="900" font-size="30" letter-spacing="-1">EN BUCLE</text>
-          <text class="loop__sub" x="180" y="198" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" letter-spacing="2">SIN SALIDA</text>
+          <text class="loop__center" x="180" y="172" text-anchor="middle" font-family="var(--font-display)" font-weight="900" font-size="30" letter-spacing="-1">{c.centerOff}</text>
+          <text class="loop__sub" x="180" y="198" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" letter-spacing="2">{c.subOff}</text>
         </svg>
         {nodes.map((n) => (
           <div class:list={["node", n.cls]} data-node data-bt={n.bt} data-bs={n.bs} data-et={n.et} data-es={n.es}>
@@ -124,7 +330,7 @@ const nodes = [
         ))}
       </div>
       <div class="loop__btnwrap">
-        <button class="loop__btn" type="button" data-loop-btn><BrandSymbol symbol="plus" size={18} color="var(--ink-900)" /> Añadir renta básica</button>
+        <button class="loop__btn" type="button" data-loop-btn><BrandSymbol symbol="plus" size={18} color="var(--ink-900)" /> {c.btnOff}</button>
       </div>
     </div>
   </div>
@@ -133,14 +339,14 @@ const nodes = [
 <!-- 4 · FEMINIZACIÓN -->
 <section class="ground-paper ec-sec">
   <div class="ec-wrap">
-    <span class="reveal"><Overline color="var(--coral-500)">Quién carga el peso</Overline></span>
-    <h2 class="display ec-h reveal">La pobreza tiene <Highlight variant="coral">cara de mujer.</Highlight></h2>
-    <p class="ec-lead reveal">Las madres cabeza de familia sostienen el hogar con menos. En Colombia, las mujeres reciben <strong>12,1% menos ingreso</strong> que los hombres por el mismo trabajo, y la trampa se cierra más fuerte sobre ellas.</p>
+    <span class="reveal"><Overline color="var(--coral-500)">{c.femOver}</Overline></span>
+    <h2 class="display ec-h reveal">{c.femHPre}<Highlight variant="coral">{c.femHWord}</Highlight></h2>
+    <p class="ec-lead reveal">{c.femLeadA}<strong>{c.femLeadStrong}</strong>{c.femLeadB}</p>
     <div class="ec-fem">
       <div class="reveal ec-fem__bars">
-        <StatBar label="Ingreso · hombres" value={100} display="100%" fill="var(--ink-900)" />
-        <StatBar label="Ingreso · mujeres" value={88} display="−12,1%" fill="var(--coral-400)" />
-        <span class="ec-src">Fuente · DANE</span>
+        <StatBar label={c.femBarMen} value={100} display="100%" fill="var(--ink-900)" />
+        <StatBar label={c.femBarWomen} value={88} display={c.femBarWomenVal} fill="var(--coral-400)" />
+        <span class="ec-src">{c.femSrc}</span>
       </div>
       <div class="reveal ec-fem__card">
         <div class="ec-fem__people">
@@ -148,7 +354,7 @@ const nodes = [
             <svg width="25" height="40" viewBox="0 0 40 64" aria-hidden="true"><circle cx="20" cy="13" r="11" fill={i < 6 ? "var(--coral-400)" : "var(--paper-300)"} /><path d="M3 64 C3 40 37 40 37 64 Z" fill={i < 6 ? "var(--coral-400)" : "var(--paper-300)"} /></svg>
           ))}
         </div>
-        <p class="ec-fem__txt">Más de la mitad de los hogares en pobreza extrema dependen de una mujer sola.</p>
+        <p class="ec-fem__txt">{c.femCard}</p>
       </div>
     </div>
   </div>
@@ -160,17 +366,17 @@ const nodes = [
     <div class="ec-cashhead reveal">
       <svg width="70" height="70" viewBox="0 0 100 100" aria-hidden="true" class="ec-coin"><circle cx="50" cy="50" r="46" fill="var(--marigold-400)" stroke="var(--ink-900)" stroke-width="5" /><circle cx="50" cy="50" r="36" fill="none" stroke="var(--ink-900)" stroke-width="3" stroke-dasharray="4 5" opacity="0.55" /><text x="50" y="68" text-anchor="middle" font-family="var(--font-display)" font-weight="900" font-size="46" fill="var(--ink-900)">$</text></svg>
       <div>
-        <Overline tone="dark">La pregunta incómoda</Overline>
-        <h2 class="display ec-h" style="margin-top:6px">¿Y si simplemente damos <Highlight variant="dark">efectivo?</Highlight></h2>
+        <Overline tone="dark">{c.cashOver}</Overline>
+        <h2 class="display ec-h" style="margin-top:6px">{c.cashHPre}<Highlight variant="dark">{c.cashHWord}</Highlight></h2>
       </div>
     </div>
-    <p class="ec-lead reveal" style="color:var(--ink-900);opacity:.85">Suena ingenuo. Pero cuando se entrega dinero sin condiciones a familias en pobreza, la evidencia mundial dice algo claro: <strong>no se malgasta.</strong> Se transforma.</p>
+    <p class="ec-lead reveal" style="color:var(--ink-900);opacity:.85">{c.cashLeadA}<strong>{c.cashLeadStrong}</strong>{c.cashLeadB}</p>
     <div class="ec-ev">
-      {evidence.map((c) => (
+      {evidence.map((e) => (
         <div class="ec-ev__card reveal">
-          <BrandSymbol symbol={c.sym} size={32} color="var(--green-400)" />
-          <h3 class="ec-ev__t">{c.t}</h3>
-          <p class="ec-ev__d">{c.d}</p>
+          <BrandSymbol symbol={e.sym} size={32} color="var(--green-400)" />
+          <h3 class="ec-ev__t">{e.t}</h3>
+          <p class="ec-ev__d">{e.d}</p>
         </div>
       ))}
     </div>
@@ -180,9 +386,9 @@ const nodes = [
 <!-- 6 · CERTEZA -->
 <section class="ground-paper ec-sec">
   <div class="ec-wrap">
-    <span class="reveal"><Overline color="var(--green-700)">La salida</Overline></span>
-    <h2 class="display ec-h reveal">Lo que cambia es la <Highlight>certeza.</Highlight></h2>
-    <p class="ec-lead reveal">Una renta básica <strong>mensual y predecible</strong> no es un regalo: es el colchón que permite dejar de apagar incendios y empezar a planear. Ahí el círculo deja de girar y se convierte en una espiral hacia arriba.</p>
+    <span class="reveal"><Overline color="var(--green-700)">{c.certOver}</Overline></span>
+    <h2 class="display ec-h reveal">{c.certHPre}<Highlight>{c.certHWord}</Highlight></h2>
+    <p class="ec-lead reveal">{c.certLeadA}<strong>{c.certLeadStrong}</strong>{c.certLeadB}</p>
     <div class="ec-steps reveal">
       {steps.map((s, i) => (
         <div class:list={["ec-step", { "ec-step--last": i === 3 }]}>
@@ -198,29 +404,29 @@ const nodes = [
 <!-- 7 · MODELO 1+ + CTA -->
 <section class="ground-ink plus-texture-green ec-sec">
   <div class="ec-wrap ec-center">
-    <span class="reveal"><Overline tone="green">Aquí entras tú</Overline></span>
-    <h2 class="display ec-h reveal" style="color:var(--paper-50);margin-inline:auto">Una familia no puede sola.<br /><Highlight variant="green">Muchos amigos, sí.</Highlight></h2>
-    <p class="ec-lead ec-lead--dark reveal" style="margin-inline:auto">El Club del 1+ junta el aporte recurrente de cientos de amigos comprometidos en un fondo, y lo convierte en renta básica para madres cabeza de familia. Así de simple.</p>
+    <span class="reveal"><Overline tone="green">{c.modelOver}</Overline></span>
+    <h2 class="display ec-h reveal" style="color:var(--paper-50);margin-inline:auto">{c.modelHA}<br /><Highlight variant="green">{c.modelHWord}</Highlight></h2>
+    <p class="ec-lead ec-lead--dark reveal" style="margin-inline:auto">{c.modelLead}</p>
 
     <div class="ec-eq reveal">
-      <div class="ec-eq__term"><span class="ec-eq__circle"><BrandSymbol symbol="ring" size={36} color="var(--green-400)" /></span><span class="ec-eq__lab">Tú</span></div>
+      <div class="ec-eq__term"><span class="ec-eq__circle"><BrandSymbol symbol="ring" size={36} color="var(--green-400)" /></span><span class="ec-eq__lab">{c.eqYou}</span></div>
       <BrandSymbol symbol="plus" size={36} color="var(--green-400)" />
-      <div class="ec-eq__term"><span class="ec-eq__circle"><BrandSymbol symbol="ring" size={36} color="var(--green-400)" /></span><span class="ec-eq__lab">Cientos de amigos</span></div>
+      <div class="ec-eq__term"><span class="ec-eq__circle"><BrandSymbol symbol="ring" size={36} color="var(--green-400)" /></span><span class="ec-eq__lab">{c.eqFriends}</span></div>
       <BrandSymbol symbol="equals" size={36} color="var(--green-400)" />
-      <div class="ec-eq__term"><span class="ec-eq__circle ec-eq__circle--hl"><BrandSymbol symbol="rise" size={36} color="var(--ink-900)" /></span><span class="ec-eq__lab ec-eq__lab--hl">Riqueza que sale de la pobreza</span></div>
+      <div class="ec-eq__term"><span class="ec-eq__circle ec-eq__circle--hl"><BrandSymbol symbol="rise" size={36} color="var(--ink-900)" /></span><span class="ec-eq__lab ec-eq__lab--hl">{c.eqResult}</span></div>
     </div>
 
     <div class="ec-cta reveal">
-      <Button href={donar} variant="primary" size="lg">Súmate al Club</Button>
-      <Button href={benef} variant="outline-on-dark" size="lg">Conoce a las beneficiarias</Button>
+      <Button href={donar} variant="primary" size="lg">{c.ctaJoin}</Button>
+      <Button href={benef} variant="outline-on-dark" size="lg">{c.ctaMeet}</Button>
     </div>
-    <p class="ec-tagline reveal">La mejor forma de eliminar la pobreza es creando riqueza.</p>
-    <p class="ec-handle reveal">El Club del 1+ · @clubdel1_</p>
+    <p class="ec-tagline reveal">{c.tagline}</p>
+    <p class="ec-handle reveal">{c.handle}</p>
   </div>
 </section>
 
 <div class="ec-disclaimer">
-  <p>Cifras de pobreza monetaria y brecha de ingresos: DANE (umbral per cápita citado por El Club del 1+). El comportamiento de las transferencias monetarias no condicionadas resume hallazgos generales de la literatura sobre el tema; no representa un estudio único. Pieza ilustrativa de divulgación.</p>
+  <p>{c.disclaimer}</p>
 </div>
 
 <script>
@@ -244,12 +450,13 @@ const nodes = [
         io.unobserve(el);
         const to = parseFloat(el.dataset.to || "0");
         const prefix = el.dataset.prefix || "", suffix = el.dataset.suffix || "";
+        const locale = el.dataset.locale || "es-CO";
         let start = 0;
         const tick = (t: number) => {
           if (!start) start = t;
           const p = Math.min(1, (t - start) / 1400);
           const eased = 1 - Math.pow(1 - p, 3);
-          el.textContent = prefix + Math.round(to * eased).toLocaleString("es-CO") + suffix;
+          el.textContent = prefix + Math.round(to * eased).toLocaleString(locale) + suffix;
           if (p < 1) requestAnimationFrame(tick);
         };
         requestAnimationFrame(tick);
@@ -271,9 +478,11 @@ const nodes = [
           (n.querySelector(".node__t") as HTMLElement).textContent = broken ? n.dataset.et! : n.dataset.bt!;
           (n.querySelector(".node__s") as HTMLElement).textContent = broken ? n.dataset.es! : n.dataset.bs!;
         });
-        const c = loop.querySelector(".loop__center"); if (c) c.textContent = broken ? "EN ESPIRAL" : "EN BUCLE";
-        const s = loop.querySelector(".loop__sub"); if (s) s.textContent = broken ? "HACIA ARRIBA" : "SIN SALIDA";
-        btn.innerHTML = broken ? "↺ Quitar la renta básica" : origBtn;
+        const center = loop.querySelector(".loop__center");
+        if (center) center.textContent = broken ? loop.dataset.centerOn! : loop.dataset.centerOff!;
+        const sub = loop.querySelector(".loop__sub");
+        if (sub) sub.textContent = broken ? loop.dataset.subOn! : loop.dataset.subOff!;
+        btn.innerHTML = broken ? loop.dataset.btnOn! : origBtn;
       });
     });
   }
