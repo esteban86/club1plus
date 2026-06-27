@@ -1,0 +1,87 @@
+---
+import Overline from "../brand/Overline.astro";
+import Highlight from "../brand/Highlight.astro";
+import { getLangFromUrl } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const c = lang === "es"
+  ? {
+      over: "Transparencia",
+      titleA: "Cada peso, con ", titleHl: "destino claro.",
+      lead: "Cuando sumas, tienes derecho a saber a dónde va tu aporte. Así lo repartimos hoy:",
+      giveH: "Para las mujeres",
+      giveD: "Transferencias en efectivo, capacitaciones, círculos solidarios y seguimiento del impacto.",
+      opsH: "Sostener la fundación",
+      opsD: "Equipo de gestión, gestión legal, plataforma tecnológica y comunicación. Lo mínimo para operar bien y rendir cuentas.",
+      commitH: "Y este reparto no es fijo.",
+      commit: "A medida que más personas se suman, el 35% de gestión baja y un porcentaje cada vez mayor llega directo a ellas. Una fundación necesita una estructura para funcionar y rendir cuentas — nuestro compromiso es hacerla sostenible con la máxima eficiencia, nunca a costa de las mujeres.",
+    }
+  : {
+      over: "Transparency",
+      titleA: "Every peso, with a ", titleHl: "clear destination.",
+      lead: "When you give, you deserve to know where it goes. Here's how we split it today:",
+      giveH: "For the women",
+      giveD: "Cash transfers, training, solidarity circles, and impact monitoring.",
+      opsH: "Running the foundation",
+      opsD: "Management team, legal, technology platform, and communications. The minimum to operate well and stay accountable.",
+      commitH: "And this split isn't fixed.",
+      commit: "As more people join, the 35% for management goes down and a growing share reaches them directly. A foundation needs structure to run and be accountable — our commitment is to keep it sustainable with maximum efficiency, never at the women's expense.",
+    };
+---
+<section class="ground-ink section">
+  <div class="container tr">
+    <Overline tone="green">{c.over}</Overline>
+    <h2 class="display tr__title">{c.titleA}<Highlight variant="green">{c.titleHl}</Highlight></h2>
+    <p class="tr__lead">{c.lead}</p>
+
+    <div class="tr__bar" role="img" aria-label="65% para las mujeres, 35% para la gestión">
+      <div class="tr__seg tr__seg--give"><span>65%</span></div>
+      <div class="tr__seg tr__seg--ops"><span>35%</span></div>
+    </div>
+
+    <div class="tr__legend">
+      <div class="tr__col">
+        <span class="tr__dot tr__dot--give" aria-hidden="true"></span>
+        <div>
+          <p class="tr__pct">65% · <strong>{c.giveH}</strong></p>
+          <p class="tr__d">{c.giveD}</p>
+        </div>
+      </div>
+      <div class="tr__col">
+        <span class="tr__dot tr__dot--ops" aria-hidden="true"></span>
+        <div>
+          <p class="tr__pct">35% · <strong>{c.opsH}</strong></p>
+          <p class="tr__d">{c.opsD}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tr__commit">
+      <p><strong class="tr__commit-h">{c.commitH}</strong> {c.commit}</p>
+    </div>
+  </div>
+</section>
+<style>
+  .tr__title { font-size: clamp(28px, 4.5vw, 44px); color: var(--paper-50); max-width: 18ch; margin-top: 14px; line-height: 1.1; padding-bottom: 0.1em; }
+  .tr__lead { font-family: var(--font-body); font-weight: 500; font-size: clamp(16px, 2vw, 19px); line-height: 1.5; color: var(--text-on-dark); opacity: 0.9; max-width: 52ch; margin-top: 14px; }
+
+  .tr__bar { display: flex; height: 60px; margin-top: 36px; border-radius: var(--radius-pill); overflow: hidden; border: 2px solid var(--ink-900); }
+  .tr__seg { display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 900; font-size: 20px; color: var(--ink-900); }
+  .tr__seg--give { flex: 65; background: var(--green-400); }
+  .tr__seg--ops { flex: 35; background: var(--marigold-400); }
+
+  .tr__legend { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 32px; }
+  .tr__col { display: flex; gap: 12px; align-items: flex-start; }
+  .tr__dot { width: 14px; height: 14px; border-radius: 50%; flex: none; margin-top: 4px; }
+  .tr__dot--give { background: var(--green-400); }
+  .tr__dot--ops { background: var(--marigold-400); }
+  .tr__pct { font-family: var(--font-display); font-weight: 700; font-size: 16px; color: var(--paper-50); }
+  .tr__pct strong { font-weight: 800; }
+  .tr__d { font-family: var(--font-body); font-weight: 500; font-size: 14.5px; line-height: 1.5; color: var(--text-on-dark-muted); margin-top: 6px; }
+
+  .tr__commit { margin-top: 32px; border-left: 4px solid var(--green-400); padding-left: 20px; max-width: 64ch; }
+  .tr__commit p { font-family: var(--font-body); font-weight: 500; font-size: clamp(15px, 1.8vw, 17px); line-height: 1.6; color: var(--text-on-dark); }
+  .tr__commit-h { font-family: var(--font-display); font-weight: 800; color: var(--green-400); }
+
+  @media (max-width: 640px) { .tr__legend { grid-template-columns: 1fr; gap: 18px; } }
+</style>
