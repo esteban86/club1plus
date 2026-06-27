@@ -70,4 +70,27 @@ Decisión: ¿se ofrece **pago único** o todo es **recurrente**?
 
 ---
 
+## 4. Política de difusión / influencers — alianzas y embajadores ⏸️
+Pagar influencers **no es antiético per se** (es un costo de captación legítimo si rinde),
+pero para una marca construida sobre la **confianza/transparencia** tiene que pasar filtros.
+
+**Filtros no-negociables si se paga difusión:**
+- **Divulgación obligatoria** (`#publicidad` / "en alianza con"). En Colombia lo **exige la SIC**;
+  promoción pagada sin declarar sería hipócrita frente a la sección de transparencia 35/65.
+- **Eficiencia medible** (donantes captados por peso; si no rinde, se corta).
+- **Honestidad del mensaje** (pagar la difusión, no el elogio falso ni resultados exagerados).
+- **Proporción** (costo razonable dentro del 35%, sin comerse el fondo de las mujeres).
+- **Congruencia del vocero** con los valores de la causa.
+
+**Camino preferido (más fuerte y más barato, más coherente con la marca):**
+1. **Embajadores que se vuelven socios** y lo cuentan de verdad (cero pago, máxima credibilidad).
+2. **Reach donado / pro-bono** (su difusión es su aporte; se les reconoce como "Embajador/Aliado").
+3. **Pagar producción, no el endorsement** (cubrir el costo de buen contenido, mensaje genuino).
+4. Si se paga, **como alianza declarada y medida**, nunca como endorsement disfrazado.
+
+**Posible entregable:** mini-política de alianzas/embajadores (criterios + reglas de divulgación)
+y/o una sección **"Sé embajador"** en la web para canalizar la difusión auténtica.
+
+---
+
 _Última actualización del backlog: jun 2026._
