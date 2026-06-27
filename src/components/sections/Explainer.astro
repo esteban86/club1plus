@@ -15,7 +15,7 @@ const donar = base + getRoute("donar", lang);
 const benef = base + getRoute("beneficiarias", lang);
 
 const numLocale = isEn ? "en-US" : "es-CO";
-const fmtPesos = "$" + (352480).toLocaleString(numLocale);
+const fmtPesos = "$" + (460198).toLocaleString(numLocale);
 
 const D = {
   es: {
@@ -31,7 +31,7 @@ const D = {
     cifrasHPost: " en cifras?",
     cifrasLeadA:
       "En Colombia, el DANE traza una línea. Si los ingresos del hogar por persona no alcanzan ",
-    cifrasLeadStrong: "$352.480 al mes",
+    cifrasLeadStrong: "$460.198 al mes",
     cifrasLeadB: ", esa familia vive en ",
     cifrasLeadCircle: "pobreza monetaria.",
     cifrasLeadC: " No es una opinión: es no poder cubrir lo básico.",
@@ -120,7 +120,7 @@ const D = {
     tagline: "La mejor forma de eliminar la pobreza es creando riqueza.",
     handle: "El Club del 1+ · @clubdel1_",
     disclaimer:
-      "Cifras de pobreza monetaria y brecha de ingresos: DANE (umbral per cápita citado por El Club del 1+). El comportamiento de las transferencias monetarias no condicionadas resume hallazgos generales de la literatura sobre el tema; no representa un estudio único. Pieza ilustrativa de divulgación.",
+      "Cifras de pobreza monetaria y brecha de ingresos: DANE, 2024 (umbral per cápita citado por El Club del 1+). El comportamiento de las transferencias monetarias no condicionadas resume hallazgos generales de la literatura sobre el tema; no representa un estudio único. Pieza ilustrativa de divulgación.",
   },
   en: {
     scroll: "Scroll",
@@ -135,7 +135,7 @@ const D = {
     cifrasHPost: " look like in numbers?",
     cifrasLeadA:
       "In Colombia, DANE draws a line. If a household's income per person falls below ",
-    cifrasLeadStrong: "COP $352,480 a month",
+    cifrasLeadStrong: "COP $460,198 a month",
     cifrasLeadB: ", that family lives in ",
     cifrasLeadCircle: "monetary poverty.",
     cifrasLeadC: " It's not an opinion: it's being unable to cover the basics.",
@@ -224,7 +224,7 @@ const D = {
     tagline: "The best way to end poverty is by creating wealth.",
     handle: "El Club del 1+ · @clubdel1_",
     disclaimer:
-      "Monetary-poverty and income-gap figures: DANE (per-capita threshold cited by El Club del 1+). The behavior of unconditional cash transfers summarizes general findings from the literature on the subject; it does not represent a single study. Illustrative explainer piece.",
+      "Monetary-poverty and income-gap figures: DANE, 2024 (per-capita threshold cited by El Club del 1+). The behavior of unconditional cash transfers summarizes general findings from the literature on the subject; it does not represent a single study. Illustrative explainer piece.",
   },
 };
 const c = isEn ? D.en : D.es;
@@ -273,9 +273,9 @@ const nodes = c.nodes.map((n, i) => ({ cls: nodeCls[i], ...n }));
     </div>
 
     <div class="ec-stats">
-      <div class="ec-stat reveal"><div class="ec-stat__big" style="color:var(--coral-500)"><span data-countup data-to="33" data-suffix="%" data-locale={numLocale}>33%</span></div><p class="ec-stat__lab">{c.stat1}</p></div>
+      <div class="ec-stat reveal"><div class="ec-stat__big" style="color:var(--coral-500)"><span data-countup data-to="32" data-suffix="%" data-locale={numLocale}>32%</span></div><p class="ec-stat__lab">{c.stat1}</p></div>
       <div class="ec-stat reveal"><div class="ec-stat__big" style="color:var(--coral-500)"><span data-countup data-to="12" data-suffix="%" data-locale={numLocale}>12%</span></div><p class="ec-stat__lab">{c.stat2}</p></div>
-      <div class="ec-stat reveal"><div class="ec-stat__big" style="color:var(--ink-900)"><span data-countup data-to="352480" data-prefix="$" data-locale={numLocale}>{fmtPesos}</span></div><p class="ec-stat__lab">{c.stat3}</p></div>
+      <div class="ec-stat reveal"><div class="ec-stat__big" style="color:var(--ink-900)"><span data-countup data-to="460198" data-prefix="$" data-locale={numLocale}>{fmtPesos}</span></div><p class="ec-stat__lab">{c.stat3}</p></div>
     </div>
     <p class="ec-src reveal">{c.cifrasSrc}</p>
   </div>

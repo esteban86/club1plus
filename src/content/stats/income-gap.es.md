@@ -1,8 +1,8 @@
 ---
 lang: es
-label: Habitantes de Medellín en pobreza monetaria (≈600 mil personas)
-value: 25
-display: "1 de cada 4"
-source: DANE
+label: Habitantes de Medellín en pobreza monetaria (≈586 mil personas)
+value: 22
+display: "22,1%"
+source: DANE · 2024
 order: 1
 ---
