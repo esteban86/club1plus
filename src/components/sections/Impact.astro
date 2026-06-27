@@ -7,8 +7,8 @@ import { getLangFromUrl } from "../../i18n/utils";
 const lang = getLangFromUrl(Astro.url);
 const stats = (await getCollection("stats", (e) => e.data.lang === lang)).sort((a, b) => a.data.order - b.data.order);
 const copy = lang === "es"
-  ? { over: "Evaluación de resultados", before: "Los datos del ", circ: "problema real.", quote: "¿Funciona dar dinero sin condiciones? Los resultados son reveladores." }
-  : { over: "Outcome evaluation", before: "The data behind the ", circ: "real problem.", quote: "Does giving money without conditions work? The results are revealing." };
+  ? { over: "Evaluación de resultados", before: "Los datos del ", circ: "problema real.", quote: "¿Funciona dar dinero sin condiciones? Los resultados son reveladores.", note: "Cifras nacionales de Colombia. Nuestro piloto arranca en Medellín.", doc: "Fuente: DANE — Pobreza monetaria en Colombia, 2024", docUrl: "https://www.dane.gov.co/files/operaciones/PM/bol-PM-2024.pdf" }
+  : { over: "Outcome evaluation", before: "The data behind the ", circ: "real problem.", quote: "Does giving money without conditions work? The results are revealing.", note: "National figures for Colombia. Our pilot starts in Medellín.", doc: "Source: DANE — Monetary poverty in Colombia, 2024", docUrl: "https://www.dane.gov.co/files/operaciones/PM/bol-PM-2024.pdf" };
 ---
 <section class="ground-paper section">
   <div class="container">
@@ -25,6 +25,8 @@ const copy = lang === "es"
       </div>
       <blockquote class="impact__quote">{copy.quote}</blockquote>
     </div>
+    <p class="impact__note">{copy.note}</p>
+    <a class="impact__doc" href={copy.docUrl} target="_blank" rel="noopener noreferrer">{copy.doc} <span aria-hidden="true">↗</span></a>
   </div>
 </section>
 <style>
@@ -33,5 +35,8 @@ const copy = lang === "es"
   .impact__stats { display: flex; flex-direction: column; gap: 28px; }
   .impact__src { font-family: var(--font-mono); font-size: 11px; color: var(--text-faint); margin-top: 6px; }
   .impact__quote { font-family: var(--font-display); font-weight: 800; font-size: clamp(20px, 3vw, 28px); line-height: 1.25; color: var(--text-strong); border-left: 4px solid var(--green-400); padding-left: 20px; margin: 0; }
+  .impact__note { font-family: var(--font-body); font-size: 13.5px; color: var(--text-muted); margin: 40px 0 0; }
+  .impact__doc { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; font-family: var(--font-mono); font-weight: 700; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--green-700); text-decoration: none; border-bottom: 1px solid transparent; }
+  .impact__doc:hover { border-bottom-color: var(--green-700); }
   @media (max-width: 820px) { .impact__grid { grid-template-columns: 1fr; gap: 28px; } }
 </style>

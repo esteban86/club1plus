@@ -1,8 +1,8 @@
 ---
 lang: en
-label: Medellín residents living in monetary poverty (~586k people)
-value: 22
-display: "22.1%"
+label: Colombians in monetary poverty — nearly 1 in 3
+value: 32
+display: "31.8%"
 source: DANE · 2024
 order: 1
 ---
