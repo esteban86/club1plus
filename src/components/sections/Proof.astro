@@ -1,0 +1,53 @@
+---
+import Overline from "../brand/Overline.astro";
+import Highlight from "../brand/Highlight.astro";
+import Button from "../brand/Button.astro";
+import { getCollection } from "astro:content";
+import { getLangFromUrl, getRoute } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const evidenciaUrl = base + getRoute("evidencia", lang);
+
+const cases = (await getCollection("evidence", (e) => e.data.lang === lang && e.data.kind === "case")).sort((a, b) => a.data.order - b.data.order);
+const items = cases.map((c) => ({
+  country: c.data.title.split("—")[0].trim(),
+  meta: c.data.meta,
+  result: c.data.result,
+}));
+
+const copy = lang === "es"
+  ? { over: "La prueba", before: "Dar dinero, sin condiciones, ", hl: "ya funcionó.",
+      lead: "No es una teoría: la renta básica se ha probado en el mundo, con resultados medidos.", cta: "Ver la evidencia completa" }
+  : { over: "The proof", before: "Giving money, no strings attached, ", hl: "has already worked.",
+      lead: "It's not a theory: basic income has been tested around the world, with measured results.", cta: "See the full evidence" };
+---
+<section class="ground-green section">
+  <div class="container">
+    <Overline tone="dark">{copy.over}</Overline>
+    <h2 class="display proof__title">{copy.before}<Highlight variant="dark">{copy.hl}</Highlight></h2>
+    <p class="proof__lead">{copy.lead}</p>
+    <div class="proof__grid">
+      {items.map((it) => (
+        <a class="pcase reveal" href={evidenciaUrl}>
+          <span class="pcase__country">{it.country}</span>
+          <span class="pcase__result">{it.result}</span>
+          <span class="pcase__meta">{it.meta}</span>
+        </a>
+      ))}
+    </div>
+    <div class="proof__cta"><Button href={evidenciaUrl} variant="dark" size="lg">{copy.cta} →</Button></div>
+  </div>
+</section>
+<style>
+  .proof__title { font-size: clamp(28px, 4.5vw, 44px); color: var(--ink-900); max-width: 20ch; margin-top: 14px; line-height: 1.1; padding-bottom: 0.1em; }
+  .proof__lead { font-family: var(--font-body); font-weight: 500; font-size: clamp(16px, 2vw, 19px); line-height: 1.5; color: var(--ink-900); opacity: 0.82; max-width: 52ch; margin-top: 14px; }
+  .proof__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 40px; }
+  .pcase { display: flex; flex-direction: column; gap: 10px; background: var(--ink-900); border-radius: var(--radius-md); padding: 26px; text-decoration: none; transition: transform var(--dur-base) var(--ease-out); }
+  .pcase:hover { transform: translateY(-4px); }
+  .pcase__country { font-family: var(--font-display); font-weight: 900; font-size: 24px; letter-spacing: -0.02em; color: var(--paper-50); }
+  .pcase__result { font-family: var(--font-display); font-weight: 800; font-size: 17px; line-height: 1.25; color: var(--green-400); }
+  .pcase__meta { font-family: var(--font-mono); font-weight: 700; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-on-dark-muted); margin-top: 2px; }
+  .proof__cta { margin-top: 32px; }
+  @media (max-width: 820px) { .proof__grid { grid-template-columns: 1fr; } }
+</style>

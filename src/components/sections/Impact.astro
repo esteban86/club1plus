@@ -7,8 +7,8 @@ import { getLangFromUrl } from "../../i18n/utils";
 const lang = getLangFromUrl(Astro.url);
 const stats = (await getCollection("stats", (e) => e.data.lang === lang)).sort((a, b) => a.data.order - b.data.order);
 const copy = lang === "es"
-  ? { over: "Evaluación de resultados", before: "Los datos del ", circ: "problema real.", quote: "¿Funciona dar dinero sin condiciones? Los resultados son reveladores.", note: "Cifras nacionales de Colombia. Nuestro piloto arranca en Medellín.", doc: "Fuente: DANE — Pobreza monetaria en Colombia, 2024", docUrl: "https://www.dane.gov.co/files/operaciones/PM/bol-PM-2024.pdf" }
-  : { over: "Outcome evaluation", before: "The data behind the ", circ: "real problem.", quote: "Does giving money without conditions work? The results are revealing.", note: "National figures for Colombia. Our pilot starts in Medellín.", doc: "Source: DANE — Monetary poverty in Colombia, 2024", docUrl: "https://www.dane.gov.co/files/operaciones/PM/bol-PM-2024.pdf" };
+  ? { over: "El problema", before: "No es falta de esfuerzo. Es una ", circ: "trampa.", quote: "¿Funciona dar dinero sin condiciones? Los resultados son reveladores.", note: "Cifras nacionales de Colombia. Nuestro piloto arranca en Medellín.", doc: "Fuente: DANE — Pobreza monetaria en Colombia, 2024", docUrl: "https://www.dane.gov.co/files/operaciones/PM/bol-PM-2024.pdf" }
+  : { over: "The problem", before: "It isn't a lack of effort. It's a ", circ: "trap.", quote: "Does giving money without conditions work? The results are revealing.", note: "National figures for Colombia. Our pilot starts in Medellín.", doc: "Source: DANE — Monetary poverty in Colombia, 2024", docUrl: "https://www.dane.gov.co/files/operaciones/PM/bol-PM-2024.pdf" };
 ---
 <section class="ground-paper section">
   <div class="container">
