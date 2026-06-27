@@ -117,9 +117,10 @@ const tierData = tiers.map((t) => ({
     };
     const applyCustom = () => {
       if (!customCta) return;
-      // Wompi usa un link de "monto abierto" (el valor se confirma en Wompi); el monto
-      // del input es solo sugerencia, así que el enlace depende únicamente de la frecuencia.
-      customCta.href = customWompiLink(freq);
+      // Pago único con monto exacto vía el Worker firmado (si está configurado);
+      // mensual usa el link de "monto abierto" de Wompi.
+      const amount = customInput ? parseInt(customInput.value, 10) : NaN;
+      customCta.href = customWompiLink(freq, Number.isNaN(amount) ? undefined : amount);
     };
     const applyText = () => {
       swappables.forEach((el) => {

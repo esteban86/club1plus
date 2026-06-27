@@ -1,0 +1,35 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Button from "../components/brand/Button.astro";
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+<BaseLayout routeKey="gracias" title="¡Gracias!" description="Gracias por sumarte a El Club del 1+." noindex>
+  <section class="ground-green section thanks">
+    <div class="container thanks__inner">
+      <h1 class="display thanks__title">¡Gracias por sumarte! 💚</h1>
+      <p class="thanks__lead">Tu aporte acerca a una madre cabeza de familia a su renta básica. Te enviaremos la confirmación a tu correo.</p>
+      <p class="thanks__ref" data-thanks-ref hidden>Referencia de tu transacción: <span class="thanks__refval"></span></p>
+      <div class="thanks__actions">
+        <Button href={base + "/"} variant="dark" size="lg">Volver al inicio</Button>
+        <Button href="https://instagram.com/clubdel1_" variant="outline" size="lg" target="_blank">Síguenos · @clubdel1_</Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+<script>
+  function showThanksRef() {
+    const id = new URLSearchParams(location.search).get("id");
+    const el = document.querySelector<HTMLElement>("[data-thanks-ref]");
+    const val = el?.querySelector(".thanks__refval");
+    if (id && el && val) { val.textContent = id; el.hidden = false; }
+  }
+  document.addEventListener("astro:page-load", showThanksRef);
+</script>
+<style>
+  .thanks__inner { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; }
+  .thanks__title { font-size: clamp(34px, 6vw, 60px); color: var(--ink-900); max-width: 18ch; padding-bottom: 0.1em; }
+  .thanks__lead { font-family: var(--font-body); font-weight: 500; font-size: clamp(16px, 2vw, 20px); color: var(--ink-900); opacity: 0.86; max-width: 50ch; }
+  .thanks__ref { font-family: var(--font-mono); font-size: 12.5px; color: var(--ink-900); opacity: 0.7; }
+  .thanks__refval { font-weight: 700; }
+  .thanks__actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 12px; }
+</style>

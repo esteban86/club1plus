@@ -16,12 +16,28 @@ export function wompiLink(tier: TierLinks, freq: Frequency): string {
   return url && url.length > 0 ? url : TIER_FALLBACK;
 }
 
-// Aporte de monto libre: links de "monto abierto" de Wompi (el donante elige el valor
-// en la página de Wompi). Wompi no recibe el monto por query —la firma de integridad lo
-// impide—, así que el campo del sitio es una sugerencia/ancla y el valor se confirma en Wompi.
-export const CUSTOM_WOMPI_MONTHLY = "https://wompi.co/"; // TODO: link Wompi monto abierto recurrente
-export const CUSTOM_WOMPI_ONCE = "https://wompi.co/";    // TODO: link Wompi monto abierto único
+// Worker de pago (Cloudflare) que firma un Web Checkout de Wompi con el monto EXACTO
+// que el usuario escribió (pago único). El secreto de integridad vive solo en el Worker.
+// Vacío = aún no desplegado → se usa el link de "monto abierto" como fallback.
+export const WORKER_BASE: string = ""; // TODO: URL del Worker, p. ej. "https://pay.clubdel1.org"
 
-export function customWompiLink(freq: Frequency): string {
+// Aporte de monto libre RECURRENTE: links de "monto abierto" de Wompi (el donante elige
+// el valor en la página de Wompi; Wompi no recibe el monto por query por la firma).
+export const CUSTOM_WOMPI_MONTHLY = "https://wompi.co/"; // TODO: link Wompi monto abierto recurrente
+export const CUSTOM_WOMPI_ONCE = "https://wompi.co/";    // TODO: link Wompi monto abierto único (fallback)
+
+// Enlace del aporte de monto libre.
+// - one-time + Worker configurado + monto válido → Worker firma el monto exacto.
+// - en otro caso → link de "monto abierto" de Wompi (el valor se confirma en Wompi).
+export function customWompiLink(freq: Frequency, amount?: number): string {
+  if (
+    freq === "one-time" &&
+    WORKER_BASE &&
+    typeof amount === "number" &&
+    Number.isFinite(amount) &&
+    amount > 0
+  ) {
+    return `${WORKER_BASE.replace(/\/$/, "")}/checkout?amount=${Math.round(amount)}`;
+  }
   return freq === "monthly" ? CUSTOM_WOMPI_MONTHLY : CUSTOM_WOMPI_ONCE;
 }

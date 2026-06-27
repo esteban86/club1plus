@@ -19,7 +19,10 @@ const year = 2026;
       <LogoBadge size={48} variant="green" glow />
       <p class="foot__rights">© {year} · {t("footer.rights")}</p>
     </div>
-    <a class="foot__ig" href="https://instagram.com/clubdel1_" target="_blank" rel="noopener noreferrer">@clubdel1_</a>
+    <div class="foot__links">
+      <a class="foot__link" href={base + getRoute("privacidad", lang)}>{t("footer.privacy")}</a>
+      <a class="foot__ig" href="https://instagram.com/clubdel1_" target="_blank" rel="noopener noreferrer">@clubdel1_</a>
+    </div>
   </div>
 </footer>
 <style>
@@ -30,5 +33,8 @@ const year = 2026;
   .foot__inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
   .foot__brand { display: flex; align-items: center; gap: 14px; }
   .foot__rights { font-family: var(--font-mono); font-size: 12.5px; color: var(--text-on-dark-muted); }
+  .foot__links { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .foot__link { font-family: var(--font-mono); font-weight: 700; text-transform: uppercase; letter-spacing: var(--ls-overline); font-size: var(--fs-overline); color: var(--text-on-dark-muted); text-decoration: none; }
+  .foot__link:hover { color: var(--green-400); }
   .foot__ig { font-family: var(--font-mono); font-weight: 700; text-transform: uppercase; letter-spacing: var(--ls-overline); font-size: var(--fs-overline); color: var(--green-400); text-decoration: none; }
 </style>

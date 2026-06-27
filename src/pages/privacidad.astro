@@ -1,0 +1,50 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+<BaseLayout routeKey="privacidad" title="Privacidad" description="Política de privacidad y tratamiento de datos de El Club del 1+ (Ley 1581 de 2012).">
+  <section class="ground-paper section">
+    <div class="container legal">
+      <p class="legal__draft">Borrador · pendiente de revisión legal antes del lanzamiento.</p>
+      <h1 class="display legal__title">Política de privacidad y tratamiento de datos</h1>
+      <p class="legal__meta">Última actualización: junio de 2026 · Ley 1581 de 2012 y Decreto 1377 de 2013 (Habeas Data)</p>
+
+      <h2>1. Responsable</h2>
+      <p>El responsable del tratamiento de tus datos es <strong>El Club del 1+</strong> (fundación en proceso de constitución), con domicilio en Medellín, Colombia. Contacto: <a href="mailto:hola@clubdel1.org">hola@clubdel1.org</a>.</p>
+
+      <h2>2. Qué datos recogemos</h2>
+      <ul>
+        <li><strong>De donantes/socios:</strong> nombre, correo electrónico, y el monto y frecuencia de tu aporte.</li>
+        <li><strong>De pagos:</strong> los procesa <strong>Wompi</strong>. No almacenamos los datos de tu tarjeta ni de tu cuenta; solo guardamos la referencia y el estado de la transacción.</li>
+        <li><strong>De navegación:</strong> datos técnicos básicos para operar y mejorar el sitio.</li>
+      </ul>
+
+      <h2>3. Para qué los usamos</h2>
+      <p>Para gestionar tu aporte, enviarte la confirmación y los reportes de impacto, vincularte con la beneficiaria que financias, y comunicarnos contigo sobre el Club. No vendemos ni alquilamos tus datos.</p>
+
+      <h2>4. Encargados y terceros</h2>
+      <p>Usamos proveedores que tratan datos por cuenta nuestra: <strong>Wompi</strong> (pasarela de pago), <strong>Cloudflare</strong> (infraestructura y correo) y nuestro proveedor de correo transaccional. Cada uno bajo sus propias condiciones de seguridad.</p>
+
+      <h2>5. Datos de las beneficiarias</h2>
+      <p>Los datos de las madres cabeza de familia se tratan con <strong>consentimiento informado y firmado</strong>. Solo se muestran a las personas socias que las financian, y siempre de forma <strong>anonimizada o agregada</strong> en las vistas públicas.</p>
+
+      <h2>6. Tus derechos (Habeas Data)</h2>
+      <p>Puedes <strong>conocer, actualizar, rectificar y suprimir</strong> tus datos, y <strong>revocar la autorización</strong> en cualquier momento, escribiendo a <a href="mailto:hola@clubdel1.org">hola@clubdel1.org</a>. Atenderemos tu solicitud en los plazos de ley.</p>
+
+      <h2>7. Conservación</h2>
+      <p>Conservamos tus datos mientras seas socio y por el tiempo que exijan las obligaciones contables y legales; luego se eliminan o anonimizan.</p>
+
+      <h2>8. Cambios</h2>
+      <p>Podemos actualizar esta política; publicaremos la versión vigente en esta página.</p>
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  .legal { max-width: 70ch; }
+  .legal__draft { display: inline-block; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--coral-500); border: 1px solid var(--coral-400); border-radius: var(--radius-pill); padding: 4px 12px; }
+  .legal__title { font-size: clamp(28px, 4.5vw, 42px); color: var(--ink-900); margin-top: 18px; line-height: 1.1; padding-bottom: 0.1em; }
+  .legal__meta { font-family: var(--font-mono); font-size: 12px; color: var(--text-faint); margin-top: 8px; }
+  .legal h2 { font-family: var(--font-display); font-weight: 800; font-size: 20px; color: var(--ink-900); margin: 34px 0 8px; }
+  .legal p, .legal li { font-family: var(--font-body); font-weight: 500; font-size: 16px; line-height: 1.6; color: var(--text-body); }
+  .legal ul { margin: 8px 0 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
+  .legal a { color: var(--green-700); }
+</style>

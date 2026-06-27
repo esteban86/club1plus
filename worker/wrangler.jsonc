@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "club1plus-pay",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-06-27",
+  "observability": { "enabled": true, "head_sampling_rate": 1 },
+  // Variables públicas. El SECRETO de integridad NO va aquí:
+  //   wrangler secret put WOMPI_INTEGRITY_SECRET
+  "vars": {
+    "WOMPI_PUBLIC_KEY": "pub_test_REEMPLAZAR",
+    "WOMPI_CURRENCY": "COP",
+    "WOMPI_CHECKOUT_BASE": "https://checkout.wompi.co/p/",
+    "WOMPI_REDIRECT_URL": "https://esteban86.github.io/club1plus/gracias",
+    "MIN_AMOUNT_COP": "5000",
+    "MAX_AMOUNT_COP": "50000000"
+  }
+}

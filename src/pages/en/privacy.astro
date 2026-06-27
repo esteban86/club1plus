@@ -1,0 +1,50 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+<BaseLayout routeKey="privacidad" title="Privacy" description="Privacy and data policy of El Club del 1+ (Colombia, Law 1581 of 2012).">
+  <section class="ground-paper section">
+    <div class="container legal">
+      <p class="legal__draft">Draft · pending legal review before launch.</p>
+      <h1 class="display legal__title">Privacy & data policy</h1>
+      <p class="legal__meta">Last updated: June 2026 · Colombia, Law 1581 of 2012 &amp; Decree 1377 of 2013 (Habeas Data)</p>
+
+      <h2>1. Controller</h2>
+      <p>The controller of your data is <strong>El Club del 1+</strong> (foundation being incorporated), based in Medellín, Colombia. Contact: <a href="mailto:hola@clubdel1.org">hola@clubdel1.org</a>.</p>
+
+      <h2>2. What we collect</h2>
+      <ul>
+        <li><strong>From donors/members:</strong> name, email, and the amount and frequency of your contribution.</li>
+        <li><strong>From payments:</strong> processed by <strong>Wompi</strong>. We do not store your card or account details — only the transaction reference and status.</li>
+        <li><strong>From browsing:</strong> basic technical data to run and improve the site.</li>
+      </ul>
+
+      <h2>3. How we use it</h2>
+      <p>To manage your contribution, send your confirmation and impact reports, connect you with the beneficiary you fund, and communicate with you about the Club. We never sell or rent your data.</p>
+
+      <h2>4. Processors &amp; third parties</h2>
+      <p>We use providers that process data on our behalf: <strong>Wompi</strong> (payment gateway), <strong>Cloudflare</strong> (infrastructure and email), and our transactional email provider, each under its own security terms.</p>
+
+      <h2>5. Beneficiaries' data</h2>
+      <p>The data of female heads of household is handled with <strong>informed, signed consent</strong>. It is shown only to the members who fund them, and always <strong>anonymized or aggregated</strong> in public views.</p>
+
+      <h2>6. Your rights (Habeas Data)</h2>
+      <p>You may <strong>access, update, correct and delete</strong> your data, and <strong>withdraw your consent</strong> at any time, by writing to <a href="mailto:hola@clubdel1.org">hola@clubdel1.org</a>. We will respond within the legal timeframes.</p>
+
+      <h2>7. Retention</h2>
+      <p>We keep your data while you are a member and for as long as accounting and legal obligations require; afterward it is deleted or anonymized.</p>
+
+      <h2>8. Changes</h2>
+      <p>We may update this policy; the current version will always be published on this page.</p>
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  .legal { max-width: 70ch; }
+  .legal__draft { display: inline-block; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--coral-500); border: 1px solid var(--coral-400); border-radius: var(--radius-pill); padding: 4px 12px; }
+  .legal__title { font-size: clamp(28px, 4.5vw, 42px); color: var(--ink-900); margin-top: 18px; line-height: 1.1; padding-bottom: 0.1em; }
+  .legal__meta { font-family: var(--font-mono); font-size: 12px; color: var(--text-faint); margin-top: 8px; }
+  .legal h2 { font-family: var(--font-display); font-weight: 800; font-size: 20px; color: var(--ink-900); margin: 34px 0 8px; }
+  .legal p, .legal li { font-family: var(--font-body); font-weight: 500; font-size: 16px; line-height: 1.6; color: var(--text-body); }
+  .legal ul { margin: 8px 0 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
+  .legal a { color: var(--green-700); }
+</style>
