@@ -2,6 +2,7 @@
 import Overline from "../brand/Overline.astro";
 import StatBar from "../brand/StatBar.astro";
 import CircledWord from "../brand/CircledWord.astro";
+import WealthPyramid from "./WealthPyramid.astro";
 import { getCollection } from "astro:content";
 import { getLangFromUrl } from "../../i18n/utils";
 const lang = getLangFromUrl(Astro.url);
@@ -25,6 +26,7 @@ const copy = lang === "es"
       </div>
       <blockquote class="impact__quote">{copy.quote}</blockquote>
     </div>
+    <WealthPyramid />
     <p class="impact__note">{copy.note}</p>
     <a class="impact__doc" href={copy.docUrl} target="_blank" rel="noopener noreferrer">{copy.doc} <span aria-hidden="true">↗</span></a>
   </div>

@@ -1,0 +1,76 @@
+---
+import { getLangFromUrl } from "../../i18n/utils";
+const lang = getLangFromUrl(Astro.url);
+const c = lang === "es"
+  ? {
+      sub: "Y la riqueza está concentrada arriba.",
+      tiers: [
+        { pct: "43,5%", who: "10% más rico", cls: "wp__bar--top" },
+        { pct: "46%", who: "50% intermedio", cls: "wp__bar--mid" },
+        { pct: "10,3%", who: "40% más pobre", cls: "wp__bar--base" },
+      ],
+      you: "Tú, casi seguro, aquí",
+      gini: "Gini 0,551",
+      giniD: "uno de los países más desiguales del mundo.",
+      legendNote: "Participación en el ingreso nacional.",
+      reframeH: "Por eso los que más tenemos podemos mover la balanza.",
+      reframe: "Si donar una pequeña cifra al mes no te quiebra, estás más arriba de lo que crees. Y ahí está tu poder: arriba, $60.000 es casi nada; abajo, sumado entre amigos, cambia una vida.",
+      src: "Fuente · DANE 2024 · Banco Mundial",
+    }
+  : {
+      sub: "And the wealth sits at the top.",
+      tiers: [
+        { pct: "43.5%", who: "richest 10%", cls: "wp__bar--top" },
+        { pct: "46%", who: "middle 50%", cls: "wp__bar--mid" },
+        { pct: "10.3%", who: "poorest 40%", cls: "wp__bar--base" },
+      ],
+      you: "You're almost certainly here",
+      gini: "Gini 0.551",
+      giniD: "one of the most unequal countries in the world.",
+      legendNote: "Share of national income.",
+      reframeH: "That's why those of us who have the most can tip the scale.",
+      reframe: "If giving a small amount each month won't break you, you're higher up than you think. That's your power: at the top, $60,000 COP is almost nothing; at the bottom, pooled among friends, it changes a life.",
+      src: "Source · DANE 2024 · World Bank",
+    };
+---
+<div class="wp">
+  <div class="wp__viz">
+    <span class="wp__you">{c.you} <span aria-hidden="true">↓</span></span>
+    <div class="wp__pyramid" role="img" aria-label={`${c.tiers[0].who}: ${c.tiers[0].pct}; ${c.tiers[1].who}: ${c.tiers[1].pct}; ${c.tiers[2].who}: ${c.tiers[2].pct} ${c.legendNote}`}>
+      {c.tiers.map((t) => (
+        <div class:list={["wp__bar", t.cls]}>
+          <span class="wp__pct">{t.pct}</span>
+          <span class="wp__who">{t.who}</span>
+        </div>
+      ))}
+    </div>
+    <p class="wp__legend-note">{c.legendNote}</p>
+  </div>
+  <div class="wp__text">
+    <h3 class="wp__sub">{c.sub}</h3>
+    <p class="wp__gini"><strong>{c.gini}</strong> — {c.giniD}</p>
+    <p class="wp__reframe"><strong class="wp__reframe-h">{c.reframeH}</strong> {c.reframe}</p>
+    <p class="wp__src">{c.src}</p>
+  </div>
+</div>
+<style>
+  .wp { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 56px; align-items: center; border-top: 1px solid var(--paper-300); padding-top: 48px; }
+  .wp__you { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-weight: 700; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--coral-500); margin-bottom: 8px; }
+  .wp__pyramid { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .wp__bar { display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 8px; padding: 10px 8px; color: var(--paper-50); }
+  .wp__bar--top { width: 42%; background: var(--ink-900); }
+  .wp__bar--mid { width: 72%; background: var(--coral-400); color: var(--ink-900); }
+  .wp__bar--base { width: 100%; background: var(--green-400); color: var(--ink-900); }
+  .wp__pct { font-family: var(--font-display); font-weight: 900; font-size: clamp(20px, 2.4vw, 26px); line-height: 1; letter-spacing: -0.02em; }
+  .wp__who { font-family: var(--font-body); font-weight: 700; font-size: 12.5px; margin-top: 3px; }
+  .wp__legend-note { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-faint); text-align: center; margin-top: 12px; }
+
+  .wp__sub { font-family: var(--font-display); font-weight: 800; font-size: clamp(22px, 3vw, 30px); color: var(--text-strong); line-height: 1.15; }
+  .wp__gini { font-family: var(--font-body); font-size: 16px; color: var(--text-body); margin-top: 14px; }
+  .wp__gini strong { font-family: var(--font-display); font-weight: 900; color: var(--coral-500); }
+  .wp__reframe { font-family: var(--font-body); font-weight: 500; font-size: clamp(15px, 1.8vw, 17px); line-height: 1.6; color: var(--text-body); margin-top: 18px; border-left: 4px solid var(--green-400); padding-left: 18px; }
+  .wp__reframe-h { font-family: var(--font-display); font-weight: 800; color: var(--text-strong); display: block; margin-bottom: 6px; }
+  .wp__src { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-faint); margin-top: 18px; }
+
+  @media (max-width: 820px) { .wp { grid-template-columns: 1fr; gap: 32px; } }
+</style>
