@@ -11,6 +11,6 @@ perks:
   - Todo lo de Amigo
   - Conoces a una beneficiaria
   - Carné de socio
-urlMonthly: ""   # TODO: URL Treli real
-urlOneTime: ""   # TODO: URL Treli real
+urlMonthly: ""   # TODO: link Wompi
+urlOneTime: ""   # TODO: link Wompi
 ---

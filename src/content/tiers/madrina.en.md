@@ -11,6 +11,6 @@ perks:
   - Everything in Patron
   - You fund one mother's income in full
   - Personal progress updates
-urlMonthly: ""   # TODO: real Treli URL
-urlOneTime: ""   # TODO: real Treli URL
+urlMonthly: ""   # TODO: real Wompi link
+urlOneTime: ""   # TODO: real Wompi link
 ---

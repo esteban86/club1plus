@@ -11,6 +11,6 @@ perks:
   - Everything in Ally
   - Annual Club gathering
   - Named as a partner
-urlMonthly: ""   # TODO: real Treli URL
-urlOneTime: ""   # TODO: real Treli URL
+urlMonthly: ""   # TODO: real Wompi link
+urlOneTime: ""   # TODO: real Wompi link
 ---

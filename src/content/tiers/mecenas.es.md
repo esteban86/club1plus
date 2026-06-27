@@ -11,6 +11,6 @@ perks:
   - Todo lo de Aliado
   - Encuentro anual del Club
   - Mención como aliado
-urlMonthly: ""   # TODO: URL Treli real
-urlOneTime: ""   # TODO: URL Treli real
+urlMonthly: ""   # TODO: link Wompi
+urlOneTime: ""   # TODO: link Wompi
 ---

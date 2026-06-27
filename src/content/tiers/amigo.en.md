@@ -10,6 +10,6 @@ order: 1
 perks:
   - Tax-deductible receipt
   - Quarterly impact report
-urlMonthly: ""   # TODO: real Treli URL
-urlOneTime: ""   # TODO: real Treli URL
+urlMonthly: ""   # TODO: real Wompi link
+urlOneTime: ""   # TODO: real Wompi link
 ---

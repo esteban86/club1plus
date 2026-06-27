@@ -5,7 +5,7 @@ import BrandSymbol from "../brand/BrandSymbol.astro";
 import Button from "../brand/Button.astro";
 import { getCollection } from "astro:content";
 import { getLangFromUrl } from "../../i18n/utils";
-import { treliLink, CUSTOM_TRELI } from "../../lib/donate";
+import { wompiLink, CUSTOM_WOMPI_MONTHLY } from "../../lib/donate";
 
 const lang = getLangFromUrl(Astro.url);
 const tiers = (await getCollection("tiers", (e) => e.data.lang === lang)).sort((a, b) => a.data.order - b.data.order);
@@ -40,8 +40,8 @@ const copy = lang === "es"
 const tierData = tiers.map((t) => ({
   ...t.data,
   slug: t.slug,
-  urlMonthly: treliLink({ slug: t.slug, urlMonthly: t.data.urlMonthly, urlOneTime: t.data.urlOneTime }, "monthly"),
-  urlOneTime: treliLink({ slug: t.slug, urlMonthly: t.data.urlMonthly, urlOneTime: t.data.urlOneTime }, "one-time"),
+  urlMonthly: wompiLink({ slug: t.slug, urlMonthly: t.data.urlMonthly, urlOneTime: t.data.urlOneTime }, "monthly"),
+  urlOneTime: wompiLink({ slug: t.slug, urlMonthly: t.data.urlMonthly, urlOneTime: t.data.urlOneTime }, "one-time"),
 }));
 ---
 <section class="ground-paper-100 section">
@@ -88,14 +88,14 @@ const tierData = tiers.map((t) => ({
                  placeholder={copy.customPlaceholder} aria-label={copy.customAria} data-custom-amount />
           <span class="custom__per" data-custom-per data-monthly={copy.per} data-once={copy.perOnce}>{copy.per}</span>
         </div>
-        <Button href={CUSTOM_TRELI} variant="dark" target="_blank" data-custom-cta>{copy.customCta}</Button>
+        <Button href={CUSTOM_WOMPI_MONTHLY} variant="dark" target="_blank" data-custom-cta>{copy.customCta}</Button>
       </div>
     </div>
   </div>
 </section>
 
 <script>
-  import { customTreliLink } from "../../lib/donate";
+  import { customWompiLink } from "../../lib/donate";
 
   function setupTiers() {
     const toggle = document.querySelector("[data-freq-toggle]");
@@ -117,8 +117,9 @@ const tierData = tiers.map((t) => ({
     };
     const applyCustom = () => {
       if (!customCta) return;
-      const amount = customInput ? parseInt(customInput.value, 10) : NaN;
-      customCta.href = customTreliLink(Number.isNaN(amount) ? 0 : amount, freq);
+      // Wompi usa un link de "monto abierto" (el valor se confirma en Wompi); el monto
+      // del input es solo sugerencia, así que el enlace depende únicamente de la frecuencia.
+      customCta.href = customWompiLink(freq);
     };
     const applyText = () => {
       swappables.forEach((el) => {

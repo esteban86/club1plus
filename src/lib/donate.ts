@@ -6,22 +6,22 @@ export interface TierLinks {
   urlOneTime: string;
 }
 
-// Placeholder hasta tener las URLs reales de Treli.
-export const TIER_FALLBACK = "https://treli.co/"; // TODO: URL Treli real (catálogo del Club)
+// Enlaces de pago Wompi. Placeholder hasta tener los reales del panel del Club.
+// El comercio crea en Wompi un link de pago por tier — recurrente/suscripción para
+// "monthly" y pago único para "one-time" — y los pega en cada .md (urlMonthly / urlOneTime).
+export const TIER_FALLBACK = "https://wompi.co/"; // TODO: link Wompi por defecto
 
-export function treliLink(tier: TierLinks, freq: Frequency): string {
+export function wompiLink(tier: TierLinks, freq: Frequency): string {
   const url = freq === "monthly" ? tier.urlMonthly : tier.urlOneTime;
   return url && url.length > 0 ? url : TIER_FALLBACK;
 }
 
-// Checkout de aporte de monto libre. Placeholder hasta tener la URL real de Treli.
-export const CUSTOM_TRELI = "https://treli.co/"; // TODO: URL Treli de monto libre
+// Aporte de monto libre: links de "monto abierto" de Wompi (el donante elige el valor
+// en la página de Wompi). Wompi no recibe el monto por query —la firma de integridad lo
+// impide—, así que el campo del sitio es una sugerencia/ancla y el valor se confirma en Wompi.
+export const CUSTOM_WOMPI_MONTHLY = "https://wompi.co/"; // TODO: link Wompi monto abierto recurrente
+export const CUSTOM_WOMPI_ONCE = "https://wompi.co/";    // TODO: link Wompi monto abierto único
 
-// Construye el enlace para un aporte personalizado. El monto y la frecuencia van como
-// query params; ajusta los nombres ("amount"/"freq") al esquema real de Treli al integrar.
-export function customTreliLink(amount: number, freq: Frequency, base: string = CUSTOM_TRELI): string {
-  const url = new URL(base);
-  if (Number.isFinite(amount) && amount > 0) url.searchParams.set("amount", String(Math.round(amount)));
-  url.searchParams.set("freq", freq === "monthly" ? "mensual" : "unico");
-  return url.toString();
+export function customWompiLink(freq: Frequency): string {
+  return freq === "monthly" ? CUSTOM_WOMPI_MONTHLY : CUSTOM_WOMPI_ONCE;
 }

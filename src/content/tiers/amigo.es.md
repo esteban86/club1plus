@@ -10,6 +10,6 @@ order: 1
 perks:
   - Recibo deducible
   - Reporte de impacto trimestral
-urlMonthly: ""   # TODO: URL Treli real
-urlOneTime: ""   # TODO: URL Treli real
+urlMonthly: ""   # TODO: link Wompi
+urlOneTime: ""   # TODO: link Wompi
 ---
