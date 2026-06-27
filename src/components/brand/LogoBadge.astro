@@ -1,7 +1,15 @@
 ---
-interface Props { size?: number; variant?: "green" | "dark"; class?: string; }
-const { size = 72, variant = "green", class: cls = "" } = Astro.props;
-const green = variant === "green";
+// LogoBadge — insignia "El Club del 1+". Anillo verde, domo oscuro con "1+" y
+// banda inferior con "club". Construcción en proporción áurea (φ) sobre malla
+// 200×200, R=94: el círculo se parte en su sección áurea — domo 61,8% (arriba)
+// y banda 38,2% (abajo), divisor en y=122.
+//
+// variant "green": anillo verde + domo ink (default). Para fondos OSCUROS o claro-neutros.
+// variant "dark":  anillo ink + domo verde (invertido). Para fondos VERDES.
+// glow: halo suave para fondos oscuros. Default false.
+interface Props { size?: number; variant?: "green" | "dark"; glow?: boolean; class?: string; }
+const { size = 72, variant = "green", glow = false, class: cls = "" } = Astro.props;
+const uid = "lb-" + Math.random().toString(36).slice(2, 8);
 ---
 <svg
   width={size}
@@ -10,22 +18,48 @@ const green = variant === "green";
   role="img"
   aria-label="El Club del 1+"
   class:list={["logo", `logo--${variant}`, cls]}
+  style="display:inline-block;overflow:visible"
 >
-  <circle class="logo__bg" cx="100" cy="100" r={green ? 100 : 96} />
-  <text class="logo__fg" x="66" y="131" text-anchor="middle" font-weight="900" font-size="104" letter-spacing="-4">1</text>
-  <g class="logo__fg">
-    <rect x="108" y="66" width="19" height="58" rx="4" />
-    <rect x="88" y="86" width="59" height="19" rx="4" />
+  <defs>
+    <clipPath id={`dome-${uid}`}><rect x="0" y="0" width="200" height="122" /></clipPath>
+    {glow && (
+      <filter id={`glow-${uid}`} x="-40%" y="-40%" width="180%" height="180%">
+        <feGaussianBlur stdDeviation="7" />
+      </filter>
+    )}
+  </defs>
+
+  {glow && <circle class="logo__glow" cx="100" cy="100" r="92" opacity="0.5" filter={`url(#glow-${uid})`} />}
+
+  {/* anillo + banda inferior (un disco) */}
+  <circle class="logo__ring" cx="100" cy="100" r="94" />
+  {/* domo — disco interior (r=84) recortado al divisor áureo */}
+  <circle class="logo__dome" cx="100" cy="100" r="84" clip-path={`url(#dome-${uid})`} />
+
+  {/* "1+" ópticamente centrado en el domo */}
+  <text class="logo__txt logo__1plus" x="72" y="99" text-anchor="middle" font-weight="900" font-size="86" letter-spacing="-4">1</text>
+  <g class="logo__1plus">
+    <rect x="122" y="39" width="16" height="58" rx="4" />
+    <rect x="101" y="60" width="58" height="16" rx="4" />
   </g>
-  <text class="logo__fg" x="100" y="173" text-anchor="middle" font-weight="800" font-size="34" letter-spacing="0.5">club</text>
+
+  {/* "club" ópticamente centrado en la banda */}
+  <text class="logo__txt logo__club" x="100" y="170" text-anchor="middle" font-weight="900" font-size="46" letter-spacing="-1.5">club</text>
 </svg>
 
 <style>
   /* Colores y fuente vía CSS (no atributos de presentación): var() resuelve
      de forma fiable en todos los navegadores, incluido Safari. */
-  .logo__fg { font-family: var(--font-display); }
-  .logo--green .logo__bg { fill: var(--green-400); }
-  .logo--green .logo__fg { fill: var(--ink-900); }
-  .logo--dark .logo__bg { fill: var(--ink-800); stroke: var(--green-400); stroke-width: 8; }
-  .logo--dark .logo__fg { fill: var(--green-400); }
+  .logo__txt { font-family: var(--font-display); }
+  .logo__glow { fill: var(--green-400); }
+
+  .logo--green .logo__ring  { fill: var(--green-400); }
+  .logo--green .logo__dome  { fill: var(--ink-900); }
+  .logo--green .logo__1plus { fill: var(--green-400); }
+  .logo--green .logo__club  { fill: var(--ink-900); }
+
+  .logo--dark .logo__ring  { fill: var(--ink-900); }
+  .logo--dark .logo__dome  { fill: var(--green-400); }
+  .logo--dark .logo__1plus { fill: var(--ink-900); }
+  .logo--dark .logo__club  { fill: var(--green-400); }
 </style>

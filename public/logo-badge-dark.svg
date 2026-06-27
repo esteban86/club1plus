@@ -1,9 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="El Club del 1+">
-  <circle cx="100" cy="100" r="96" fill="#0F1F17" stroke="#2BE06F" stroke-width="8"></circle>
-  <text x="66" y="131" text-anchor="middle" font-family="&#39;Hanken Grotesk&#39;,&#39;Helvetica Neue&#39;,Arial,sans-serif" font-weight="900" font-size="104" letter-spacing="-4" fill="#2BE06F">1</text>
+  <defs>
+    <clipPath id="domeD"><rect x="0" y="0" width="200" height="122"></rect></clipPath>
+    <filter id="glowD" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="7"></feGaussianBlur></filter>
+  </defs>
+  <circle cx="100" cy="100" r="92" fill="#2BE06F" opacity="0.5" filter="url(#glowD)"></circle>
+  <circle cx="100" cy="100" r="94" fill="#2BE06F"></circle>
+  <circle cx="100" cy="100" r="84" fill="#0C1A13" clip-path="url(#domeD)"></circle>
+  <text x="72" y="99" text-anchor="middle" font-family="&#39;Hanken Grotesk&#39;,&#39;Helvetica Neue&#39;,Arial,sans-serif" font-weight="900" font-size="86" letter-spacing="-4" fill="#2BE06F">1</text>
   <g fill="#2BE06F">
-    <rect x="108" y="66" width="19" height="58" rx="4"></rect>
-    <rect x="88" y="86" width="59" height="19" rx="4"></rect>
+    <rect x="122" y="39" width="16" height="58" rx="4"></rect>
+    <rect x="101" y="60" width="58" height="16" rx="4"></rect>
   </g>
-  <text x="100" y="173" text-anchor="middle" font-family="&#39;Hanken Grotesk&#39;,&#39;Helvetica Neue&#39;,Arial,sans-serif" font-weight="800" font-size="34" letter-spacing="0.5" fill="#2BE06F">club</text>
+  <text x="100" y="170" text-anchor="middle" font-family="&#39;Hanken Grotesk&#39;,&#39;Helvetica Neue&#39;,Arial,sans-serif" font-weight="900" font-size="46" letter-spacing="-1.5" fill="#0C1A13">club</text>
 </svg>
