@@ -161,6 +161,18 @@ const STEPS_FOUNDERS: Step[] = [
     body: { es: "Cómo se reparte cada aporte (65/35), cómo se completa la renta de cada madre, cómo se asigna. El motor ya está diseñado para que el equipo lo opere.", en: "How each contribution splits (65/35), how each mother's income is completed, how it's matched. The engine is already designed for the team to run." },
   },
   {
+    route: "nosotros", target: "[data-tour='ellos']", ready: "[data-tour='ellos']",
+    kicker: { es: "Esto empezó con ustedes", en: "It started with you" },
+    title: { es: "Los fundadores del Club", en: "The Club's founders" },
+    body: { es: "El Club del 1% existió porque un grupo de amigos se atrevió. Ustedes demostraron que asociarse para dar una renta básica cambia vidas. Ese legado es el punto de partida.", en: "El Club del 1% existed because a group of friends dared to. You proved that joining forces to give a basic income changes lives. That legacy is our starting point." },
+  },
+  {
+    route: "nosotros", target: "[data-tour='nosotros']", ready: "[data-tour='nosotros']",
+    kicker: { es: "El equipo que hoy le mete el empuje", en: "The team pushing it today" },
+    title: { es: "Equipo refundador", en: "Re-founding team" },
+    body: { es: "Nosotros tomamos el testigo para reabrirlo y profesionalizarlo como El Club del 1+. Pero esto se hace en grande solo si lo hacemos juntos — ustedes y nosotros.", en: "We took up the baton to reopen and professionalize it as El Club del 1+. But this only goes big if we do it together — you and us." },
+  },
+  {
     route: "home",
     kicker: { es: "Tu turno, refundador/a", en: "Your turn, re-founder" },
     title: { es: "¿Le metemos el empuje, juntos?", en: "Shall we give it the push, together?" },

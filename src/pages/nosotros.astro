@@ -15,30 +15,34 @@ const partners = (await getCollection("partners", (e) => e.data.lang === "es")).
       <h1 class="display about__title">No somos millonarios, somos amigos comprometidos.</h1>
       <p class="about__lead">El Club del 1% nació de la visión de un grupo de amigos que demostró que asociarse para dar una renta básica podía cambiar vidas en Medellín. En 2026 tomamos el testigo y lo refundamos como <strong>El Club del 1+</strong> — evolucionando el modelo, profesionalizando la operación y sumando energías con quienes lo hicieron posible.</p>
 
-      <h2 class="about__sub">Fundadores del Club del 1%</h2>
-      <div class="about__team">
-        {founders.map((m) => (
-          <figure class="member">
-            <AvatarRing src={m.data.photo ? base + m.data.photo : undefined} alt={m.data.name} size={96} treatment="ring" name={m.data.name} />
-            <figcaption class="member__cap">
-              <span class="member__name">{m.data.name}</span>
-              <span class="member__role">{m.data.role}</span>
-            </figcaption>
-          </figure>
-        ))}
+      <div data-tour="ellos">
+        <h2 class="about__sub">Fundadores del Club del 1%</h2>
+        <div class="about__team">
+          {founders.map((m) => (
+            <figure class="member">
+              <AvatarRing src={m.data.photo ? base + m.data.photo : undefined} alt={m.data.name} size={96} treatment="ring" name={m.data.name} />
+              <figcaption class="member__cap">
+                <span class="member__name">{m.data.name}</span>
+                <span class="member__role">{m.data.role}</span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
       </div>
 
-      <h2 class="about__sub">Equipo refundador</h2>
-      <div class="about__team">
-        {team.map((m) => (
-          <figure class="member">
-            <AvatarRing src={m.data.photo ? base + m.data.photo : undefined} alt={m.data.name} size={96} treatment="ring" name={m.data.name} />
-            <figcaption class="member__cap">
-              <span class="member__name">{m.data.name}</span>
-              <span class="member__role">{m.data.role}</span>
-            </figcaption>
-          </figure>
-        ))}
+      <div data-tour="nosotros">
+        <h2 class="about__sub">Equipo refundador</h2>
+        <div class="about__team">
+          {team.map((m) => (
+            <figure class="member">
+              <AvatarRing src={m.data.photo ? base + m.data.photo : undefined} alt={m.data.name} size={96} treatment="ring" name={m.data.name} />
+              <figcaption class="member__cap">
+                <span class="member__name">{m.data.name}</span>
+                <span class="member__role">{m.data.role}</span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
       </div>
 
       <h2 class="about__sub">Aliados</h2>
