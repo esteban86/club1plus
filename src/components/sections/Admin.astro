@@ -1,0 +1,259 @@
+---
+import DemoBadge from "../brand/DemoBadge.astro";
+import { getLangFromUrl } from "../../i18n/utils";
+import {
+  BENEFICIARIES, MEMBERS, CIRCLES, TIERS, tierLabel, formatCop, formatDate,
+  getBeneficiary, getCircle, committedCop, pctFunded,
+  FUNDING_TARGET, PROGRAM_SHARE, PUBLIC_STATS,
+  type BenStatus, type TierKey,
+} from "../../lib/demo/data";
+
+const lang = getLangFromUrl(Astro.url);
+const isEn = lang === "en";
+
+const tierColor: Record<TierKey, string> = { amigo: "#19C95E", aliado: "#FF6B4A", mecenas: "#FFC23D", madrina: "#0C1A13" };
+
+const statusLabel = (s: BenStatus): string => {
+  const m = {
+    in_formation: isEn ? "Forming" : "En formación",
+    funded: isEn ? "Funded" : "Financiada",
+    active: isEn ? "Active" : "Activa",
+    graduated: isEn ? "Graduated" : "Graduada",
+  };
+  return m[s];
+};
+const statusAccent = (s: BenStatus) => (s === "active" || s === "funded" ? "green" : s === "in_formation" ? "marigold" : "ink");
+
+const mrr = PUBLIC_STATS.committedMonthlyCop;
+const program = Math.round(mrr * PROGRAM_SHARE);
+const ops = mrr - program;
+
+const c = {
+  title: isEn ? "Admin · operations" : "Admin · operación",
+  sub: isEn ? "Internal panel: mothers, members, circles, matching and finances." : "Panel interno: madres, socios, círculos, matching y finanzas.",
+  tMadres: isEn ? "Mothers" : "Madres",
+  tSocios: isEn ? "Members" : "Socios",
+  tCirculos: isEn ? "Circles" : "Círculos",
+  tMatching: "Matching",
+  tFinanzas: isEn ? "Finances" : "Finanzas",
+  thName: isEn ? "Name" : "Nombre",
+  thLoc: isEn ? "Location" : "Ubicación",
+  thStatus: isEn ? "Status" : "Estado",
+  thFunded: isEn ? "Funded" : "Financiada",
+  thTier: isEn ? "Tier" : "Nivel",
+  thAmount: isEn ? "Amount/mo" : "Aporte/mes",
+  thFunds: isEn ? "Funds" : "Financia a",
+  thJoined: isEn ? "Joined" : "Ingresó",
+  thType: isEn ? "Type" : "Tipo",
+  thMembers: isEn ? "Members" : "Socios",
+  thCommitted: isEn ? "Committed / target" : "Comprometido / meta",
+  sole: isEn ? "Sponsor 1:1" : "Padrino 1:1",
+  shared: isEn ? "Shared circle" : "Círculo compartido",
+  morMembers: isEn ? "+ 210 more members (sample data)" : "+ 210 socios más (datos de prueba)",
+  matchTitle: isEn ? "How contributions stack up to fund each mother" : "Cómo se suman los aportes para financiar a cada madre",
+  matchNote: isEn ? "Each segment is one member's monthly contribution. Target: $600.000/mo (gross) per mother." : "Cada segmento es el aporte mensual de un socio. Meta: $600.000/mes (bruto) por madre.",
+  finMrr: isEn ? "Recurring / month" : "Recurrente / mes",
+  finProgram: isEn ? "Program (to mothers)" : "Programa (a las madres)",
+  finOps: isEn ? "Foundation (operation)" : "Fundación (operación)",
+  finActive: isEn ? "Mothers with income" : "Madres con renta",
+  finForming: isEn ? "Forming their circle" : "Completando su círculo",
+  finMembers: isEn ? "Members" : "Socios",
+  finSplit: isEn ? "Split 65 / 35 — the 35% drops as the Club grows." : "Reparto 65 / 35 — el 35% baja a medida que el Club crece.",
+  note: isEn ? "Demo: read-only view with sample data. In production this is gated behind Cloudflare Access with an audit log on every PII access." : "Demo: vista de solo lectura con datos de prueba. En producción va detrás de Cloudflare Access con bitácora de auditoría en cada acceso a datos personales.",
+};
+
+const tabs = [
+  { id: "madres", label: c.tMadres },
+  { id: "socios", label: c.tSocios },
+  { id: "circulos", label: c.tCirculos },
+  { id: "matching", label: c.tMatching },
+  { id: "finanzas", label: c.tFinanzas },
+];
+---
+<section class="app-shell">
+  <div class="app-wrap">
+    <div style="margin-bottom:14px"><DemoBadge /></div>
+    <h1 class="pf-hello" style="font-size:clamp(26px,4vw,36px)">{c.title}</h1>
+    <p class="pf-muted" style="margin-top:4px">{c.sub}</p>
+
+    <div class="pf-tabs" role="tablist" style="margin-top:18px">
+      {tabs.map((t, i) => <button class="pf-tab" role="tab" data-tab={t.id} aria-selected={i === 0}>{t.label}</button>)}
+    </div>
+
+    {/* ── Madres ── */}
+    <div data-panel="madres">
+      <div class="pf-card">
+        <div class="pf-table-scroll">
+          <table class="pf-table">
+            <thead><tr><th>{c.thName}</th><th>{c.thLoc}</th><th>{c.thStatus}</th><th>{c.thFunded}</th></tr></thead>
+            <tbody>
+              {BENEFICIARIES.map((b) => {
+                const circle = getCircle(b.id)!;
+                const pct = pctFunded(circle);
+                return (
+                  <tr>
+                    <td><b>{b.name}</b></td>
+                    <td class="pf-mono">{b.location}</td>
+                    <td><span class={`pf-chip pf-chip--${statusAccent(b.status)}`}>{statusLabel(b.status)}</span></td>
+                    <td style="min-width:180px">
+                      <div class="pf-bar"><div class={`pf-bar__fill${b.status === "in_formation" ? " pf-bar__fill--warm" : ""}`} style={`width:${pct}%`}></div></div>
+                      <span class="pf-kick" style="margin-top:6px;display:block">{pct}% · {formatCop(committedCop(circle), lang)} / {formatCop(FUNDING_TARGET, lang)}</span>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    {/* ── Socios ── */}
+    <div data-panel="socios" hidden>
+      <div class="pf-card">
+        <div class="pf-table-scroll">
+          <table class="pf-table">
+            <thead><tr><th>{c.thName}</th><th>{c.thTier}</th><th>{c.thAmount}</th><th>{c.thFunds}</th><th>{c.thJoined}</th></tr></thead>
+            <tbody>
+              {MEMBERS.map((m) => {
+                const ben = getBeneficiary(m.fundsBeneficiaryId);
+                return (
+                  <tr>
+                    <td><b>{m.name}</b>{m.ambassador ? <span class="pf-chip pf-chip--green" style="margin-left:8px">★</span> : ""}</td>
+                    <td><span class="pf-cofunder"><span class="pf-cofunder__dot" style={`background:${tierColor[m.tierKey]}`}></span>{tierLabel(m.tierKey, lang)}</span></td>
+                    <td><b>{formatCop(m.amountCop, lang)}</b></td>
+                    <td>{ben?.name ?? "—"}</td>
+                    <td class="pf-mono">{formatDate(m.joinedAt, lang)}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+        <p class="pf-muted" style="margin-top:14px">{c.morMembers}</p>
+      </div>
+    </div>
+
+    {/* ── Círculos ── */}
+    <div data-panel="circulos" hidden>
+      <div class="pf-card">
+        <div class="pf-table-scroll">
+          <table class="pf-table">
+            <thead><tr><th>{c.thName}</th><th>{c.thType}</th><th>{c.thMembers}</th><th>{c.thCommitted}</th></tr></thead>
+            <tbody>
+              {CIRCLES.map((circle) => {
+                const ben = getBeneficiary(circle.beneficiaryId)!;
+                const pct = pctFunded(circle);
+                return (
+                  <tr>
+                    <td><b>{ben.name}</b></td>
+                    <td><span class={`pf-chip pf-chip--${circle.type === "sole" ? "ink" : "green"}`}>{circle.type === "sole" ? c.sole : c.shared}</span></td>
+                    <td>{circle.entries.length}</td>
+                    <td style="min-width:200px">
+                      <div class="pf-bar"><div class={`pf-bar__fill${pct < 100 ? " pf-bar__fill--warm" : ""}`} style={`width:${pct}%`}></div></div>
+                      <span class="pf-kick" style="margin-top:6px;display:block">{formatCop(committedCop(circle), lang)} / {formatCop(FUNDING_TARGET, lang)} · {pct}%</span>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    {/* ── Matching (bin-packing visual) ── */}
+    <div data-panel="matching" hidden>
+      <div class="pf-card">
+        <h3 class="pf-h">{c.matchTitle}</h3>
+        <p class="pf-muted">{c.matchNote}</p>
+        <div class="adm-match">
+          {CIRCLES.map((circle) => {
+            const ben = getBeneficiary(circle.beneficiaryId)!;
+            const pct = pctFunded(circle);
+            const segs = [...circle.entries].sort((a, b) => b.amountCop - a.amountCop);
+            return (
+              <div class="adm-row">
+                <div class="adm-row__head">
+                  <span class="adm-row__name">{ben.name}</span>
+                  <span class="pf-kick">{pct}% · {formatCop(committedCop(circle), lang)}</span>
+                </div>
+                <div class="adm-track">
+                  {segs.map((e) => (
+                    <span class="adm-seg" style={`width:${Math.min(100, (e.amountCop / FUNDING_TARGET) * 100)}%;background:${tierColor[e.tierKey]}`} title={`${e.name} · ${formatCop(e.amountCop, lang)}`}></span>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <div class="adm-legend">
+          {(Object.keys(TIERS) as TierKey[]).map((k) => (
+            <span><span class="adm-legend__sw" style={`background:${tierColor[k]}`}></span>{tierLabel(k, lang)} · {formatCop(TIERS[k].amountCop, lang)}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    {/* ── Finanzas ── */}
+    <div data-panel="finanzas" hidden>
+      <div class="pf-grid pf-grid--2">
+        <div class="pf-card">
+          <span class="pf-kick">{c.finMrr}</span>
+          <div class="pf-carnet__amount" style="color:var(--ink-900);font-size:38px;margin-top:6px">{formatCop(mrr, lang)}</div>
+          <div class="pf-spacer"></div>
+          <div class="adm-split">
+            <span class="adm-split__a" style={`width:${Math.round(PROGRAM_SHARE * 100)}%`}>{Math.round(PROGRAM_SHARE * 100)}%</span>
+            <span class="adm-split__b" style={`width:${Math.round((1 - PROGRAM_SHARE) * 100)}%`}>{Math.round((1 - PROGRAM_SHARE) * 100)}%</span>
+          </div>
+          <div class="adm-split-legend">
+            <span><b>{formatCop(program, lang)}</b> · {c.finProgram}</span>
+            <span><b>{formatCop(ops, lang)}</b> · {c.finOps}</span>
+          </div>
+          <p class="pf-muted" style="margin-top:14px">{c.finSplit}</p>
+        </div>
+        <div class="pf-card">
+          <div class="pf-stats" style="grid-template-columns:1fr 1fr">
+            <div class="pf-stat"><div class="pf-stat__n">{PUBLIC_STATS.mothersActive}</div><div class="pf-stat__l">{c.finActive}</div></div>
+            <div class="pf-stat"><div class="pf-stat__n">{PUBLIC_STATS.mothersInFormation}</div><div class="pf-stat__l">{c.finForming}</div></div>
+            <div class="pf-stat"><div class="pf-stat__n">{PUBLIC_STATS.members}</div><div class="pf-stat__l">{c.finMembers}</div></div>
+            <div class="pf-stat"><div class="pf-stat__n">{formatCop(PUBLIC_STATS.transferredCop, lang)}</div><div class="pf-stat__l">{isEn ? "Transferred (total)" : "Transferido (acum.)"}</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="pf-note">{c.note}</p>
+  </div>
+</section>
+
+<script>
+  function wireAdmin() {
+    const tabs = document.querySelectorAll<HTMLElement>(".app-shell .pf-tab");
+    const panels = document.querySelectorAll<HTMLElement>(".app-shell [data-panel]");
+    if (!tabs.length) return;
+    tabs.forEach((btn) =>
+      btn.addEventListener("click", () => {
+        const id = btn.dataset.tab;
+        tabs.forEach((b) => b.setAttribute("aria-selected", String(b === btn)));
+        panels.forEach((p) => (p.hidden = p.dataset.panel !== id));
+      })
+    );
+  }
+  document.addEventListener("astro:page-load", wireAdmin);
+</script>
+
+<style>
+  .adm-match { display: flex; flex-direction: column; gap: 16px; margin-top: 20px; }
+  .adm-row__head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 6px; }
+  .adm-row__name { font-family: var(--font-display); font-weight: 800; font-size: 15px; color: var(--ink-900); }
+  .adm-track { display: flex; gap: 2px; height: 26px; background: var(--paper-200); border-radius: var(--radius-sm); overflow: hidden; }
+  .adm-seg { height: 100%; min-width: 3px; }
+  .adm-legend { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 18px; font-size: 13px; color: var(--text-muted); }
+  .adm-legend span { display: inline-flex; align-items: center; gap: 7px; }
+  .adm-legend__sw { width: 12px; height: 12px; border-radius: 3px; }
+  .adm-split { display: flex; height: 40px; border-radius: var(--radius-sm); overflow: hidden; font-family: var(--font-display); font-weight: 800; font-size: 14px; }
+  .adm-split__a { background: var(--green-400); color: var(--ink-900); display: flex; align-items: center; justify-content: center; }
+  .adm-split__b { background: var(--marigold-400); color: var(--ink-900); display: flex; align-items: center; justify-content: center; }
+  .adm-split-legend { display: flex; justify-content: space-between; gap: 16px; margin-top: 10px; font-size: 13px; color: var(--text-body); flex-wrap: wrap; }
+</style>
