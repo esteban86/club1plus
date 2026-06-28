@@ -1,7 +1,8 @@
 // ─────────────────────────────────────────────────────────────────────────────
-//  Recorrido guiado de onboarding (demo). Overlay tipo "spotlight" + tooltip que
-//  ATRAVIESA todo el sitio: home → comunidad → portal → admin → donar. El estado
-//  (activo, paso, idioma) vive en localStorage para reanudar tras cada navegación.
+//  Recorrido guiado de onboarding (demo). Panel "narrador" anclado abajo (no tapa
+//  el contenido: la página se desplaza para dejar el elemento resaltado por encima
+//  del panel) + spotlight con anillo. Atraviesa todo el sitio y reanuda el paso
+//  tras cada navegación (estado en localStorage). ES + EN, responsive.
 // ─────────────────────────────────────────────────────────────────────────────
 import { ROUTES, type RouteKey } from "../../i18n/routes";
 import { setMemberId } from "./session";
@@ -14,84 +15,96 @@ const KEY = "c1p_tour";
 interface I18n { es: string; en: string }
 interface Step {
   route: RouteKey;
-  target?: string;       // selector a iluminar; ausente = tarjeta centrada
-  ready?: string;        // selector que indica que la página está lista (para esperar render JS)
+  target?: string;       // selector a iluminar; ausente = solo narrador (intro/outro)
+  ready?: string;        // selector que indica que la página está lista (espera render JS)
   pre?: () => void;      // acción antes de mostrar (p. ej. abrir una pestaña)
   ensureDemoSession?: boolean;
+  kicker: I18n;
   title: I18n;
   body: I18n;
 }
 
 const L = {
-  es: { next: "Siguiente", prev: "Atrás", skip: "Saltar", finish: "Terminar ✓", launch: "Recorrido guiado" },
-  en: { next: "Next", prev: "Back", skip: "Skip", finish: "Finish ✓", launch: "Guided tour" },
+  es: { next: "Siguiente", prev: "Atrás", skip: "Saltar recorrido", finish: "Terminar", launch: "Recorrido guiado", of: "de" },
+  en: { next: "Next", prev: "Back", skip: "Skip tour", finish: "Finish", launch: "Guided tour", of: "of" },
 };
 
 const STEPS: Step[] = [
   {
     route: "home",
+    kicker: { es: "Bienvenida/o", en: "Welcome" },
     title: { es: "Te muestro el Club en 1 minuto", en: "Let me show you the Club in 1 minute" },
-    body: { es: "Un recorrido rápido por todo: el modelo, la comunidad, el espacio de cada socio y el panel interno. Avanza con Siguiente.", en: "A quick walk through everything: the model, the community, each member's space and the internal panel. Use Next to advance." },
+    body: { es: "Un recorrido corto por la historia completa: el problema, tu papel y a quién le cambias la vida. ¿Vamos?", en: "A short walk through the whole story: the problem, your role, and whose life you change. Shall we?" },
   },
   {
     route: "home", target: ".hero",
-    title: { es: "La promesa", en: "The promise" },
-    body: { es: "Amigos comprometidos suman un aporte mensual para dar una renta básica a madres cabeza de familia. Riqueza, no caridad.", en: "Committed friends add a monthly contribution to fund a basic income for female heads of household. Wealth, not charity." },
+    kicker: { es: "La idea", en: "The idea" },
+    title: { es: "Riqueza, no caridad", en: "Wealth, not charity" },
+    body: { es: "Cientos de amigos suman un aporte mensual para que una madre cabeza de familia reciba una renta básica y construya su propia salida.", en: "Hundreds of friends add a monthly contribution so a female head of household receives a basic income and builds her own way out." },
   },
   {
     route: "home", target: "[data-tour='problema']",
-    title: { es: "El problema", en: "The problem" },
-    body: { es: "1 de cada 3 personas en Colombia es pobre. No es falta de esfuerzo: es una trampa. Por eso quienes más tenemos podemos mover la balanza.", en: "1 in 3 people in Colombia is poor. It isn't lack of effort — it's a trap. That's why those of us with more can move the needle." },
+    kicker: { es: "Por qué importa", en: "Why it matters" },
+    title: { es: "1 de cada 3 es pobre", en: "1 in 3 is poor" },
+    body: { es: "En Colombia la pobreza no es falta de esfuerzo: es una trampa. Quienes más tenemos podemos inclinar la balanza con muy poco.", en: "In Colombia, poverty isn't lack of effort — it's a trap. Those of us with more can tip the scale with very little." },
   },
   {
     route: "home", target: "[data-tour='tiers']",
-    title: { es: "Cómo te sumas", en: "How you join" },
-    body: { es: "Eliges cuánto sumar cada mes. Diez aliados o cuatro mecenas financian a una madre; una madrina la apadrina completa.", en: "You choose how much to add each month. Ten allies or four patrons fund one mother; a godmother sponsors her in full." },
+    kicker: { es: "Tu parte", en: "Your part" },
+    title: { es: "Eliges cuánto sumar", en: "You choose how much to add" },
+    body: { es: "Diez aliados o cuatro mecenas financian a una madre entre todos; una madrina la apadrina completa. Cada + cuenta.", en: "Ten allies or four patrons fund one mother together; a godmother sponsors her in full. Every + counts." },
   },
   {
     route: "home", target: ".livec",
-    title: { es: "La comunidad crece", en: "The community grows" },
-    body: { es: "En vivo: cuántos somos, cuántas madres ya reciben renta y cuánto hemos transferido. Vamos a verla de cerca.", en: "Live: how many we are, how many mothers already receive income, and how much we've transferred. Let's look closer." },
+    kicker: { es: "No empiezas de cero", en: "You're not starting from zero" },
+    title: { es: "Ya somos una comunidad", en: "We're already a community" },
+    body: { es: "En vivo: cuántos sumamos, cuántas madres ya reciben su renta y cuánto hemos transferido. Vamos a verla.", en: "Live: how many we are, how many mothers already receive income, and how much we've transferred. Let's see it." },
   },
   {
     route: "comunidad", target: ".comm__graphcard", ready: ".comm__graphcard",
-    title: { es: "Una red que se multiplica", en: "A network that multiplies" },
-    body: { es: "Cada socio puede traer a otros. Así crece la red — varios niveles — siempre anonimizada en la vista pública.", en: "Every member can bring others in. The network grows several levels deep — always anonymized in the public view." },
+    kicker: { es: "El efecto red", en: "The network effect" },
+    title: { es: "Un + se multiplica", en: "One + multiplies" },
+    body: { es: "Invitas a un amigo, que invita a otro. Así crece la red — varios niveles — y entran más madres. Siempre anónima en lo público.", en: "You invite a friend, who invites another. The network grows several levels deep — and more mothers join. Always anonymous in public." },
   },
   {
     route: "miEspacio", target: ".pf-carnet", ready: ".pf-tabs", ensureDemoSession: true,
-    title: { es: "El espacio de cada socio", en: "Each member's space" },
-    body: { es: "Al donar, cada socio entra a Mi espacio: su carné, la madre que financia, sus aportes y su red de referidos.", en: "After donating, each member enters My space: their card, the mother they fund, their contributions and their referral network." },
+    kicker: { es: "Tu espacio", en: "Your space" },
+    title: { es: "Todo en un solo lugar", en: "Everything in one place" },
+    body: { es: "Al sumarte entras a Mi espacio: tu carné, tus aportes, tu red y —lo más importante— la persona que financias.", en: "When you join you enter My space: your card, your contributions, your network and — most importantly — the person you fund." },
   },
   {
     route: "miEspacio", target: ".pf-mother", ready: ".pf-tabs",
     pre: () => { try { localStorage.setItem("c1p_demo_consent", "1"); } catch {} document.querySelector<HTMLElement>(".pf-tab[data-tab='madre']")?.click(); },
-    title: { es: "La persona que financias", en: "The person you fund" },
-    body: { es: "Con su consentimiento, el socio conoce a su beneficiaria real: su historia y cuánto falta para completar su renta.", en: "With her consent, the member meets their real beneficiary: her story and how much is left to complete her income." },
+    kicker: { es: "La conexión", en: "The connection" },
+    title: { es: "Conoces a quien financias", en: "You meet who you fund" },
+    body: { es: "Con su consentimiento, ves a tu beneficiaria real: su historia y cuánto falta para completar su renta. No es un número.", en: "With her consent, you see your real beneficiary: her story and how much is left to complete her income. Not a number." },
   },
   {
     route: "miEspacio", target: ".pf-reflink", ready: ".pf-tabs",
     pre: () => { document.querySelector<HTMLElement>(".pf-tab[data-tab='referidos']")?.click(); },
-    title: { es: "Invita y multiplica", en: "Invite and multiply" },
-    body: { es: "Cada socio comparte su enlace y ve crecer su propia red — incluso varios niveles abajo.", en: "Each member shares their link and watches their own network grow — even several levels down." },
+    kicker: { es: "Multiplica", en: "Multiply" },
+    title: { es: "Tu enlace, tu red", en: "Your link, your network" },
+    body: { es: "Compartes tu link y ves crecer tu propia red de referidos, incluso varios niveles abajo.", en: "You share your link and watch your own referral network grow, even several levels down." },
   },
   {
     route: "admin", target: "[data-panel='matching']", ready: ".pf-tab",
     pre: () => { document.querySelector<HTMLElement>(".pf-tab[data-tab='matching']")?.click(); },
-    title: { es: "Para el equipo: el matching", en: "For the team: matching" },
-    body: { es: "El panel interno muestra cómo se apilan los aportes para completar los $600.000/mes de cada madre, y el reparto 65/35.", en: "The internal panel shows how contributions stack up to complete each mother's $600,000/mo, and the 65/35 split." },
+    kicker: { es: "Tras bambalinas", en: "Behind the scenes" },
+    title: { es: "Cómo encajan las piezas", en: "How the pieces fit" },
+    body: { es: "El equipo ve cómo se apilan los aportes para completar los $600.000/mes de cada madre, y el reparto 65/35.", en: "The team sees how contributions stack up to complete each mother's $600,000/mo, and the 65/35 split." },
   },
   {
     route: "donar", target: "[data-tour='tiers']", ready: "[data-tour='tiers']",
-    title: { es: "¿Listo para sumarte?", en: "Ready to join?" },
-    body: { es: "Eso es todo. Tu + se convierte en la renta de una madre cabeza de familia. Elige tu aporte y súmate.", en: "That's it. Your + becomes the income of a female head of household. Pick your contribution and join." },
+    kicker: { es: "Tu turno", en: "Your turn" },
+    title: { es: "¿Lista/o para sumarte?", en: "Ready to join?" },
+    body: { es: "Eso es todo. Tu + se convierte en la renta de una madre cabeza de familia. Elige tu aporte y empieza hoy.", en: "That's it. Your + becomes the income of a female head of household. Pick your contribution and start today." },
   },
 ];
 
 interface State { active: boolean; step: number; lang: Lang }
-const read = (): State => { try { return JSON.parse(localStorage.getItem(KEY) || "") || { active: false, step: 0, lang: "es" }; } catch { return { active: false, step: 0, lang: "es" }; } };
+const read = (): State => { try { return JSON.parse(localStorage.getItem(KEY) || "null") || { active: false, step: 0, lang: "es" }; } catch { return { active: false, step: 0, lang: "es" }; } };
 const write = (s: State) => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch {} };
-const clear = () => { try { localStorage.removeItem(KEY); } catch {} };
+const clearState = () => { try { localStorage.removeItem(KEY); } catch {} };
 
 const detectLang = (): Lang => (location.pathname.split("/").filter(Boolean).some((s) => s === "en") ? "en" : "es");
 const norm = (p: string) => p.replace(/\/+$/, "");
@@ -110,16 +123,16 @@ export function startTour() {
   showStep();
 }
 function endTour() {
-  clear();
+  clearState();
   currentEl = null;
-  document.getElementById("tour-root")!.innerHTML = "";
+  const root = document.getElementById("tour-root");
+  if (root) root.innerHTML = "";
   document.body.classList.remove("tour-on");
 }
 function goTo(i: number) {
-  const st = read();
   if (i >= STEPS.length) return endTour();
   if (i < 0) return;
-  write({ ...st, step: i });
+  write({ ...read(), step: i });
   showStep();
 }
 
@@ -136,7 +149,6 @@ function showStep() {
   const step = STEPS[st.step];
   if (!step) return endTour();
   const lang = st.lang;
-  // ¿estamos en la página correcta?
   if (currentKey(lang) !== step.route) {
     if (step.ensureDemoSession) setMemberId(DEFAULT_MEMBER_ID);
     location.assign(routePath(step.route, lang));
@@ -159,91 +171,102 @@ function paint(step: Step, el: HTMLElement | null, st: State, lang: Lang) {
   const ui = L[lang];
   const isFirst = st.step === 0;
   const isLast = st.step === STEPS.length - 1;
+  const total = STEPS.length;
+
   if (el) {
     el.querySelectorAll<HTMLElement>(".reveal").forEach((r) => r.classList.add("is-in"));
     el.classList.add("is-in");
-    el.scrollIntoView({ block: "center", inline: "nearest" });
   }
+
+  const dots = STEPS.map((_, i) => {
+    const cls = i === st.step ? "tourx__dot tourx__dot--now" : i < st.step ? "tourx__dot tourx__dot--done" : "tourx__dot";
+    return `<button class="${cls}" data-goto="${i}" aria-label="${i + 1}"></button>`;
+  }).join("");
+
   root.innerHTML = `
-    <div class="tour-blocker ${el ? "tour-blocker--clear" : "tour-blocker--dim"}"></div>
-    ${el ? '<div class="tour-hole" id="tour-hole"></div>' : ""}
-    <div class="tour-tip ${el ? "" : "tour-tip--center"}" id="tour-tip" role="dialog" aria-modal="true" aria-label="${esc(step.title[lang])}">
-      <div class="tour-tip__bar"><span class="tour-tip__count">${st.step + 1} / ${STEPS.length}</span><button class="tour-tip__x" id="tour-skip" aria-label="${ui.skip}">✕</button></div>
-      <h3 class="tour-tip__title">${esc(step.title[lang])}</h3>
-      <p class="tour-tip__body">${esc(step.body[lang])}</p>
-      <div class="tour-tip__actions">
-        <button class="tour-tip__skip" id="tour-skip2">${ui.skip}</button>
-        <div class="tour-tip__nav">
-          ${isFirst ? "" : `<button class="btn btn--outline btn--sm" id="tour-prev">${ui.prev}</button>`}
-          <button class="btn btn--primary btn--sm" id="tour-next">${isLast ? ui.finish : ui.next}</button>
+    <div class="tourx-dim ${el ? "tourx-dim--clear" : "tourx-dim--solid"}"></div>
+    ${el ? '<div class="tourx-ring" id="tourx-ring"></div>' : ""}
+    <div class="tourx" id="tourx-card" role="dialog" aria-modal="true" aria-label="${esc(step.title[lang])}">
+      <div class="tourx__top">
+        <span class="tourx__kicker">${esc(step.kicker[lang])}</span>
+        <button class="tourx__close" id="tourx-close" aria-label="${ui.skip}">✕</button>
+      </div>
+      <h3 class="tourx__title">${esc(step.title[lang])}</h3>
+      <p class="tourx__body">${esc(step.body[lang])}</p>
+      <div class="tourx__progress" role="group" aria-label="${st.step + 1} ${ui.of} ${total}">${dots}</div>
+      <div class="tourx__foot">
+        <button class="tourx__skip" id="tourx-skip">${ui.skip}</button>
+        <div class="tourx__btns">
+          ${isFirst ? "" : `<button class="tourx__btn tourx__btn--ghost" id="tourx-prev">${ui.prev}</button>`}
+          <button class="tourx__btn tourx__btn--primary" id="tourx-next">${isLast ? ui.finish + " ✓" : ui.next + " →"}</button>
         </div>
       </div>
     </div>`;
 
   currentEl = el;
-  if (el) reposition();
+  if (el) { scrollSmart(el); repositionRing(el); }
 
-  root.querySelector("#tour-next")!.addEventListener("click", () => goTo(st.step + 1));
-  root.querySelector("#tour-prev")?.addEventListener("click", () => goTo(st.step - 1));
-  root.querySelector("#tour-skip")!.addEventListener("click", endTour);
-  root.querySelector("#tour-skip2")!.addEventListener("click", endTour);
+  root.querySelector("#tourx-next")!.addEventListener("click", () => goTo(st.step + 1));
+  root.querySelector("#tourx-prev")?.addEventListener("click", () => goTo(st.step - 1));
+  root.querySelector("#tourx-skip")!.addEventListener("click", endTour);
+  root.querySelector("#tourx-close")!.addEventListener("click", endTour);
+  root.querySelectorAll<HTMLElement>(".tourx__dot").forEach((d) =>
+    d.addEventListener("click", () => goTo(Number(d.dataset.goto)))
+  );
 }
 
-function reposition() {
-  const tip = document.getElementById("tour-tip");
-  const hole = document.getElementById("tour-hole");
-  if (!currentEl || !tip || !hole) return;
-  const r = currentEl.getBoundingClientRect();
-  const pad = 6;
-  hole.style.top = `${r.top - pad}px`;
-  hole.style.left = `${r.left - pad}px`;
-  hole.style.width = `${r.width + pad * 2}px`;
-  hole.style.height = `${r.height + pad * 2}px`;
+// Desplaza la página para dejar el elemento en el área visible POR ENCIMA del panel.
+function scrollSmart(el: HTMLElement) {
+  const card = document.getElementById("tourx-card");
+  const reserved = (card?.offsetHeight || 220) + 56;
+  const navOff = 90;
+  const vh = window.innerHeight;
+  const availH = Math.max(120, vh - navOff - reserved);
+  const r = el.getBoundingClientRect();
+  const absTop = r.top + window.scrollY;
+  const to = r.height >= availH ? absTop - navOff : absTop - navOff - (availH - r.height) / 2;
+  window.scrollTo({ top: Math.max(0, to), behavior: "instant" as ScrollBehavior });
+  repositionRing(el);
+}
 
-  const vw = window.innerWidth, vh = window.innerHeight, gap = 14;
-  if (vw < 600) {
-    tip.style.left = "12px";
-    tip.style.right = "12px";
-    tip.style.width = "auto";
-    tip.style.top = `${Math.max(12, vh - tip.offsetHeight - 16)}px`;
-    return;
-  }
-  const tw = tip.offsetWidth, th = tip.offsetHeight;
-  let top: number;
-  if (r.bottom + gap + th < vh) top = r.bottom + gap;
-  else if (r.top - gap - th > 0) top = r.top - gap - th;
-  else top = Math.max(12, (vh - th) / 2);
-  const left = Math.min(Math.max(12, r.left), vw - tw - 12);
-  tip.style.top = `${top}px`;
-  tip.style.left = `${left}px`;
-  tip.style.right = "auto";
+function repositionRing(el: HTMLElement) {
+  const ring = document.getElementById("tourx-ring");
+  if (!ring) return;
+  const card = document.getElementById("tourx-card");
+  const cardTop = card ? card.getBoundingClientRect().top : window.innerHeight;
+  const pad = 6;
+  const r = el.getBoundingClientRect();
+  // El anillo nunca pasa por debajo del panel: para elementos altos muestra su
+  // parte superior y termina limpio por encima del narrador.
+  const top = Math.max(8, r.top - pad);
+  let bottom = Math.min(r.bottom + pad, cardTop - 14);
+  if (bottom < top + 36) bottom = top + 36;
+  ring.style.top = `${top}px`;
+  ring.style.left = `${r.left - pad}px`;
+  ring.style.width = `${r.width + pad * 2}px`;
+  ring.style.height = `${bottom - top}px`;
 }
 
 export function initTour() {
-  // botón lanzador (guarda contra listeners duplicados en navegación SPA)
   const launch = document.getElementById("tour-launch");
   if (launch && !launch.dataset.bound) { launch.dataset.bound = "1"; launch.addEventListener("click", startTour); }
-  // ?tour=1 inicia el recorrido (y limpia la URL)
   const params = new URLSearchParams(location.search);
   if (params.get("tour") === "1") {
-    const url = location.pathname + location.hash;
-    history.replaceState(null, "", url);
+    history.replaceState(null, "", location.pathname + location.hash);
     startTour();
     return;
   }
-  // reanudar si está activo
   if (read().active) showStep();
 }
 
-// reposición ante scroll/resize mientras hay un paso con elemento
+// reposición del anillo ante scroll/resize mientras hay un paso con elemento
 let bound = false;
-function bindReflow() {
+(function bindReflow() {
   if (bound) return;
   bound = true;
-  const h = () => { if (currentEl) reposition(); };
+  const h = () => { if (currentEl) repositionRing(currentEl); };
   window.addEventListener("scroll", h, { passive: true });
   window.addEventListener("resize", h);
-}
-bindReflow();
+})();
 
 function esc(s: string) { return s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]!)); }

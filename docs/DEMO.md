@@ -22,11 +22,16 @@ Entradas: enlace **"Mi espacio"** en el nav; **"Comunidad"** en el footer;
 ## Recorrido guiado (onboarding)
 
 Botón flotante **"✨ Recorrido guiado"** (abajo a la derecha, en todas las páginas) o
-añadiendo **`?tour=1`** a cualquier URL. Es un tour de 11 pasos tipo *spotlight* que
-**atraviesa todo el sitio** y navega solo entre páginas: intro → la promesa → el problema
-→ cómo te sumas → la comunidad → red de referidos → portal de socios (carné → tu madre →
-referidos) → matching del admin → donar. Reanuda el paso tras cada navegación (estado en
-`localStorage`), funciona en ES y EN, y es responsive. Motor: `src/lib/demo/tour.ts` +
+añadiendo **`?tour=1`** a cualquier URL. Es un tour de 11 pasos que **atraviesa todo el
+sitio** y navega solo entre páginas: intro → la promesa → el problema → cómo te sumas →
+la comunidad → red de referidos → portal de socios (carné → tu madre → referidos) →
+matching del admin → donar.
+
+UX: un **panel narrador anclado abajo** (fondo ink + textura "+", kicker + título +
+relato, puntos de progreso navegables y botones de marca) que **no tapa el contenido** —
+la página se desplaza para dejar el elemento resaltado iluminado por encima del panel, con
+el anillo recortado justo arriba de él. Reanuda el paso tras cada navegación (estado en
+`localStorage`), funciona en ES y EN y es responsive. Motor: `src/lib/demo/tour.ts` +
 `src/styles/tour.css`.
 
 ## Qué es real y qué es de prueba
