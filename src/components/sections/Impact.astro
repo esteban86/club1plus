@@ -11,7 +11,7 @@ const copy = lang === "es"
   ? { over: "El problema", before: "No es falta de esfuerzo. Es una ", circ: "trampa.", quote: "¿Funciona dar dinero sin condiciones? Los resultados son reveladores.", note: "Cifras nacionales de Colombia. Nuestro piloto arranca en Medellín.", doc: "Fuente: DANE — Pobreza monetaria en Colombia, 2024", docUrl: "https://www.dane.gov.co/files/operaciones/PM/bol-PM-2024.pdf" }
   : { over: "The problem", before: "It isn't a lack of effort. It's a ", circ: "trap.", quote: "Does giving money without conditions work? The results are revealing.", note: "National figures for Colombia. Our pilot starts in Medellín.", doc: "Source: DANE — Monetary poverty in Colombia, 2024", docUrl: "https://www.dane.gov.co/files/operaciones/PM/bol-PM-2024.pdf" };
 ---
-<section class="ground-paper section">
+<section class="ground-paper section" data-tour="problema">
   <div class="container">
     <Overline tone="muted">{copy.over}</Overline>
     <h2 class="display impact__title">{copy.before}<CircledWord>{copy.circ}</CircledWord></h2>

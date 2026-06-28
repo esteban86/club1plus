@@ -44,7 +44,7 @@ const tierData = tiers.map((t) => ({
   urlOneTime: wompiLink({ slug: t.slug, urlMonthly: t.data.urlMonthly, urlOneTime: t.data.urlOneTime }, "one-time"),
 }));
 ---
-<section class="ground-paper-100 section">
+<section class="ground-paper-100 section" data-tour="tiers">
   <div class="container">
     <div class="tiers__head">
       <Overline color="var(--coral-500)">{copy.over}</Overline>

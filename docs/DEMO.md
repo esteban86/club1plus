@@ -19,6 +19,16 @@ infraestructura real fase por fase (ver `docs/ROADMAP.md`).
 Entradas: enlace **"Mi espacio"** en el nav; **"Comunidad"** en el footer;
 **"Ver la experiencia del socio (demo)"** en `/donar`; CTA del contador → comunidad.
 
+## Recorrido guiado (onboarding)
+
+Botón flotante **"✨ Recorrido guiado"** (abajo a la derecha, en todas las páginas) o
+añadiendo **`?tour=1`** a cualquier URL. Es un tour de 11 pasos tipo *spotlight* que
+**atraviesa todo el sitio** y navega solo entre páginas: intro → la promesa → el problema
+→ cómo te sumas → la comunidad → red de referidos → portal de socios (carné → tu madre →
+referidos) → matching del admin → donar. Reanuda el paso tras cada navegación (estado en
+`localStorage`), funciona en ES y EN, y es responsive. Motor: `src/lib/demo/tour.ts` +
+`src/styles/tour.css`.
+
 ## Qué es real y qué es de prueba
 
 - **Real (público, con consentimiento):** las 4 beneficiarias (Yuri, Sandra, Juliana,

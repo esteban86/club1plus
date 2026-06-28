@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import "../styles/tour.css";
 import { ClientRouter } from "astro:transitions";
 import Nav from "../components/sections/Nav.astro";
 import Footer from "../components/sections/Footer.astro";
@@ -77,6 +78,12 @@ const jsonLd = {
       <slot />
     </main>
     <Footer />
+    <button id="tour-launch" class="tour-launch" type="button" aria-label={t("tour.launch")}>✨ {t("tour.launch")}</button>
+    <div id="tour-root" aria-live="polite"></div>
+    <script>
+      import { initTour } from "../lib/demo/tour";
+      document.addEventListener("astro:page-load", initTour);
+    </script>
     <script>
       let io: IntersectionObserver | null = null;
       function initReveal() {
