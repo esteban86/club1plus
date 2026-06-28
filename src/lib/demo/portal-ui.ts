@@ -429,7 +429,7 @@ export function initDashboard() {
 }
 
 // ── Grafo de referidos (SVG inline, layout tidy top-down) ────────────────────────
-export function renderGraphSVG(rootId: string, anonymizeRoot = false): string {
+export function renderGraphSVG(rootId: string, opts: { anonymizeAll?: boolean } = {}): string {
   const root = D.REFERRAL_NETWORK.find((n) => n.id === rootId);
   if (!root) return "";
   const baseDepth = root.depth;
@@ -462,15 +462,16 @@ export function renderGraphSVG(rootId: string, anonymizeRoot = false): string {
   const circles = nodes.map((n) => {
     const x = px(n), y = py(n);
     const isRoot = n.id === rootId;
-    const label = (anonymizeRoot && isRoot) ? "Tú" : (n.label.includes(".") ? n.label : firstName(n.label));
+    const label = opts.anonymizeAll ? "" : (n.label.includes(".") ? n.label : firstName(n.label));
     const fill = n.converted ? "#2BE06F" : "#FFFFFF";
     const stroke = n.converted ? "#0C1A13" : "#19C95E";
     const dash = n.converted ? "" : ` stroke-dasharray="4 3"`;
     const rr = isRoot ? r + 4 : r;
+    const text = label ? `<text x="${x.toFixed(1)}" y="${y + rr + 15}" text-anchor="middle" font-family="'Space Mono', monospace" font-size="11" fill="#0C1A13">${esc(label)}</text>` : "";
     return `
       <g>
         <circle cx="${x.toFixed(1)}" cy="${y}" r="${rr}" fill="${fill}" stroke="${stroke}" stroke-width="${isRoot ? 3 : 2}"${dash} />
-        <text x="${x.toFixed(1)}" y="${y + rr + 15}" text-anchor="middle" font-family="'Space Mono', monospace" font-size="11" fill="#0C1A13">${esc(label)}</text>
+        ${text}
       </g>`;
   }).join("");
 
