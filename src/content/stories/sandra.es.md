@@ -1,7 +1,7 @@
 ---
 lang: es
-name: Sandra Palacios
+name: Sandra Lucía Palacio Montoya
 role: Beneficiaria
-location: Moravia, Medellín
-order: 3
+quote: "Gracias a tu ayuda puedo sentirme acompañada y escuchada. Veo que no estamos solos en este camino tan difícil."
+order: 2
 ---
