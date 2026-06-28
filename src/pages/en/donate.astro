@@ -2,12 +2,16 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Tiers from "../../components/sections/Tiers.astro";
 import Transparency from "../../components/sections/Transparency.astro";
+import { getLangFromUrl, getRoute } from "../../i18n/utils";
+const lang = getLangFromUrl(Astro.url);
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 <BaseLayout routeKey="donar" title="Become a member" description="Join the Club. Pick your recurring contribution and become a committed friend. Secure payment via Wompi.">
   <section class="ground-green section donar-head">
     <div class="container">
       <h1 class="display donar-head__title">Turn your + into the light of change.</h1>
       <p class="donar-head__lead">Choose how much to add each month. Payment is secure and recurring via Wompi; cancel anytime.</p>
+      <a class="donar-head__demo" href={base + getRoute("bienvenida", lang)}>▷ See the member experience (demo)</a>
     </div>
   </section>
   <Tiers />
@@ -17,4 +21,6 @@ import Transparency from "../../components/sections/Transparency.astro";
   .donar-head { padding-bottom: 0; }
   .donar-head__title { font-size: clamp(34px, 6vw, 60px); color: var(--ink-900); max-width: 16ch; padding-bottom: 0.1em; }
   .donar-head__lead { font-family: var(--font-body); font-weight: 500; font-size: clamp(16px, 2vw, 19px); color: var(--ink-900); opacity: 0.86; max-width: 48ch; margin-top: 14px; }
+  .donar-head__demo { display: inline-block; margin-top: 16px; font-family: var(--font-display); font-weight: 800; font-size: 15px; color: var(--ink-900); text-decoration: underline; text-underline-offset: 3px; }
+  .donar-head__demo:hover { opacity: 0.7; }
 </style>

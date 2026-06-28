@@ -1,0 +1,109 @@
+---
+import Overline from "../brand/Overline.astro";
+import Button from "../brand/Button.astro";
+import DemoBadge from "../brand/DemoBadge.astro";
+import { getLangFromUrl, getRoute } from "../../i18n/utils";
+import { getBeneficiary, getCircle, pctFunded, committedCop, formatCop, FUNDING_TARGET } from "../../lib/demo/data";
+
+const lang = getLangFromUrl(Astro.url);
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const isEn = lang === "en";
+
+// La madre "asignada" en el demo: Deyis (su círculo está en formación → tu aporte la acerca).
+const ben = getBeneficiary("deyis")!;
+const circle = getCircle("deyis")!;
+const pct = pctFunded(circle);
+const committed = committedCop(circle);
+const enterMember = "julian"; // socio del demo que financia a Deyis
+const enterHref = base + getRoute("miEspacio", lang);
+
+const c = {
+  over: isEn ? "Welcome to the Club" : "Bienvenida/o al Club",
+  title: isEn ? "We received your contribution. 💚" : "Recibimos tu aporte. 💚",
+  lead: isEn
+    ? "You're now part of the community. We've matched you with the mother your contribution helps fund."
+    : "Ya eres parte de la comunidad. Te emparejamos con la madre que tu aporte ayuda a financiar.",
+  ref: isEn ? "Transaction reference:" : "Referencia de tu transacción:",
+  matchKick: isEn ? "The person you fund" : "La persona que financias",
+  role: isEn ? "Beneficiary" : "Beneficiaria",
+  moved: isEn
+    ? "Your contribution just joined her circle. Today it's at"
+    : "Tu aporte se sumó a su círculo. Hoy va en",
+  funded: isEn ? "funded" : "financiada",
+  of: isEn ? "of" : "de",
+  enter: isEn ? "Enter My space" : "Entra a Mi espacio",
+  home: isEn ? "Back to home" : "Volver al inicio",
+  note: isEn
+    ? "Demo: in production, this page is the redirect after your secure Wompi payment — it creates your account and sends your first magic link."
+    : "Demo: en producción esta página es el regreso tras tu pago seguro en Wompi — crea tu cuenta y te envía tu primer enlace mágico.",
+};
+---
+<section class="ground-green section wel-head">
+  <div class="container wel-head__inner">
+    <div style="margin-bottom:6px"><DemoBadge /></div>
+    <Overline tone="dark">{c.over}</Overline>
+    <h1 class="display wel-head__title">{c.title}</h1>
+    <p class="wel-head__lead">{c.lead}</p>
+    <p class="wel-head__ref" data-wel-ref hidden>{c.ref} <span class="wel-head__refval"></span></p>
+  </div>
+</section>
+
+<section class="ground-paper-100 section">
+  <div class="container">
+    <Overline tone="green">{c.matchKick}</Overline>
+    <div class="wel-match">
+      <span class="wel-match__photo">
+        {ben.photo ? <img src={base + ben.photo} alt={ben.name} /> : <span class="wel-match__ph">{ben.name.slice(0,1)}</span>}
+      </span>
+      <div class="wel-match__body">
+        <h2 class="wel-match__name">{ben.name}</h2>
+        <p class="wel-match__meta">{c.role} · {ben.location}</p>
+        <p class="wel-match__quote">“{isEn ? ben.quote.en : ben.quote.es}”</p>
+        <p class="wel-match__moved">{c.moved} <b>{pct}% {c.funded}</b> · {formatCop(committed, lang)} {c.of} {formatCop(FUNDING_TARGET, lang)}/mes</p>
+        <div class="wel-bar"><div class="wel-bar__fill" style={`width:${pct}%`}></div></div>
+        <div class="wel-actions">
+          <Button class="wel-enter" data-member={enterMember} data-href={enterHref} variant="dark" size="lg">{c.enter} →</Button>
+          <Button href={base + getRoute("home", lang)} variant="outline" size="lg">{c.home}</Button>
+        </div>
+      </div>
+    </div>
+    <p class="wel-note">{c.note}</p>
+  </div>
+</section>
+
+<script>
+  import { setMemberId } from "../../lib/demo/session";
+  function wireWelcome() {
+    const ref = new URLSearchParams(location.search).get("id");
+    const refEl = document.querySelector<HTMLElement>("[data-wel-ref]");
+    if (ref && refEl) { refEl.querySelector(".wel-head__refval")!.textContent = ref; refEl.hidden = false; }
+    const btn = document.querySelector<HTMLElement>(".wel-enter");
+    btn?.addEventListener("click", (e) => {
+      e.preventDefault();
+      setMemberId(btn.dataset.member || "julian");
+      location.assign(btn.dataset.href || "/");
+    });
+  }
+  document.addEventListener("astro:page-load", wireWelcome);
+</script>
+
+<style>
+  .wel-head__inner { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
+  .wel-head__title { font-size: clamp(34px, 6vw, 58px); color: var(--ink-900); max-width: 18ch; padding-bottom: 0.1em; }
+  .wel-head__lead { font-family: var(--font-body); font-weight: 500; font-size: clamp(16px, 2vw, 20px); color: var(--ink-900); opacity: 0.86; max-width: 52ch; }
+  .wel-head__ref { font-family: var(--font-mono); font-size: 12.5px; color: var(--ink-900); opacity: 0.7; }
+  .wel-head__refval { font-weight: 700; }
+  .wel-match { display: grid; grid-template-columns: 160px 1fr; gap: 28px; align-items: center; margin-top: 24px; }
+  @media (max-width: 640px) { .wel-match { grid-template-columns: 1fr; gap: 18px; } }
+  .wel-match__photo { width: 160px; height: 160px; border-radius: 50%; overflow: hidden; border: 5px solid var(--green-400); background: var(--ink-700); }
+  .wel-match__photo img { width: 100%; height: 100%; object-fit: cover; }
+  .wel-match__ph { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; font-family: var(--font-display); font-weight: 800; font-size: 56px; color: var(--text-on-dark-muted); }
+  .wel-match__name { font-family: var(--font-display); font-weight: 900; font-size: clamp(24px, 3.5vw, 34px); letter-spacing: -0.02em; color: var(--ink-900); }
+  .wel-match__meta { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--coral-500); margin-top: 4px; }
+  .wel-match__quote { font-family: var(--font-display); font-weight: 800; font-size: clamp(18px, 2.4vw, 24px); line-height: 1.25; color: var(--ink-900); margin: 14px 0; max-width: 40ch; }
+  .wel-match__moved { font-size: 15px; color: var(--text-body); }
+  .wel-bar { height: 14px; background: var(--paper-200); border-radius: var(--radius-pill); overflow: hidden; margin: 12px 0 22px; max-width: 460px; }
+  .wel-bar__fill { height: 100%; background: var(--marigold-400); border-radius: var(--radius-pill); }
+  .wel-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .wel-note { font-size: 13px; color: var(--text-muted); background: var(--paper-0); border: 1px dashed var(--paper-300); border-radius: var(--radius-md); padding: 14px 16px; margin-top: 36px; max-width: 68ch; }
+</style>
