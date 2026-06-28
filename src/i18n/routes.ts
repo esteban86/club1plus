@@ -11,6 +11,12 @@ export const ROUTES = {
   donar:         { es: "/donar",         en: "/en/donate" },
   gracias:       { es: "/gracias",       en: "/en/thanks" },
   privacidad:    { es: "/privacidad",    en: "/en/privacy" },
+  // ── Demo interactiva (portal de socios, comunidad y admin) ──
+  ingresar:      { es: "/ingresar",      en: "/en/login" },
+  miEspacio:     { es: "/mi-espacio",    en: "/en/my-space" },
+  bienvenida:    { es: "/bienvenida",    en: "/en/welcome" },
+  comunidad:     { es: "/comunidad",     en: "/en/community" },
+  admin:         { es: "/admin",         en: "/en/admin" },
 } as const;
 
 export type RouteKey = keyof typeof ROUTES;

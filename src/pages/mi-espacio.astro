@@ -1,0 +1,21 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import DemoBadge from "../components/brand/DemoBadge.astro";
+import { getLangFromUrl } from "../i18n/utils";
+import "../styles/portal.css";
+const lang = getLangFromUrl(Astro.url);
+---
+<BaseLayout routeKey="miEspacio" title="Mi espacio" description="Tu espacio de socio de El Club del 1+." noindex>
+  <section class="app-shell">
+    <div class="app-wrap">
+      <div style="margin-bottom:14px"><DemoBadge /></div>
+      <div id="portal" data-lang={lang}>
+        <noscript><p class="pf-muted">Esta demo necesita JavaScript activado.</p></noscript>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+<script>
+  import { initDashboard } from "../lib/demo/portal-ui";
+  document.addEventListener("astro:page-load", initDashboard);
+</script>

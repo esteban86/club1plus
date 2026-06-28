@@ -1,0 +1,23 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import DemoBadge from "../../components/brand/DemoBadge.astro";
+import { getLangFromUrl } from "../../i18n/utils";
+import "../../styles/portal.css";
+const lang = getLangFromUrl(Astro.url);
+---
+<BaseLayout routeKey="ingresar" title="My space" description="Enter your El Club del 1+ member space." noindex>
+  <section class="app-shell">
+    <div class="app-wrap">
+      <div class="lg-head">
+        <DemoBadge />
+        <h1 class="lg-title">My space</h1>
+        <p class="lg-sub">Enter your member space. This is a demo: use the simulated magic link or enter as one of our sample members.</p>
+      </div>
+      <div id="login" data-lang={lang}></div>
+    </div>
+  </section>
+</BaseLayout>
+<script>
+  import { initLogin } from "../../lib/demo/portal-ui";
+  document.addEventListener("astro:page-load", initLogin);
+</script>
