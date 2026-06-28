@@ -4,6 +4,7 @@ import AvatarRing from "../brand/AvatarRing.astro";
 import { getCollection } from "astro:content";
 import { getLangFromUrl } from "../../i18n/utils";
 const lang = getLangFromUrl(Astro.url);
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const stories = (await getCollection("stories", (e) => e.data.lang === lang)).sort((a, b) => a.data.order - b.data.order);
 const over = lang === "es" ? "Protagonistas" : "Protagonists";
 const heading = lang === "es" ? "Ellas son la cara del cambio." : "They are the face of change.";
@@ -15,7 +16,7 @@ const heading = lang === "es" ? "Ellas son la cara del cambio." : "They are the 
     <div class="stories__grid">
       {stories.map((s) => (
         <article class="story reveal">
-          <AvatarRing src={s.data.photo} alt={s.data.name} size={88} treatment="ring" name={s.data.name} />
+          <AvatarRing src={s.data.photo ? base + s.data.photo : undefined} alt={s.data.name} size={88} treatment="ring" name={s.data.name} />
           {s.data.quote && <blockquote class="story__quote">“{s.data.quote}”</blockquote>}
           <p class="story__name">{s.data.name}</p>
           <p class="story__role">{s.data.role}{s.data.location ? ` · ${s.data.location}` : ""}</p>
