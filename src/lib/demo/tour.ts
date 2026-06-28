@@ -22,6 +22,7 @@ interface Step {
   kicker: I18n;
   title: I18n;
   body: I18n;
+  cta?: I18n;            // etiqueta del botón final (último paso); si falta usa "Terminar"
 }
 
 const L = {
@@ -101,8 +102,79 @@ const STEPS: Step[] = [
   },
 ];
 
-interface State { active: boolean; step: number; lang: Lang }
-const read = (): State => { try { return JSON.parse(localStorage.getItem(KEY) || "null") || { active: false, step: 0, lang: "es" }; } catch { return { active: false, step: 0, lang: "es" }; } };
+// ── Edición "fundadores": invitación a refundar el Club (1% → 1+) ───────────────
+const STEPS_FOUNDERS: Step[] = [
+  {
+    route: "home",
+    kicker: { es: "Para quienes fundaron el Club", en: "For those who founded the Club" },
+    title: { es: "Lo cerramos. ¿Lo reabrimos, juntos?", en: "We closed it. Shall we reopen it — together?" },
+    body: { es: "Creamos El Club del 1% y lo pausamos. Pero la idea era demasiado buena para dejarla ir. Te invitamos a refundarlo con nosotros, ahora como El Club del 1+. Déjanos mostrarte lo que ya está listo.", en: "We built El Club del 1% and paused it. But the idea was too good to let go. We invite you to re-found it with us — now as El Club del 1+. Let us show you what's already built." },
+  },
+  {
+    route: "home", target: ".hero",
+    kicker: { es: "La misión sigue intacta", en: "The mission is intact" },
+    title: { es: "Riqueza, no caridad", en: "Wealth, not charity" },
+    body: { es: "El propósito no cambió: que una madre cabeza de familia reciba una renta básica y construya su propia salida. Lo que cambia es la fuerza con la que lo hacemos.", en: "The purpose hasn't changed: a female head of household receives a basic income and builds her own way out. What changes is the force we do it with." },
+  },
+  {
+    route: "home", target: "[data-tour='problema']",
+    kicker: { es: "Por qué vale la pena volver", en: "Why it's worth coming back" },
+    title: { es: "El problema no se fue", en: "The problem didn't go away" },
+    body: { es: "1 de cada 3 personas en Colombia sigue en la trampa de la pobreza. Lo que nos unió sigue ahí, esperando que volvamos a moverlo.", en: "1 in 3 people in Colombia is still in the poverty trap. What brought us together is still there, waiting for us to move it again." },
+  },
+  {
+    route: "home", target: "[data-tour='tiers']",
+    kicker: { es: "El giro: del 1% al 1+", en: "The shift: from 1% to 1+" },
+    title: { es: "De pocos elegidos a sumar a muchos", en: "From a chosen few to adding many" },
+    body: { es: "Antes, un club del 1%. Ahora un “+”: sumar. Diez aliados o cuatro mecenas financian a una madre; una madrina la apadrina completa. Mientras más seamos, más madres reciben su renta.", en: "Before, a club of the 1%. Now a “+”: adding up. Ten allies or four patrons fund one mother; a godmother sponsors her in full. The more we are, the more mothers receive income." },
+  },
+  {
+    route: "home", target: ".livec",
+    kicker: { es: "Imagina la tracción", en: "Imagine the traction" },
+    title: { es: "Esto es lo que crece al reabrir", en: "This is what grows when we reopen" },
+    body: { es: "Socios, madres con renta, dinero transferido — en vivo. Hoy son cifras de demostración; contigo y este equipo se vuelven reales.", en: "Members, mothers with income, money transferred — live. Today they're demo figures; with you and this team they become real." },
+  },
+  {
+    route: "comunidad", target: ".comm__graphcard", ready: ".comm__graphcard",
+    kicker: { es: "El efecto refundador", en: "The re-founder effect" },
+    title: { es: "Cada uno trae a otros", en: "Each one brings others" },
+    body: { es: "Tú ya sabes a quién invitar. Un refundador trae a otro, y la red se multiplica. Así pasamos de un puñado a un movimiento.", en: "You already know who to invite. One re-founder brings another, and the network multiplies. That's how we go from a handful to a movement." },
+  },
+  {
+    route: "miEspacio", target: ".pf-carnet", ready: ".pf-tabs", ensureDemoSession: true,
+    kicker: { es: "Ya está construido", en: "It's already built" },
+    title: { es: "El espacio del socio, listo", en: "The member space, ready" },
+    body: { es: "No partimos de cero: el portal, el carné, los aportes y la red ya funcionan. Solo falta encenderlo.", en: "We're not starting from zero: the portal, the card, the contributions and the network already work. We just need to switch it on." },
+  },
+  {
+    route: "miEspacio", target: ".pf-mother", ready: ".pf-tabs",
+    pre: () => { try { localStorage.setItem("c1p_demo_consent", "1"); } catch {} document.querySelector<HTMLElement>(".pf-tab[data-tab='madre']")?.click(); },
+    kicker: { es: "Por esto lo hacemos", en: "This is why we do it" },
+    title: { es: "Ellas ya están", en: "They're already here" },
+    body: { es: "Cuatro mujeres reales confiaron y dieron su testimonio. Cada socio conoce a la madre que financia. No es un número: es una historia esperando seguir.", en: "Four real women trusted us and shared their testimony. Each member meets the mother they fund. Not a number: a story waiting to continue." },
+  },
+  {
+    route: "admin", target: "[data-panel='matching']", ready: ".pf-tab",
+    pre: () => { document.querySelector<HTMLElement>(".pf-tab[data-tab='matching']")?.click(); },
+    kicker: { es: "La operación, pensada", en: "The operation, thought through" },
+    title: { es: "Sabemos cómo encaja", en: "We know how it fits" },
+    body: { es: "Cómo se reparte cada aporte (65/35), cómo se completa la renta de cada madre, cómo se asigna. El motor ya está diseñado para que el equipo lo opere.", en: "How each contribution splits (65/35), how each mother's income is completed, how it's matched. The engine is already designed for the team to run." },
+  },
+  {
+    route: "home",
+    kicker: { es: "Tu turno, refundador/a", en: "Your turn, re-founder" },
+    title: { es: "¿Le metemos el empuje, juntos?", en: "Shall we give it the push, together?" },
+    body: { es: "Esto solo necesita gente que se ilusione. Ya hay un equipo de liderazgo metiéndole el empuje. Si te late, escríbenos: ¿le entras a refundar El Club del 1+?", en: "This just needs people who get excited. There's already a leadership team pushing it. If it resonates, write to us: are you in to re-found El Club del 1+?" },
+    cta: { es: "¡Cuenten conmigo!", en: "Count me in!" },
+  },
+];
+
+type Variant = "general" | "founders";
+const getSteps = (v: Variant): Step[] => (v === "founders" ? STEPS_FOUNDERS : STEPS);
+
+interface State { active: boolean; step: number; lang: Lang; variant: Variant }
+const DEFAULT_STATE: State = { active: false, step: 0, lang: "es", variant: "general" };
+const read = (): State => { try { const s = JSON.parse(localStorage.getItem(KEY) || "null"); return s ? { ...DEFAULT_STATE, ...s } : { ...DEFAULT_STATE }; } catch { return { ...DEFAULT_STATE }; } };
 const write = (s: State) => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch {} };
 const clearState = () => { try { localStorage.removeItem(KEY); } catch {} };
 
@@ -118,8 +190,8 @@ const routePath = (k: RouteKey, lang: Lang) => base + ROUTES[k][lang];
 
 let currentEl: HTMLElement | null = null;
 
-export function startTour() {
-  write({ active: true, step: 0, lang: detectLang() });
+export function startTour(variant: Variant = "general") {
+  write({ active: true, step: 0, lang: detectLang(), variant });
   showStep();
 }
 function endTour() {
@@ -130,7 +202,7 @@ function endTour() {
   document.body.classList.remove("tour-on");
 }
 function goTo(i: number) {
-  if (i >= STEPS.length) return endTour();
+  if (i >= getSteps(read().variant).length) return endTour();
   if (i < 0) return;
   write({ ...read(), step: i });
   showStep();
@@ -146,7 +218,7 @@ function waitFor(sel: string, onFound: (el: HTMLElement) => void, onTimeout?: ()
 function showStep() {
   const st = read();
   if (!st.active) return;
-  const step = STEPS[st.step];
+  const step = getSteps(st.variant)[st.step];
   if (!step) return endTour();
   const lang = st.lang;
   if (currentKey(lang) !== step.route) {
@@ -169,16 +241,17 @@ function paint(step: Step, el: HTMLElement | null, st: State, lang: Lang) {
   const root = document.getElementById("tour-root");
   if (!root) return;
   const ui = L[lang];
+  const steps = getSteps(st.variant);
   const isFirst = st.step === 0;
-  const isLast = st.step === STEPS.length - 1;
-  const total = STEPS.length;
+  const isLast = st.step === steps.length - 1;
+  const total = steps.length;
 
   if (el) {
     el.querySelectorAll<HTMLElement>(".reveal").forEach((r) => r.classList.add("is-in"));
     el.classList.add("is-in");
   }
 
-  const dots = STEPS.map((_, i) => {
+  const dots = steps.map((_, i) => {
     const cls = i === st.step ? "tourx__dot tourx__dot--now" : i < st.step ? "tourx__dot tourx__dot--done" : "tourx__dot";
     return `<button class="${cls}" data-goto="${i}" aria-label="${i + 1}"></button>`;
   }).join("");
@@ -198,7 +271,7 @@ function paint(step: Step, el: HTMLElement | null, st: State, lang: Lang) {
         <button class="tourx__skip" id="tourx-skip">${ui.skip}</button>
         <div class="tourx__btns">
           ${isFirst ? "" : `<button class="tourx__btn tourx__btn--ghost" id="tourx-prev">${ui.prev}</button>`}
-          <button class="tourx__btn tourx__btn--primary" id="tourx-next">${isLast ? ui.finish + " ✓" : ui.next + " →"}</button>
+          <button class="tourx__btn tourx__btn--primary" id="tourx-next">${isLast ? (step.cta ? esc(step.cta[lang]) : ui.finish + " ✓") : ui.next + " →"}</button>
         </div>
       </div>
     </div>`;
@@ -249,11 +322,11 @@ function repositionRing(el: HTMLElement) {
 
 export function initTour() {
   const launch = document.getElementById("tour-launch");
-  if (launch && !launch.dataset.bound) { launch.dataset.bound = "1"; launch.addEventListener("click", startTour); }
-  const params = new URLSearchParams(location.search);
-  if (params.get("tour") === "1") {
+  if (launch && !launch.dataset.bound) { launch.dataset.bound = "1"; launch.addEventListener("click", () => startTour("general")); }
+  const tp = new URLSearchParams(location.search).get("tour");
+  if (tp) {
     history.replaceState(null, "", location.pathname + location.hash);
-    startTour();
+    startTour(tp === "fundadores" || tp === "founders" || tp === "refundadores" ? "founders" : "general");
     return;
   }
   if (read().active) showStep();
