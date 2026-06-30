@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="El Club del 1+">
+  <defs>
+    <clipPath id="domeI"><rect x="0" y="0" width="200" height="122"></rect></clipPath>
+  </defs>
+  <circle cx="100" cy="100" r="94" fill="#0C1A13"></circle>
+  <circle cx="100" cy="100" r="84" fill="#2BE06F" clip-path="url(#domeI)"></circle>
+  <text x="72" y="99" text-anchor="middle" font-family="&#39;Hanken Grotesk&#39;,&#39;Helvetica Neue&#39;,Arial,sans-serif" font-weight="900" font-size="86" letter-spacing="-4" fill="#0C1A13">1</text>
+  <g fill="#0C1A13">
+    <rect x="122" y="39" width="16" height="58" rx="4"></rect>
+    <rect x="101" y="60" width="58" height="16" rx="4"></rect>
+  </g>
+  <text x="100" y="170" text-anchor="middle" font-family="&#39;Hanken Grotesk&#39;,&#39;Helvetica Neue&#39;,Arial,sans-serif" font-weight="900" font-size="46" letter-spacing="-1.5" fill="#2BE06F">club</text>
+</svg>
