@@ -13,6 +13,7 @@ const accentVar: Record<string, string> = { green: "var(--green-500)", coral: "v
 const copy = lang === "es"
   ? {
       over: "Súmate", before: "Elige cómo ", hl: "sumar.", featured: "★ Más elegido",
+      cohort: "Buscamos a las próximas 50 madres de 2026. Tu aporte reserva un cupo.",
       monthly: "Mensual", once: "Único", per: "/ mes", perOnce: "", join: "Súmate como",
       freqLabel: "Frecuencia del aporte",
       recurringMonthly: "Tu aporte se debita automáticamente cada mes hasta que lo canceles. Cancelas cuando quieras.",
@@ -26,6 +27,7 @@ const copy = lang === "es"
     }
   : {
       over: "Join", before: "Choose how to ", hl: "add.", featured: "★ Most chosen",
+      cohort: "We're looking for 2026's next 50 mothers. Your contribution reserves a spot.",
       monthly: "Monthly", once: "One-time", per: "/ mo", perOnce: "", join: "Join as",
       freqLabel: "Contribution frequency",
       recurringMonthly: "Your contribution is charged automatically every month until you cancel. Cancel anytime.",
@@ -49,6 +51,7 @@ const tierData = tiers.map((t) => ({
     <div class="tiers__head">
       <Overline color="var(--coral-500)">{copy.over}</Overline>
       <h2 class="display tiers__title">{copy.before}<Highlight variant="coral">{copy.hl}</Highlight></h2>
+      <p class="tiers__cohort">{copy.cohort}</p>
       <div class="tiers__toggle" role="group" aria-label={copy.freqLabel} data-freq-toggle>
         <button class="is-on" data-freq="monthly" aria-pressed="true">{copy.monthly}</button>
         <button data-freq="one-time" aria-pressed="false">{copy.once}</button>
@@ -152,6 +155,7 @@ const tierData = tiers.map((t) => ({
 <style>
   .tiers__head { text-align: center; max-width: 32ch; margin: 0 auto 18px; }
   .tiers__title { font-size: clamp(28px, 4.5vw, 42px); color: var(--ink-900); margin-top: 14px; padding-bottom: 0.1em; }
+  .tiers__cohort { font-family: var(--font-body); font-weight: 700; font-size: 14px; color: var(--coral-500); margin-top: 12px; }
   .tiers__toggle { display: inline-flex; background: var(--paper-200); border-radius: var(--radius-pill); padding: 4px; margin-top: 22px; }
   .tiers__toggle button { font-family: var(--font-display); font-weight: 700; font-size: 14px; border: 0; background: transparent; color: var(--text-muted); padding: 11px 22px; border-radius: var(--radius-pill); cursor: pointer; }
   .tiers__toggle button.is-on { background: var(--ink-900); color: var(--paper-50); }

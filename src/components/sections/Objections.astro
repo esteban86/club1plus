@@ -1,0 +1,74 @@
+---
+import Overline from "../brand/Overline.astro";
+import Highlight from "../brand/Highlight.astro";
+import { getLangFromUrl, getRoute } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const d = lang === "es"
+  ? {
+      over: "Preguntas incómodas",
+      before: "Lo que seguro te estás ",
+      hl: "preguntando.",
+      lead: "Las dudas legítimas, de frente. Cada respuesta se apoya en la evidencia y en nuestros propios resultados.",
+      items: [
+        { q: "¿No se lo van a gastar mal?", a: "La evidencia mundial y nuestro propio piloto dicen lo contrario: lo invierten. De 53 madres, el aporte fue a mercado, emprendimiento, ahorro y la educación de sus hijos." },
+        { q: "¿No les quita las ganas de trabajar?", a: "El mito de la pereza no se sostiene: trabajan igual o más, ahora con un plan. Entre nuestras beneficiarias, el desempleo pasó de 59,5% a 18,9%." },
+        { q: "¿No es mejor «enseñar a pescar»?", a: "El efectivo es la caña — y ellas saben qué caña necesitan. Además del ingreso damos acompañamiento, capacitación y círculos de apoyo." },
+        { q: "¿Esto no es asistencialismo?", a: "Es lo contrario del paternalismo: confiamos en su criterio en vez de decidir por ellas. No es un regalo; es el colchón que les permite dejar de apagar incendios y emprender." },
+        { q: "¿A dónde va exactamente mi plata?", a: "Cada peso con destino claro: 65% llega a ellas, 35% sostiene la operación — y ese 35% baja a medida que más nos sumamos. Como socio ves a tu madre y su progreso." },
+        { q: "¿Por qué a madres cabeza de familia?", a: "La pobreza tiene cara de mujer: el 36,1% de los hogares pobres dependen de una mujer sola. Apoyar a una madre multiplica el impacto en toda su familia." },
+      ],
+      ctaEv: "Ver la evidencia",
+      ctaIm: "Ver nuestros resultados",
+    }
+  : {
+      over: "Uncomfortable questions",
+      before: "What you're probably ",
+      hl: "wondering.",
+      lead: "The fair doubts, head-on. Every answer rests on the evidence and on our own results.",
+      items: [
+        { q: "Won't they just waste it?", a: "Global evidence and our own pilot say otherwise: they invest it. Across 53 mothers, it went to groceries, their businesses, savings and their children's education." },
+        { q: "Doesn't it kill the will to work?", a: "The laziness myth doesn't hold: they work as much or more, now with a plan. Among our beneficiaries, unemployment fell from 59.5% to 18.9%." },
+        { q: "Isn't it better to «teach them to fish»?", a: "Cash is the fishing rod — and they know which rod they need. Beyond the income we add mentoring, training and support circles." },
+        { q: "Isn't this just a handout?", a: "It's the opposite of paternalism: we trust their judgment instead of deciding for them. It's not a gift; it's the cushion that lets them stop firefighting and start building." },
+        { q: "Where exactly does my money go?", a: "Every peso with a clear destination: 65% reaches them, 35% runs the operation — and that 35% drops as more of us join. As a member you see your mother and her progress." },
+        { q: "Why female heads of household?", a: "Poverty has a woman's face: 36.1% of poor households depend on a woman alone. Supporting a mother multiplies the impact across her whole family." },
+      ],
+      ctaEv: "See the evidence",
+      ctaIm: "See our results",
+    };
+const evUrl = base + getRoute("evidencia", lang);
+const imUrl = base + getRoute("impacto", lang);
+---
+<section class="ground-paper section">
+  <div class="container">
+    <Overline tone="muted">{d.over}</Overline>
+    <h2 class="display obj__title">{d.before}<Highlight>{d.hl}</Highlight></h2>
+    <p class="obj__lead">{d.lead}</p>
+    <div class="obj__grid">
+      {d.items.map((it) => (
+        <div class="obj__card reveal">
+          <h3 class="obj__q">{it.q}</h3>
+          <p class="obj__a">{it.a}</p>
+        </div>
+      ))}
+    </div>
+    <div class="obj__cta">
+      <a class="obj__link" href={evUrl}>{d.ctaEv} →</a>
+      <a class="obj__link" href={imUrl}>{d.ctaIm} →</a>
+    </div>
+  </div>
+</section>
+<style>
+  .obj__title { font-size: clamp(28px, 4.5vw, 44px); color: var(--text-strong); margin-top: 14px; max-width: 22ch; line-height: 1.1; padding-bottom: 0.1em; }
+  .obj__lead { font-family: var(--font-body); font-weight: 500; font-size: clamp(15px, 2vw, 18px); color: var(--text-muted); max-width: 56ch; margin-top: 16px; }
+  .obj__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 40px; }
+  .obj__card { background: var(--paper-0); border: 1px solid var(--paper-200); border-left: 4px solid var(--green-400); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); padding: 24px; }
+  .obj__q { font-family: var(--font-display); font-weight: 800; font-size: 18px; color: var(--text-strong); line-height: 1.25; }
+  .obj__a { font-family: var(--font-body); font-weight: 500; font-size: 14.5px; line-height: 1.55; color: var(--text-body); margin-top: 10px; }
+  .obj__cta { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 32px; }
+  .obj__link { font-family: var(--font-display); font-weight: 800; font-size: 15px; color: var(--green-700); text-decoration: none; border-bottom: 1px solid transparent; }
+  .obj__link:hover { border-bottom-color: var(--green-700); }
+  @media (max-width: 720px) { .obj__grid { grid-template-columns: 1fr; } }
+</style>

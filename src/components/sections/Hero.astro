@@ -8,8 +8,8 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const copy = lang === "es"
-  ? { over: "Startup social · Medellín, Colombia", lead: "Salir de la pobreza no es cuestión de esfuerzo. Asociamos a cientos de amigos para dar una renta básica mensual a madres cabeza de familia — y que construyan su propia salida.", before: "La mejor forma de eliminar la pobreza es creando ", hl: "riqueza." }
-  : { over: "Social startup · Medellín, Colombia", lead: "Escaping poverty isn't a matter of effort. We bring hundreds of friends together to fund a monthly basic income for female heads of household — so they build their own way out.", before: "The best way to end poverty is by creating ", hl: "wealth." };
+  ? { over: "Startup social · Medellín, Colombia", lead: "No es por falta de esfuerzo: es por falta de liquidez. Entre cientos de amigos cofinanciamos un ingreso estable para madres emprendedoras — y ellas construyen su propia salida.", before: "La mejor forma de eliminar la pobreza es creando ", hl: "riqueza." }
+  : { over: "Social startup · Medellín, Colombia", lead: "It isn't for lack of effort — it's lack of liquidity. Hundreds of friends co-fund a stable income for entrepreneurial mothers — and they build their own way out.", before: "The best way to end poverty is by creating ", hl: "wealth." };
 ---
 <section class="ground-green hero">
   <div class="container">
