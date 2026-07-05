@@ -1,0 +1,73 @@
+---
+// Comparador temporal de tipografías display (no indexado). Para decidir la fuente
+// de titulares. Borrar tras elegir.
+import "@fontsource-variable/hanken-grotesk";
+import "@fontsource-variable/fraunces/full.css";
+import "@fontsource-variable/bricolage-grotesque";
+import "@fontsource-variable/space-grotesk";
+import "../styles/tokens.css";
+
+const options = [
+  { id: 1, name: "Fraunces", note: "Serif editorial cálida · la actual", fam: '"Fraunces Variable", Georgia, serif', vset: '"opsz" 140, "SOFT" 40, "WONK" 0', weight: 600 },
+  { id: 2, name: "Bricolage Grotesque", note: "Sans display con carácter · contemporánea, muy “agencia”", fam: '"Bricolage Grotesque Variable", sans-serif', vset: "normal", weight: 800 },
+  { id: 3, name: "Space Grotesk", note: "Geométrica limpia · hermana del Space Mono que ya usan", fam: '"Space Grotesk Variable", sans-serif', vset: "normal", weight: 700 },
+];
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Comparador de tipografías · El Club del 1+</title>
+  <style is:global>
+    :root { color-scheme: light; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper-100); color: var(--ink-900); font-family: var(--font-body, system-ui); -webkit-font-smoothing: antialiased; }
+    .wrap { max-width: 860px; margin-inline: auto; padding: clamp(20px, 5vw, 44px) clamp(16px, 5vw, 32px) 80px; }
+    .lead-over { font-family: "Space Mono", monospace; font-weight: 700; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--green-700); }
+    .lead-h { font-family: var(--font-body); font-weight: 800; font-size: clamp(24px, 5vw, 34px); letter-spacing: -0.02em; margin: 8px 0 6px; }
+    .lead-p { font-family: var(--font-body); font-weight: 500; font-size: 15px; color: var(--text-muted); max-width: 60ch; line-height: 1.5; }
+    .opt { margin-top: 30px; border-radius: 18px; overflow: hidden; box-shadow: var(--shadow-md); border: 1px solid var(--paper-200); }
+    .opt__label { background: var(--ink-900); color: var(--paper-50); padding: 12px 18px; display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+    .opt__num { font-family: "Space Mono", monospace; font-weight: 700; color: var(--green-400); font-size: 13px; }
+    .opt__name { font-family: var(--font-body); font-weight: 800; font-size: 16px; }
+    .opt__note { font-family: var(--font-body); font-weight: 500; font-size: 13px; color: var(--ink-300); }
+    /* Panel verde = contexto real del hero */
+    .opt__panel { background: linear-gradient(152deg, var(--green-300), var(--green-400) 52%, var(--green-500)); padding: clamp(22px, 5vw, 40px); }
+    .opt__title { color: var(--ink-900); font-size: clamp(30px, 7vw, 60px); line-height: 1.0; letter-spacing: -0.02em; margin: 0; max-width: 15ch; }
+    .mark { background: var(--ink-900); color: var(--green-400); padding: 0 0.1em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+    .opt__sub { margin: 22px 0 0; color: var(--ink-900); font-size: clamp(19px, 3.4vw, 28px); line-height: 1.1; letter-spacing: -0.02em; opacity: 0.92; }
+    .pick { font-family: "Space Mono", monospace; font-size: 12px; color: var(--text-muted); margin-top: 40px; }
+    .back { display: inline-block; margin-top: 8px; font-family: var(--font-body); font-weight: 800; color: var(--green-700); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <p class="lead-over">Decisión de marca · tipografía de titulares</p>
+    <h1 class="lead-h">¿Cuál titular se siente “un millón”?</h1>
+    <p class="lead-p">El mismo titular del hero en 3 fuentes top, sobre el verde de marca. Mira cuál te llega más y dime el número. El cuerpo del texto y los datos (Space Mono) no cambian — esto es solo para los <strong>titulares</strong>.</p>
+
+    {options.map((o) => (
+      <div class="opt">
+        <div class="opt__label">
+          <span class="opt__num">OPCIÓN {o.id}</span>
+          <span class="opt__name">{o.name}</span>
+          <span class="opt__note">{o.note}</span>
+        </div>
+        <div class="opt__panel">
+          <h2 class="opt__title" style={`font-family:${o.fam};font-weight:${o.weight};font-variation-settings:${o.vset}`}>
+            La mejor forma de eliminar la pobreza es creando <span class="mark">riqueza.</span>
+          </h2>
+          <p class="opt__sub" style={`font-family:${o.fam};font-weight:${o.weight};font-variation-settings:${o.vset}`}>
+            Ellas son la cara del cambio.
+          </p>
+        </div>
+      </div>
+    ))}
+
+    <p class="pick">Cuando decidas, dime “Opción 1 / 2 / 3” y la dejo fija en todo el sitio (y borro esta página).</p>
+    <a class="back" href={base + "/"}>← Volver al inicio</a>
+  </div>
+</body>
+</html>
