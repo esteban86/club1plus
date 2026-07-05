@@ -40,8 +40,11 @@ ul { margin: 0; padding: 0; }
 /* Layout helpers */
 .container { max-width: var(--maxw-content); margin-inline: auto; padding-inline: clamp(20px, 5vw, 40px); }
 .section { padding-block: clamp(56px, 9vw, 88px); }
-.ground-green { background: linear-gradient(150deg, var(--green-300) 0%, var(--green-400) 52%, var(--green-500) 100%); color: var(--ink-900); }
-.ground-ink   { background: linear-gradient(160deg, var(--ink-700) 0%, var(--ink-800) 55%, var(--ink-900) 100%); color: var(--text-on-dark); }
+/* background-color = base sólida SIEMPRE presente (si un .plus-texture-* sobrescribe
+   el background-image, el color de fondo se mantiene y el texto no queda invisible).
+   background-image = gradiente de profundidad (se ve en secciones sin textura). */
+.ground-green { background-color: var(--green-400); background-image: linear-gradient(150deg, var(--green-300) 0%, var(--green-400) 52%, var(--green-500) 100%); color: var(--ink-900); }
+.ground-ink   { background-color: var(--ink-800); background-image: linear-gradient(160deg, var(--ink-700) 0%, var(--ink-800) 55%, var(--ink-900) 100%); color: var(--text-on-dark); }
 .ground-paper { background: var(--paper-50);  color: var(--text-body); }
 .ground-paper-100 { background: var(--paper-100); color: var(--text-body); }
 .plus-texture-green { background-image: var(--pattern-plus-green); }
