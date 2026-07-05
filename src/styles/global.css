@@ -1,5 +1,5 @@
 @import "@fontsource-variable/hanken-grotesk";
-@import "@fontsource-variable/fraunces/full.css";
+@import "@fontsource-variable/bricolage-grotesque";
 @import "@fontsource/space-mono/400.css";
 @import "@fontsource/space-mono/700.css";
 @import "./tokens.css";
@@ -52,8 +52,7 @@ ul { margin: 0; padding: 0; }
 
 /* Display headline helper */
 .display {
-  font-family: var(--font-serif); font-weight: 600;
-  font-variation-settings: "opsz" 140, "SOFT" 40, "WONK" 0;
+  font-family: var(--font-headline); font-weight: 800;
   line-height: var(--lh-tight); letter-spacing: -0.02em; color: inherit;
 }
 

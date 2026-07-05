@@ -98,7 +98,7 @@
   --font-display: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
   --font-body:    "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
   --font-mono:    "Space Mono", ui-monospace, "SF Mono", Menlo, monospace;
-  --font-serif:   "Fraunces Variable", "Hanken Grotesk", Georgia, serif; /* display editorial */
+  --font-headline: "Bricolage Grotesque Variable", "Hanken Grotesk", sans-serif; /* titulares display */
 
   /* Weights */
   --fw-regular:  400; /* @kind font */
