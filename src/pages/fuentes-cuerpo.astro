@@ -1,0 +1,76 @@
+---
+// Comparador temporal de tipografía de CUERPO (no indexado). Para decidir la fuente
+// de lectura. Mismo párrafo, mismo seteo (18px / 1.6 / ~60ch) — solo cambia la fuente.
+// Borrar tras elegir.
+import "@fontsource-variable/hanken-grotesk";
+import "@fontsource-variable/inter";
+import "@fontsource/atkinson-hyperlegible/400.css";
+import "@fontsource/atkinson-hyperlegible/700.css";
+import "@fontsource-variable/bricolage-grotesque";
+import "../styles/tokens.css";
+
+const para =
+  "En El Club del 1+ asociamos a cientos de amigos comprometidos que suman un aporte mensual. Con ese fondo, una madre cabeza de familia recibe una renta básica estable y acompañamiento para emprender. No es caridad: es liquidez para que ella construya su propia salida y, con el tiempo, genere sus propios ingresos.";
+const small = "El 65% de cada aporte va directo a las madres; el 35% sostiene la operación — y baja a medida que crecemos.";
+
+const options = [
+  { id: 1, name: "Hanken Grotesk", note: "La actual · grotesca humanista", fam: '"Hanken Grotesk", sans-serif' },
+  { id: 2, name: "Inter", note: "Workhorse neutra ultra-legible · deja que los titulares brillen", fam: '"Inter Variable", sans-serif' },
+  { id: 3, name: "Atkinson Hyperlegible", note: "Diseñada para baja visión · máxima legibilidad + alineada con la misión", fam: '"Atkinson Hyperlegible", sans-serif' },
+];
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Comparador de cuerpo · El Club del 1+</title>
+  <style is:global>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper-50); color: var(--text-body); font-family: "Hanken Grotesk", system-ui; -webkit-font-smoothing: antialiased; }
+    .wrap { max-width: 760px; margin-inline: auto; padding: clamp(20px, 5vw, 44px) clamp(16px, 5vw, 30px) 80px; }
+    .over { font-family: "Space Mono", monospace; font-weight: 700; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--green-700); }
+    .lead-h { font-family: "Bricolage Grotesque Variable", sans-serif; font-weight: 800; font-size: clamp(26px, 5vw, 36px); letter-spacing: -0.02em; margin: 8px 0 6px; color: var(--ink-900); }
+    .lead-p { font-weight: 500; font-size: 15px; color: var(--text-muted); max-width: 60ch; line-height: 1.55; }
+    .opt { margin-top: 30px; background: var(--paper-0); border: 1px solid var(--paper-200); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-sm); }
+    .opt__label { background: var(--ink-900); color: var(--paper-50); padding: 11px 18px; display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+    .opt__num { font-family: "Space Mono", monospace; font-weight: 700; color: var(--green-400); font-size: 13px; }
+    .opt__name { font-weight: 800; font-size: 16px; }
+    .opt__note { font-size: 13px; color: var(--ink-300); }
+    .opt__body { padding: clamp(20px, 4vw, 32px); }
+    /* Titular Bricolage (fijo) para ver la pareja real */
+    .opt__title { font-family: "Bricolage Grotesque Variable", sans-serif; font-weight: 800; font-size: clamp(24px, 4vw, 32px); letter-spacing: -0.02em; line-height: 1.05; color: var(--ink-900); margin: 0 0 14px; }
+    /* Cuerpo: MISMO seteo para todas, solo cambia la familia */
+    .opt__para { font-size: 18px; line-height: 1.6; color: var(--text-body); max-width: 60ch; margin: 0; }
+    .opt__small { font-size: 13.5px; line-height: 1.5; color: var(--text-muted); margin: 16px 0 0; max-width: 60ch; }
+    .pick { font-family: "Space Mono", monospace; font-size: 12px; color: var(--text-muted); margin-top: 40px; }
+    .back { display: inline-block; margin-top: 8px; font-family: "Hanken Grotesk", sans-serif; font-weight: 800; color: var(--green-700); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <p class="over">Decisión de marca · tipografía de cuerpo (lectura)</p>
+    <h1 class="lead-h">¿Cuál lees más cómodo?</h1>
+    <p class="lead-p">El mismo párrafo, con el mismo tamaño, interlineado y ancho de línea — <strong>solo cambia la fuente</strong>. El titular arriba está en Bricolage (la de titulares que ya elegimos) para ver la pareja real. Lee cada bloque un par de segundos y dime el número.</p>
+
+    {options.map((o) => (
+      <div class="opt">
+        <div class="opt__label">
+          <span class="opt__num">OPCIÓN {o.id}</span>
+          <span class="opt__name">{o.name}</span>
+          <span class="opt__note">{o.note}</span>
+        </div>
+        <div class="opt__body">
+          <h2 class="opt__title">Ellas construyen su propia salida.</h2>
+          <p class="opt__para" style={`font-family:${o.fam}`}>{para}</p>
+          <p class="opt__small" style={`font-family:${o.fam}`}>{small}</p>
+        </div>
+      </div>
+    ))}
+
+    <p class="pick">Cuando decidas, dime “Opción 1 / 2 / 3” y la dejo fija como cuerpo en todo el sitio (y borro esta página).</p>
+    <a class="back" href={base + "/"}>← Volver al inicio</a>
+  </div>
+</body>
+</html>
