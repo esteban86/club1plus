@@ -93,7 +93,15 @@ const jsonLd = {
             if (e.isIntersecting) { e.target.classList.add("is-in"); io?.unobserve(e.target); }
           }
         }, { rootMargin: "0px 0px -10% 0px" });
-        document.querySelectorAll(".reveal:not(.is-in)").forEach((el) => io!.observe(el));
+        document.querySelectorAll<HTMLElement>(".reveal:not(.is-in)").forEach((el) => {
+          // cascada: hermanos .reveal entran en secuencia (--ro = orden, tope 8)
+          const p = el.parentElement;
+          if (p) {
+            const sibs = Array.from(p.children).filter((c) => c.classList.contains("reveal"));
+            el.style.setProperty("--ro", String(Math.min(sibs.indexOf(el), 8)));
+          }
+          io!.observe(el);
+        });
       }
       document.addEventListener("astro:page-load", initReveal);
     </script>

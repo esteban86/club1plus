@@ -71,7 +71,7 @@ const words = copy.before.trim().split(/\s+/);
   @keyframes hero-sheen { from { transform: translate(-4%, -3%) scale(1); opacity: 0.9; } to { transform: translate(6%, 5%) scale(1.12); opacity: 0.55; } }
   @media (prefers-reduced-motion: reduce) { .hero::before { animation: none; } }
 
-  .hero__title { font-size: clamp(46px, 7.6vw, 92px); line-height: 1.02; letter-spacing: -0.035em; margin-top: 22px; max-width: 15ch; padding-bottom: 0.1em; }
+  .hero__title { font-size: clamp(46px, 7.6vw, 92px); line-height: 1.0; letter-spacing: -0.02em; margin-top: 22px; max-width: 15ch; padding-bottom: 0.1em; }
   .hero__word { display: inline-block; margin-right: 0.26em; }
   /* Titular cinético: las palabras se arman en secuencia. Animación CSS pura
      (se reproduce sola al cargar; el estado final SIEMPRE es visible). */
