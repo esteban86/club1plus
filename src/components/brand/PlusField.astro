@@ -1,0 +1,154 @@
+---
+// Constelación viva de "+" — la comunidad como red que se conecta, reacciona al
+// cursor y crece al hacer clic. Se dibuja en <canvas> detrás del contenido del
+// contenedor padre (que debe ser position: relative). Vanilla, performante,
+// respeta prefers-reduced-motion (dibuja un solo frame estático).
+interface Props { tone?: "ink" | "paper"; class?: string; }
+const { tone = "ink", class: cls = "" } = Astro.props;
+---
+<canvas class:list={["plusfield", `plusfield--${tone}`, cls]} aria-hidden="true" data-tone={tone}></canvas>
+<style>
+  .plusfield { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; z-index: 0; }
+</style>
+<script>
+  type P = { x: number; y: number; vx: number; vy: number; s: number; z: number; born: number };
+
+  function initField(canvas: HTMLCanvasElement) {
+    if (canvas.dataset.init) return;
+    canvas.dataset.init = "1";
+    const parent = canvas.parentElement as HTMLElement;
+    const ctx = canvas.getContext("2d");
+    if (!parent || !ctx) return;
+    const stroke = canvas.dataset.tone === "paper" ? "12, 26, 19" : "12, 26, 19"; // ink RGB
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    let w = 0, h = 0, dpr = 1, particles: P[] = [], raf = 0, running = false, t = 0;
+    const mouse = { x: -9999, y: -9999, on: false };
+    const MAXD = 130;
+
+    const rnd = (a: number, b: number) => a + Math.random() * (b - a);
+    const spawn = (x?: number, y?: number): P => ({
+      x: x ?? Math.random() * w, y: y ?? Math.random() * h,
+      vx: rnd(-0.22, 0.22), vy: rnd(-0.22, 0.22), s: rnd(6, 11), z: rnd(0.35, 1), born: t,
+    });
+
+    function build() {
+      const count = Math.max(28, Math.min(offscreen() ? 46 : 110, Math.round((w * h) / 12500)));
+      particles = Array.from({ length: count }, () => spawn());
+    }
+    function offscreen() { return w < 640; }
+
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = parent.clientWidth; h = parent.clientHeight;
+      if (!w || !h) return;
+      canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+      ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
+      build();
+      if (reduce) draw();
+    }
+
+    function plus(x: number, y: number, s: number, a: number) {
+      ctx!.globalAlpha = a;
+      ctx!.beginPath();
+      ctx!.moveTo(x - s / 2, y); ctx!.lineTo(x + s / 2, y);
+      ctx!.moveTo(x, y - s / 2); ctx!.lineTo(x, y + s / 2);
+      ctx!.stroke();
+    }
+
+    function draw() {
+      ctx!.clearRect(0, 0, w, h);
+      // líneas entre "+" cercanos (la red)
+      ctx!.lineWidth = 1;
+      ctx!.lineCap = "round";
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const a = particles[i], b = particles[j];
+          const dx = a.x - b.x, dy = a.y - b.y;
+          const d = Math.hypot(dx, dy);
+          if (d < MAXD) {
+            ctx!.strokeStyle = `rgba(${stroke}, ${(1 - d / MAXD) * 0.2})`;
+            ctx!.beginPath(); ctx!.moveTo(a.x, a.y); ctx!.lineTo(b.x, b.y); ctx!.stroke();
+          }
+        }
+      }
+      // conexión al cursor (pozo de gravedad suave)
+      if (mouse.on) {
+        for (const p of particles) {
+          const dx = mouse.x - p.x, dy = mouse.y - p.y;
+          const d = Math.hypot(dx, dy);
+          if (d < MAXD * 1.5) {
+            ctx!.strokeStyle = `rgba(${stroke}, ${(1 - d / (MAXD * 1.5)) * 0.28})`;
+            ctx!.lineWidth = 1.2;
+            ctx!.beginPath(); ctx!.moveTo(mouse.x, mouse.y); ctx!.lineTo(p.x, p.y); ctx!.stroke();
+          }
+        }
+      }
+      // los "+"
+      ctx!.strokeStyle = `rgb(${stroke})`;
+      for (const p of particles) {
+        const grow = Math.min(1, (t - p.born) / 28); // aparecen creciendo
+        ctx!.lineWidth = 1.4 + p.z * 1.2; // los "cercanos" con trazo más grueso → profundidad
+        plus(p.x, p.y, p.s * (0.55 + p.z * 0.6) * grow, (0.3 + p.z * 0.4) * grow);
+      }
+      ctx!.globalAlpha = 1;
+    }
+
+    function step() {
+      t++;
+      for (const p of particles) {
+        // deriva suave hacia el cursor
+        if (mouse.on) {
+          const dx = mouse.x - p.x, dy = mouse.y - p.y;
+          const d = Math.hypot(dx, dy);
+          if (d < MAXD * 1.5 && d > 0.01) { p.vx += (dx / d) * 0.02; p.vy += (dy / d) * 0.02; }
+        }
+        p.x += p.vx; p.y += p.vy;
+        p.vx *= 0.985; p.vy *= 0.985;
+        // reinyecta un poco de vida
+        if (Math.abs(p.vx) < 0.05) p.vx += rnd(-0.06, 0.06);
+        if (Math.abs(p.vy) < 0.05) p.vy += rnd(-0.06, 0.06);
+        // envolver bordes
+        if (p.x < -20) p.x = w + 20; if (p.x > w + 20) p.x = -20;
+        if (p.y < -20) p.y = h + 20; if (p.y > h + 20) p.y = -20;
+      }
+      draw();
+      raf = requestAnimationFrame(step);
+    }
+    function start() { if (running || reduce) return; running = true; raf = requestAnimationFrame(step); }
+    function stop() { running = false; cancelAnimationFrame(raf); }
+
+    // interacción (cursor + clic para "sumar tu +")
+    parent.addEventListener("pointermove", (e) => {
+      const r = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; mouse.on = true;
+    });
+    parent.addEventListener("pointerleave", () => { mouse.on = false; mouse.x = mouse.y = -9999; });
+    parent.addEventListener("pointerdown", (e) => {
+      const el = e.target as HTMLElement;
+      if (el.closest("a,button,input,select,textarea")) return; // no molestar a los controles
+      const r = canvas.getBoundingClientRect();
+      const x = e.clientX - r.left, y = e.clientY - r.top;
+      for (let k = 0; k < 6; k++) {
+        const p = spawn(x + rnd(-8, 8), y + rnd(-8, 8));
+        p.vx = rnd(-1.4, 1.4); p.vy = rnd(-1.4, 1.4);
+        particles.push(p);
+      }
+      if (particles.length > 140) particles.splice(0, particles.length - 140);
+    });
+
+    const ro = new ResizeObserver(() => resize());
+    ro.observe(parent);
+    // pausa cuando el hero no está en pantalla
+    const io = new IntersectionObserver((es) => { es[0].isIntersecting ? start() : stop(); }, { threshold: 0 });
+    io.observe(parent);
+
+    resize();
+    if (!reduce) start();
+  }
+
+  function bootFields() {
+    document.querySelectorAll<HTMLCanvasElement>("canvas.plusfield").forEach(initField);
+  }
+  document.addEventListener("astro:page-load", bootFields);
+</script>

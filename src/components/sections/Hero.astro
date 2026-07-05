@@ -3,6 +3,7 @@ import Button from "../brand/Button.astro";
 import Highlight from "../brand/Highlight.astro";
 import Overline from "../brand/Overline.astro";
 import ChevronPill from "../brand/ChevronPill.astro";
+import PlusField from "../brand/PlusField.astro";
 import { getLangFromUrl, useTranslations, getRoute } from "../../i18n/utils";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -10,38 +11,76 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const copy = lang === "es"
   ? { over: "Startup social · Medellín, Colombia", lead: "No es por falta de esfuerzo: es por falta de liquidez. Entre cientos de amigos cofinanciamos un ingreso estable para madres emprendedoras — y ellas construyen su propia salida.", before: "La mejor forma de eliminar la pobreza es creando ", hl: "riqueza." }
   : { over: "Social startup · Medellín, Colombia", lead: "It isn't for lack of effort — it's lack of liquidity. Hundreds of friends co-fund a stable income for entrepreneurial mothers — and they build their own way out.", before: "The best way to end poverty is by creating ", hl: "wealth." };
+const words = copy.before.trim().split(/\s+/);
 ---
 <section class="ground-green hero">
+  <PlusField tone="ink" />
   <div class="container">
     <Overline tone="dark">{copy.over}</Overline>
-    <h1 class="display hero__title">{copy.before}<Highlight>{copy.hl}</Highlight></h1>
+    <h1 class="display hero__title" data-kinetic>
+      {words.map((word, i) => <span class="hero__word" style={`--i:${i}`}>{word}</span>)}
+      <span class="hero__word" style={`--i:${words.length}`}><Highlight>{copy.hl}</Highlight></span>
+    </h1>
     <p class="hero__lead">{copy.lead}</p>
     <div class="hero__actions">
-      <Button href={base + getRoute("donar", lang)} variant="dark" size="lg">{t("nav.donate")}</Button>
-      <Button href={base + getRoute("modelo", lang)} variant="outline" size="lg">{t("cta.learn")}</Button>
+      <Button href={base + getRoute("donar", lang)} variant="dark" size="lg" data-magnetic>{t("nav.donate")}</Button>
+      <Button href={base + getRoute("modelo", lang)} variant="outline" size="lg" data-magnetic>{t("cta.learn")}</Button>
       <ChevronPill count={3} variant="dark" />
     </div>
   </div>
 </section>
+
+<script>
+  function bootHero() {
+    // CTAs magnéticos (solo puntero fino, sin reduced-motion)
+    const fine = window.matchMedia("(pointer: fine)").matches;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!fine || reduce) return;
+    document.querySelectorAll<HTMLElement>(".hero [data-magnetic]").forEach((el) => {
+      if (el.dataset.magBound) return;
+      el.dataset.magBound = "1";
+      const onMove = (e: PointerEvent) => {
+        const r = el.getBoundingClientRect();
+        const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+        const dx = e.clientX - cx, dy = e.clientY - cy;
+        if (Math.hypot(dx, dy) < r.width / 2 + 80) el.style.transform = `translate(${dx * 0.32}px, ${dy * 0.32}px)`;
+        else el.style.transform = "";
+      };
+      window.addEventListener("pointermove", onMove, { passive: true });
+      el.addEventListener("pointerleave", () => (el.style.transform = ""));
+    });
+  }
+  document.addEventListener("astro:page-load", bootHero);
+</script>
+
 <style>
-  .hero { padding-block: clamp(56px, 9vw, 84px); position: relative; overflow: hidden; }
-  /* Bloom de luz que respira, sobre el verde plano */
+  .hero { padding-block: clamp(64px, 10vw, 104px); position: relative; overflow: hidden;
+    background: linear-gradient(152deg, var(--green-300) 0%, var(--green-400) 46%, var(--green-500) 100%); }
+  /* Bloom de luz que respira, detrás de la constelación */
   .hero::before {
-    content: ""; position: absolute; inset: 0; pointer-events: none;
-    background: radial-gradient(58% 55% at 28% 18%, rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0) 68%);
+    content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background: radial-gradient(56% 52% at 26% 16%, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0) 66%);
     animation: hero-sheen 15s var(--ease-in-out) infinite alternate;
   }
-  /* Textura "+" que deriva muy lento (comunidad que crece) */
+  /* Viñeta: bordes más profundos → sensación de escenario iluminado */
   .hero::after {
-    content: ""; position: absolute; inset: -25%; pointer-events: none;
-    background-image: var(--pattern-plus-ink); opacity: 0.55;
-    animation: hero-drift 44s linear infinite;
+    content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    box-shadow: inset 0 -120px 160px -80px rgba(10, 40, 24, 0.45), inset 0 0 240px 30px rgba(10, 40, 24, 0.12);
   }
   .hero > .container { position: relative; z-index: 1; }
-  @keyframes hero-sheen { from { transform: translate(-4%, -3%) scale(1); opacity: 0.9; } to { transform: translate(6%, 5%) scale(1.12); opacity: 0.6; } }
-  @keyframes hero-drift { from { background-position: 0 0; } to { background-position: 264px 264px; } }
-  @media (prefers-reduced-motion: reduce) { .hero::before, .hero::after { animation: none; } }
-  .hero__title { font-size: clamp(44px, 7vw, 84px); line-height: 1.1; margin-top: 20px; max-width: 16ch; padding-bottom: 0.1em; }
+  @keyframes hero-sheen { from { transform: translate(-4%, -3%) scale(1); opacity: 0.9; } to { transform: translate(6%, 5%) scale(1.12); opacity: 0.55; } }
+  @media (prefers-reduced-motion: reduce) { .hero::before { animation: none; } }
+
+  .hero__title { font-size: clamp(46px, 7.6vw, 92px); line-height: 1.02; letter-spacing: -0.035em; margin-top: 22px; max-width: 15ch; padding-bottom: 0.1em; }
+  .hero__word { display: inline-block; margin-right: 0.26em; }
+  /* Titular cinético: las palabras se arman en secuencia. Animación CSS pura
+     (se reproduce sola al cargar; el estado final SIEMPRE es visible). */
+  html.js .hero__title[data-kinetic] .hero__word { animation: hero-word-in 0.7s var(--ease-overshoot) backwards; animation-delay: calc(var(--i) * 55ms); }
+  @keyframes hero-word-in { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    html.js .hero__title[data-kinetic] .hero__word { animation: none; }
+  }
+
   .hero__lead { font-family: var(--font-body); font-weight: 500; font-size: clamp(17px, 2.2vw, 20px); line-height: 1.5; color: var(--ink-900); opacity: 0.86; margin-top: 18px; max-width: 46ch; }
   .hero__actions { display: flex; align-items: center; gap: 16px; margin-top: 36px; flex-wrap: wrap; }
 </style>
