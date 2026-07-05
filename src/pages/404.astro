@@ -4,7 +4,7 @@ import Button from "../components/brand/Button.astro";
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 <BaseLayout routeKey="home" title="404">
-  <section class="ground-ink section nf">
+  <section class="ground-ink section nf plus-texture-green">
     <div class="container nf__inner">
       <p class="display nf__big">404</p>
       <h1 class="nf__h">Esta página se nos perdió.</h1>
@@ -18,7 +18,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 </BaseLayout>
 <style>
   .nf__inner { text-align: center; }
-  .nf__big { font-size: clamp(80px, 18vw, 180px); color: var(--green-400); line-height: 1; }
+  .nf__big { font-size: clamp(80px, 18vw, 180px); color: var(--green-400); line-height: 1; animation: nf-float 5s var(--ease-in-out) infinite alternate; }
+  @keyframes nf-float { from { transform: translateY(-6px); } to { transform: translateY(10px); } }
+  @media (prefers-reduced-motion: reduce) { .nf__big { animation: none; } }
   .nf__h { font-family: var(--font-display); font-weight: 800; font-size: clamp(22px, 4vw, 32px); color: var(--paper-50); margin: 8px 0 4px; }
   .nf__h-en { font-family: var(--font-body); font-weight: 500; font-size: clamp(15px, 2.5vw, 18px); color: var(--text-on-dark-muted); margin: 0 0 28px; }
   .nf__actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }

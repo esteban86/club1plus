@@ -24,7 +24,23 @@ const copy = lang === "es"
   </div>
 </section>
 <style>
-  .hero { padding-block: clamp(56px, 9vw, 84px); }
+  .hero { padding-block: clamp(56px, 9vw, 84px); position: relative; overflow: hidden; }
+  /* Bloom de luz que respira, sobre el verde plano */
+  .hero::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(58% 55% at 28% 18%, rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0) 68%);
+    animation: hero-sheen 15s var(--ease-in-out) infinite alternate;
+  }
+  /* Textura "+" que deriva muy lento (comunidad que crece) */
+  .hero::after {
+    content: ""; position: absolute; inset: -25%; pointer-events: none;
+    background-image: var(--pattern-plus-ink); opacity: 0.55;
+    animation: hero-drift 44s linear infinite;
+  }
+  .hero > .container { position: relative; z-index: 1; }
+  @keyframes hero-sheen { from { transform: translate(-4%, -3%) scale(1); opacity: 0.9; } to { transform: translate(6%, 5%) scale(1.12); opacity: 0.6; } }
+  @keyframes hero-drift { from { background-position: 0 0; } to { background-position: 264px 264px; } }
+  @media (prefers-reduced-motion: reduce) { .hero::before, .hero::after { animation: none; } }
   .hero__title { font-size: clamp(44px, 7vw, 84px); line-height: 1.1; margin-top: 20px; max-width: 16ch; padding-bottom: 0.1em; }
   .hero__lead { font-family: var(--font-body); font-weight: 500; font-size: clamp(17px, 2.2vw, 20px); line-height: 1.5; color: var(--ink-900); opacity: 0.86; margin-top: 18px; max-width: 46ch; }
   .hero__actions { display: flex; align-items: center; gap: 16px; margin-top: 36px; flex-wrap: wrap; }

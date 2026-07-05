@@ -33,7 +33,7 @@ const c = lang === "es"
       src: "Source · DANE 2024 · World Bank",
     };
 ---
-<div class="wp">
+<div class="wp reveal">
   <div class="wp__viz">
     <span class="wp__you">{c.you} <span aria-hidden="true">↓</span></span>
     <div class="wp__pyramid" role="img" aria-label={`${c.tiers[0].who}: ${c.tiers[0].pct}; ${c.tiers[1].who}: ${c.tiers[1].pct}; ${c.tiers[2].who}: ${c.tiers[2].pct} ${c.legendNote}`}>
@@ -57,10 +57,16 @@ const c = lang === "es"
   .wp { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 56px; align-items: center; border-top: 1px solid var(--paper-300); padding-top: 48px; }
   .wp__you { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-weight: 700; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--coral-500); margin-bottom: 8px; }
   .wp__pyramid { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-  .wp__bar { display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 8px; padding: 10px 8px; color: var(--paper-50); }
+  .wp__bar { display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 8px; padding: 10px 8px; color: var(--paper-50); transition: width 0.85s var(--ease-out), opacity 0.5s var(--ease-out); }
   .wp__bar--top { width: 42%; background: var(--ink-900); }
   .wp__bar--mid { width: 72%; background: var(--coral-400); color: var(--ink-900); }
   .wp__bar--base { width: 100%; background: var(--green-400); color: var(--ink-900); }
+  /* La pirámide se construye de abajo hacia arriba al entrar en pantalla */
+  html.js .wp:not(.is-in) .wp__bar { width: 0; opacity: 0; overflow: hidden; }
+  .wp.is-in .wp__bar--base { transition-delay: 0s; }
+  .wp.is-in .wp__bar--mid { transition-delay: 0.14s; }
+  .wp.is-in .wp__bar--top { transition-delay: 0.28s; }
+  .wp__pct, .wp__who { white-space: nowrap; }
   .wp__pct { font-family: var(--font-display); font-weight: 900; font-size: clamp(20px, 2.4vw, 26px); line-height: 1; letter-spacing: -0.02em; }
   .wp__who { font-family: var(--font-body); font-weight: 700; font-size: 12.5px; margin-top: 3px; }
   .wp__legend-note { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-faint); text-align: center; margin-top: 12px; }

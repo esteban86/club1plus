@@ -54,11 +54,43 @@ ul { margin: 0; padding: 0; }
 
 /* Reveal-on-scroll. Mejora progresiva: solo se oculta cuando hay JS (html.js,
    añadido por un script inline en el <head>). Sin JS el contenido es visible. */
-.reveal { transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-overshoot); }
-html.js .reveal { opacity: 0; transform: translateY(16px); }
-html.js .reveal.is-in { opacity: 1; transform: none; }
+.reveal { transition: opacity var(--dur-slow) var(--ease-out), transform 640ms var(--ease-overshoot), filter var(--dur-slow) var(--ease-out); }
+html.js .reveal { opacity: 0; transform: translateY(22px); filter: blur(8px); }
+html.js .reveal.is-in { opacity: 1; transform: none; filter: blur(0); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
-  html.js .reveal, html.js .reveal.is-in { opacity: 1; transform: none; }
+  html.js .reveal, html.js .reveal.is-in { opacity: 1; transform: none; filter: none; }
+}
+
+/* ── Acabado de lujo (craft & detalle) ───────────────────────────────────────── */
+
+/* Selección de texto con la marca */
+::selection { background: var(--green-400); color: var(--ink-900); }
+::-moz-selection { background: var(--green-400); color: var(--ink-900); }
+
+/* Scrollbar de marca */
+html { scrollbar-width: thin; scrollbar-color: var(--green-500) transparent; }
+::-webkit-scrollbar { width: 11px; height: 11px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--green-500); border-radius: var(--radius-pill); border: 3px solid var(--surface-base); }
+::-webkit-scrollbar-thumb:hover { background: var(--green-600); }
+
+/* Grano fílmico sutil sobre toda la página — desactiva la sensación "plana/plantilla" */
+body::after {
+  content: "";
+  position: fixed; inset: 0; z-index: 400; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+  opacity: 0.42;
+  mix-blend-mode: overlay;
+}
+
+/* Transiciones de página suaves (View Transitions API — navegación SPA) */
+@keyframes c1p-vt-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes c1p-vt-out { from { opacity: 1; } to { opacity: 0; } }
+::view-transition-old(root) { animation: c1p-vt-out 160ms var(--ease-out) both; }
+::view-transition-new(root) { animation: c1p-vt-in 320ms var(--ease-out) both; }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
 }
