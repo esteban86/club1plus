@@ -430,7 +430,11 @@ const nodes = c.nodes.map((n, i) => ({ cls: nodeCls[i], ...n }));
 </div>
 
 <script>
+  let cleanup: Array<() => void> = [];
   function setupExplainer() {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // reduced-motion: pausa las animaciones SMIL del SVG (no las cubre el CSS)
+    if (reduce) document.querySelectorAll<SVGSVGElement>(".loop__svg").forEach((s) => s.pauseAnimations());
     // progreso de scroll
     const prog = document.querySelector("[data-prog]") as HTMLElement | null;
     if (prog) {
@@ -440,6 +444,7 @@ const nodes = c.nodes.map((n, i) => ({ cls: nodeCls[i], ...n }));
         prog.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + "%";
       };
       window.addEventListener("scroll", onScroll, { passive: true });
+      cleanup.push(() => window.removeEventListener("scroll", onScroll));
       onScroll();
     }
     // count up
@@ -451,6 +456,8 @@ const nodes = c.nodes.map((n, i) => ({ cls: nodeCls[i], ...n }));
         const to = parseFloat(el.dataset.to || "0");
         const prefix = el.dataset.prefix || "", suffix = el.dataset.suffix || "";
         const locale = el.dataset.locale || "es-CO";
+        // reduced-motion: sin animación, directo al valor final
+        if (reduce) { el.textContent = prefix + Math.round(to).toLocaleString(locale) + suffix; continue; }
         let start = 0;
         const tick = (t: number) => {
           if (!start) start = t;
@@ -487,6 +494,8 @@ const nodes = c.nodes.map((n, i) => ({ cls: nodeCls[i], ...n }));
     });
   }
   document.addEventListener("astro:page-load", setupExplainer);
+  // ClientRouter: retira los listeners de window antes de cada navegación SPA
+  document.addEventListener("astro:before-swap", () => { cleanup.forEach((fn) => fn()); cleanup = []; });
 </script>
 
 <style>
@@ -531,7 +540,7 @@ const nodes = c.nodes.map((n, i) => ({ cls: nodeCls[i], ...n }));
   .loop__svg { position: absolute; inset: 0; width: 100%; height: 100%; }
   .loop__center { fill: var(--coral-500); }
   .loop.is-broken .loop__center { fill: var(--green-700); }
-  .loop__sub { fill: var(--ink-900); opacity: 0.55; }
+  .loop__sub { fill: var(--paper-50); opacity: 0.55; }
   .loop.is-broken .loop__sub { fill: var(--paper-50); opacity: 0.7; }
   .node { position: absolute; width: 150px; background: var(--paper-0); border: 2px solid var(--ink-900); border-radius: 12px; padding: 9px 12px; box-shadow: var(--shadow-md); }
   .node__t { font-family: var(--font-display); font-weight: 800; font-size: 14px; color: var(--ink-900); line-height: 1.12; white-space: nowrap; }
@@ -581,7 +590,7 @@ const nodes = c.nodes.map((n, i) => ({ cls: nodeCls[i], ...n }));
   .ec-handle { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-on-dark-muted); margin-top: 14px; }
 
   .ec-disclaimer { background: var(--ink-900); padding: 0 24px 40px; }
-  .ec-disclaimer p { max-width: 920px; margin: 0 auto; font-family: var(--font-body); font-size: 12.5px; line-height: 1.6; color: var(--ink-400); border-top: 1px solid var(--border-dark); padding-top: 20px; }
+  .ec-disclaimer p { max-width: 920px; margin: 0 auto; font-family: var(--font-body); font-size: 12.5px; line-height: 1.6; color: var(--ink-300); border-top: 1px solid var(--border-dark); padding-top: 20px; }
 
   @media (max-width: 760px) {
     .ec-fem { grid-template-columns: 1fr; gap: 28px; }

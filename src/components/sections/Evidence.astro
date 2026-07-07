@@ -59,7 +59,7 @@ const copy = lang === "es"
     <div class="ev__grid ev__grid--res">
       {resources.map((r) => (
         <a class="eres reveal" href={r.data.url} target="_blank" rel="noopener noreferrer">
-          {r.data.image && <img class="eres__cover" src={base + r.data.image} alt={r.data.title} loading="lazy" />}
+          {r.data.image && <img class="eres__cover" src={base + r.data.image} alt={r.data.title} loading="lazy" width="96" height="144" decoding="async" />}
           <div class="eres__body">
             <span class="eres__meta">{r.data.meta}</span>
             <h3 class="eres__title">{r.data.title}</h3>

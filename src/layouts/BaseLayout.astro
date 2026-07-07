@@ -1,6 +1,9 @@
 ---
 import "../styles/global.css";
 import "../styles/tour.css";
+// URLs con hash de las dos fuentes variables críticas (preload = sin FOUT en el titular)
+import hankenWoff2 from "@fontsource-variable/hanken-grotesk/files/hanken-grotesk-latin-wght-normal.woff2?url";
+import bricolageWoff2 from "@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wght-normal.woff2?url";
 import { ClientRouter } from "astro:transitions";
 import Nav from "../components/sections/Nav.astro";
 import Footer from "../components/sections/Footer.astro";
@@ -49,7 +52,12 @@ const jsonLd = {
     <link rel="alternate" hreflang={lang} href={canonical} />
     <link rel="alternate" hreflang={otherLang(lang)} href={altOther} />
     <link rel="alternate" hreflang="x-default" href={xDefault} />
+    <link rel="preload" as="font" type="font/woff2" href={hankenWoff2} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={bricolageWoff2} crossorigin />
+    <link rel="icon" href={base + "/favicon.ico"} sizes="32x32" />
     <link rel="icon" href={base + "/favicon.svg"} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={base + "/apple-touch-icon.png"} />
+    <link rel="manifest" href={base + "/site.webmanifest"} />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="El Club del 1+" />
     <meta property="og:title" content={pageTitle} />

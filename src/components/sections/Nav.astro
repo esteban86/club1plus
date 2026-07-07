@@ -46,14 +46,27 @@ const items: { k: RouteKey; label: string }[] = [
 
 <script>
   function setupNav() {
-    const toggle = document.querySelector(".nav__toggle");
+    const toggle = document.querySelector<HTMLElement>(".nav__toggle");
     const menu = document.getElementById("nav-mobile");
-    if (!toggle || !menu) return;
+    if (!toggle || !menu || toggle.dataset.bound) return;
+    toggle.dataset.bound = "1";
+    const close = (refocus = false) => {
+      toggle.setAttribute("aria-expanded", "false");
+      menu.hidden = true;
+      if (refocus) toggle.focus();
+    };
     toggle.addEventListener("click", () => {
       const open = toggle.getAttribute("aria-expanded") === "true";
       toggle.setAttribute("aria-expanded", String(!open));
-      (menu as HTMLElement).hidden = open;
+      menu.hidden = open;
+      // al abrir, lleva el foco al primer enlace (teclado y lector de pantalla)
+      if (!open) menu.querySelector<HTMLElement>("a")?.focus();
     });
+    // Escape cierra y devuelve el foco al botón
+    menu.addEventListener("keydown", (e) => { if (e.key === "Escape") close(true); });
+    toggle.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+    // elegir un destino cierra el menú
+    menu.addEventListener("click", (e) => { if ((e.target as HTMLElement).closest("a")) close(); });
   }
   document.addEventListener("astro:page-load", setupNav);
 </script>

@@ -3,6 +3,7 @@
 export function initCountUp() {
   const els = document.querySelectorAll<HTMLElement>("[data-count]:not([data-done])");
   if (!els.length) return;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const io = new IntersectionObserver((entries) => {
     for (const e of entries) {
       if (!e.isIntersecting) continue;
@@ -22,6 +23,8 @@ export function initCountUp() {
         }
         return prefix + Math.round(n).toLocaleString(locale);
       };
+      // reduced-motion: sin animación, directo al valor final
+      if (reduce) { el.textContent = fmt(to); continue; }
       const tick = (now: number) => {
         const p = Math.min(1, (now - start) / dur);
         const eased = 1 - Math.pow(1 - p, 3);

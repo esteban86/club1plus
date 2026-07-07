@@ -31,6 +31,7 @@ const words = copy.before.trim().split(/\s+/);
 </section>
 
 <script>
+  let cleanup: Array<() => void> = [];
   function bootHero() {
     // CTAs magnéticos (solo puntero fino, sin reduced-motion)
     const fine = window.matchMedia("(pointer: fine)").matches;
@@ -47,10 +48,13 @@ const words = copy.before.trim().split(/\s+/);
         else el.style.transform = "";
       };
       window.addEventListener("pointermove", onMove, { passive: true });
+      cleanup.push(() => window.removeEventListener("pointermove", onMove));
       el.addEventListener("pointerleave", () => (el.style.transform = ""));
     });
   }
   document.addEventListener("astro:page-load", bootHero);
+  // ClientRouter: retira los listeners de window antes de cada navegación SPA
+  document.addEventListener("astro:before-swap", () => { cleanup.forEach((fn) => fn()); cleanup = []; });
 </script>
 
 <style>

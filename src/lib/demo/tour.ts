@@ -201,8 +201,10 @@ function currentKey(lang: Lang): RouteKey | null {
 const routePath = (k: RouteKey, lang: Lang) => base + ROUTES[k][lang];
 
 let currentEl: HTMLElement | null = null;
+let lastFocused: HTMLElement | null = null;
 
 export function startTour(variant: Variant = "general") {
+  lastFocused = document.activeElement instanceof HTMLElement ? document.activeElement : null;
   write({ active: true, step: 0, lang: detectLang(), variant });
   showStep();
 }
@@ -212,6 +214,9 @@ function endTour() {
   const root = document.getElementById("tour-root");
   if (root) root.innerHTML = "";
   document.body.classList.remove("tour-on");
+  // devuelve el foco a quien abrió el tour (si sigue en el DOM tras navegar)
+  if (lastFocused?.isConnected) lastFocused.focus();
+  lastFocused = null;
 }
 function goTo(i: number) {
   if (i >= getSteps(read().variant).length) return endTour();
@@ -265,13 +270,13 @@ function paint(step: Step, el: HTMLElement | null, st: State, lang: Lang) {
 
   const dots = steps.map((_, i) => {
     const cls = i === st.step ? "tourx__dot tourx__dot--now" : i < st.step ? "tourx__dot tourx__dot--done" : "tourx__dot";
-    return `<button class="${cls}" data-goto="${i}" aria-label="${i + 1}"></button>`;
+    return `<button class="${cls}" data-goto="${i}" aria-label="${i + 1} ${ui.of} ${total}"${i === st.step ? ' aria-current="step"' : ""}></button>`;
   }).join("");
 
   root.innerHTML = `
     <div class="tourx-dim ${el ? "tourx-dim--clear" : "tourx-dim--solid"}"></div>
     ${el ? '<div class="tourx-ring" id="tourx-ring"></div>' : ""}
-    <div class="tourx" id="tourx-card" role="dialog" aria-modal="true" aria-label="${esc(step.title[lang])}">
+    <div class="tourx" id="tourx-card" role="dialog" aria-modal="true" tabindex="-1" aria-label="${esc(step.title[lang])}">
       <div class="tourx__top">
         <span class="tourx__kicker">${esc(step.kicker[lang])}</span>
         <button class="tourx__close" id="tourx-close" aria-label="${ui.skip}">✕</button>
@@ -298,6 +303,8 @@ function paint(step: Step, el: HTMLElement | null, st: State, lang: Lang) {
   root.querySelectorAll<HTMLElement>(".tourx__dot").forEach((d) =>
     d.addEventListener("click", () => goTo(Number(d.dataset.goto)))
   );
+  // Foco al panel: el lector de pantalla anuncia el paso y el teclado queda dentro.
+  root.querySelector<HTMLElement>("#tourx-card")?.focus({ preventScroll: true });
 }
 
 // Desplaza la página para dejar el elemento en el área visible POR ENCIMA del panel.
@@ -344,6 +351,31 @@ export function initTour() {
   if (read().active) showStep();
 }
 
+// Teclado global del tour: Escape cierra, ←/→ navegan, Tab queda atrapado en el
+// panel (es un diálogo modal: el resto de la página está velada e inerte).
+function onTourKey(e: KeyboardEvent) {
+  if (!read().active) return;
+  if (e.key === "Escape") { e.preventDefault(); endTour(); return; }
+  if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+    const t = e.target as HTMLElement | null;
+    if (t && /^(input|textarea|select)$/i.test(t.tagName)) return;
+    e.preventDefault();
+    goTo(read().step + (e.key === "ArrowRight" ? 1 : -1));
+    return;
+  }
+  if (e.key === "Tab") {
+    const card = document.getElementById("tourx-card");
+    if (!card) return;
+    const focusables = Array.from(card.querySelectorAll<HTMLElement>("button, a[href]"));
+    if (!focusables.length) return;
+    const first = focusables[0], last = focusables[focusables.length - 1];
+    const active = document.activeElement;
+    if (!(active instanceof HTMLElement) || !card.contains(active)) { e.preventDefault(); first.focus(); return; }
+    if (e.shiftKey && active === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && active === last) { e.preventDefault(); first.focus(); }
+  }
+}
+
 // reposición del anillo ante scroll/resize mientras hay un paso con elemento
 let bound = false;
 (function bindReflow() {
@@ -352,6 +384,7 @@ let bound = false;
   const h = () => { if (currentEl) repositionRing(currentEl); };
   window.addEventListener("scroll", h, { passive: true });
   window.addEventListener("resize", h);
+  window.addEventListener("keydown", onTourKey);
 })();
 
 function esc(s: string) { return s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]!)); }

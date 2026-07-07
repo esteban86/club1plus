@@ -53,7 +53,7 @@ const c = {
     <Overline tone="green">{c.matchKick}</Overline>
     <div class="wel-match">
       <span class="wel-match__photo">
-        {ben.photo ? <img src={base + ben.photo} alt={ben.name} /> : <span class="wel-match__ph">{ben.name.slice(0,1)}</span>}
+        {ben.photo ? <img src={base + ben.photo} alt={ben.name} width="160" height="160" decoding="async" /> : <span class="wel-match__ph">{ben.name.slice(0,1)}</span>}
       </span>
       <div class="wel-match__body">
         <h2 class="wel-match__name">{ben.name}</h2>

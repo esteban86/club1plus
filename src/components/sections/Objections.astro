@@ -40,7 +40,18 @@ const d = lang === "es"
     };
 const evUrl = base + getRoute("evidencia", lang);
 const imUrl = base + getRoute("impacto", lang);
+// Rich snippet de FAQ en Google (schema.org/FAQPage)
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: d.items.map((it) => ({
+    "@type": "Question",
+    name: it.q,
+    acceptedAnswer: { "@type": "Answer", text: it.a },
+  })),
+};
 ---
+<script is:inline type="application/ld+json" set:html={JSON.stringify(faqLd)} />
 <section class="ground-paper section">
   <div class="container">
     <Overline tone="muted">{d.over}</Overline>

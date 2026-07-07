@@ -53,8 +53,8 @@ body.tour-on .tour-launch { display: none; }
 .tourx__body { font-family: var(--font-body); font-size: 15px; line-height: 1.55; color: var(--text-on-dark); }
 
 .tourx__progress { display: flex; gap: 6px; align-items: center; margin-top: 18px; }
-.tourx__dot { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 50%; background: var(--ink-500); cursor: pointer; transition: width 0.2s var(--ease-out), background 0.2s; }
-.tourx__dot--done { background: var(--green-700); }
+.tourx__dot { width: 8px; height: 8px; padding: 0; border: 1px solid var(--ink-300); border-radius: 50%; background: var(--ink-500); cursor: pointer; transition: width 0.2s var(--ease-out), background 0.2s; }
+.tourx__dot--done { background: var(--green-700); border-color: transparent; }
 .tourx__dot--now { width: 24px; border-radius: 5px; background: var(--green-400); }
 .tourx__dot:hover { background: var(--green-300); }
 

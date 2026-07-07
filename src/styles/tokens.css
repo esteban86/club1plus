@@ -58,7 +58,7 @@
   --text-strong:  var(--ink-900);
   --text-body:    #233A2C;
   --text-muted:   #56705E;
-  --text-faint:   #87977E;
+  --text-faint:   #62705A;  /* AA 4.5:1 sobre paper-50/100 (antes #87977E ≈ 2.9:1) */
 
   /* Text on dark */
   --text-on-dark-strong: var(--paper-50);

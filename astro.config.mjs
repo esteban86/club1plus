@@ -16,5 +16,15 @@ export default defineConfig({
     locales: ["es", "en"],
     routing: { prefixDefaultLocale: false },
   },
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      // fuera del sitemap: páginas noindex (demo/portal/transaccionales) y temporales
+      filter: (page) =>
+        ![
+          /\/admin\/?$/, /\/bienvenida\/?$/, /\/welcome\/?$/,
+          /\/gracias\/?$/, /\/thanks\/?$/, /\/ingresar\/?$/, /\/login\/?$/,
+          /\/mi-espacio\/?$/, /\/my-space\/?$/, /\/fuentes-cuerpo\/?$/,
+        ].some((re) => re.test(new URL(page).pathname)),
+    }),
+  ],
 });
