@@ -52,3 +52,23 @@ npm run build    # genera dist/
 ## Stack
 
 Astro 5 · TypeScript · @astrojs/sitemap · @fontsource · Vitest · GitHub Actions.
+
+## Staging
+
+Sitio de revisión en **https://esteban86.github.io/club1plus-staging/** — repo
+separado (`club1plus-staging`), `noindex` global y `robots.txt` en `Disallow: /`.
+Nunca debe indexarse ni competir con `clubdel1.org`.
+
+Para publicar una versión de staging desde la rama en la que estés trabajando:
+
+```bash
+STAGING_BASE=/club1plus-staging PUBLIC_IS_STAGING=1 npm run build
+rm -f dist/CNAME   # el CNAME es de producción; en staging rompería el dominio
+```
+
+y subir el contenido de `dist/` a la rama `main` del repo `club1plus-staging`.
+
+- `STAGING_BASE` cambia `site` a `esteban86.github.io` y fija el `base` del subdirectorio.
+- `PUBLIC_IS_STAGING=1` fuerza `noindex` en todas las páginas (ver `BaseLayout.astro`)
+  y hace que `robots.txt` bloquee todo.
+- Producción no se ve afectada: el workflow de despliegue solo corre en `main`.
