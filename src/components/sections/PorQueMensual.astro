@@ -1,0 +1,102 @@
+---
+import Overline from "../brand/Overline.astro";
+import Highlight from "../brand/Highlight.astro";
+import { getLangFromUrl } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+
+// Evidencia: Haushofer & Shapiro (2016), Quarterly Journal of Economics — RCT en
+// Kenia que aleatorizó pago único vs. cuotas mensuales. Costo bruto por madre y
+// reparto 65/35 según el modelo financiero del Club.
+const d = lang === "es"
+  ? {
+      over: "Por qué mensual",
+      before: "Un ingreso estable no se paga con un ",
+      hl: "aporte único.",
+      lead: "Por eso pedimos el tuyo todos los meses. No es una preferencia nuestra: es la diferencia entre que una familia coma todos los meses y que compre una cosa una vez.",
+      quote: "Las transferencias mensuales tienen más probabilidad que los pagos únicos de mejorar la seguridad alimentaria; los pagos únicos tienen más probabilidad de gastarse en bienes durables.",
+      quoteSrc: "Haushofer & Shapiro (2016), Quarterly Journal of Economics — experimento aleatorizado en Kenia que comparó exactamente las dos formas de entregar el dinero.",
+      mathTitle: "La cuenta, sin adornos",
+      math: [
+        { k: "Sostener a una madre en el programa cuesta", v: "$600.000 al mes" },
+        { k: "De ahí llega directo a ella", v: "$400.000 al mes" },
+        { k: "El resto sostiene la operación y la rendición de cuentas", v: "$200.000 al mes" },
+      ],
+      circleTitle: "Un círculo la sostiene",
+      circle: "Diez socios de $60.000 sostienen a una madre durante un año. Cuatro de $150.000, lo mismo. Una madrina o padrino, sola.",
+      honestTitle: "Y lo que no vamos a prometerte",
+      honest: "$400.000 al mes no sacan a un hogar de la pobreza — la línea oficial de pobreza en Colombia es de $482.041 por persona al mes. Lo que sí hacen es evitar que una familia venda lo que le da de comer, o que una niña salga del colegio, mientras se recupera. Eso es lo que financia tu aporte.",
+      honestSrc: "Línea de pobreza monetaria: DANE, 2025.",
+    }
+  : {
+      over: "Why monthly",
+      before: "A stable income can't be funded with a ",
+      hl: "one-off gift.",
+      lead: "That's why we ask for yours every month. It isn't our preference: it's the difference between a family eating every month and buying one thing once.",
+      quote: "Monthly transfers are more likely than lump-sum transfers to improve food security, whereas lump-sum transfers are more likely to be spent on durables.",
+      quoteSrc: "Haushofer & Shapiro (2016), Quarterly Journal of Economics — a randomised experiment in Kenya that compared exactly these two ways of delivering the money.",
+      mathTitle: "The math, unvarnished",
+      math: [
+        { k: "Supporting one mother in the programme costs", v: "$600,000 COP/month" },
+        { k: "Of that, reaching her directly", v: "$400,000 COP/month" },
+        { k: "The rest runs the operation and the accounting", v: "$200,000 COP/month" },
+      ],
+      circleTitle: "A circle holds her up",
+      circle: "Ten members giving $60,000 support one mother for a year. Four giving $150,000, the same. One godmother or godfather, alone.",
+      honestTitle: "And what we won't promise you",
+      honest: "$400,000 a month does not lift a household out of poverty — Colombia's official poverty line is $482,041 per person per month. What it does is stop a family from selling what feeds them, or a girl from leaving school, while they recover. That's what your contribution funds.",
+      honestSrc: "Monetary poverty line: DANE, 2025.",
+    };
+---
+<section class="ground-paper-100 section pqm">
+  <div class="container">
+    <Overline tone="muted">{d.over}</Overline>
+    <h2 class="display pqm__title">{d.before}<Highlight>{d.hl}</Highlight></h2>
+    <p class="pqm__lead">{d.lead}</p>
+
+    <blockquote class="pqm__quote reveal">
+      <p>{d.quote}</p>
+      <cite>{d.quoteSrc}</cite>
+    </blockquote>
+
+    <div class="pqm__grid">
+      <div class="pqm__card reveal">
+        <h3 class="pqm__h">{d.mathTitle}</h3>
+        <dl class="pqm__math">
+          {d.math.map((m) => (
+            <div class="pqm__row">
+              <dt>{m.k}</dt>
+              <dd>{m.v}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+      <div class="pqm__card reveal">
+        <h3 class="pqm__h">{d.circleTitle}</h3>
+        <p class="pqm__p">{d.circle}</p>
+        <h3 class="pqm__h pqm__h--sp">{d.honestTitle}</h3>
+        <p class="pqm__p">{d.honest}</p>
+        <p class="pqm__src">{d.honestSrc}</p>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .pqm__title { font-size: clamp(28px, 4.5vw, 44px); color: var(--text-strong); max-width: 20ch; margin-top: 14px; line-height: 1.1; padding-bottom: 0.1em; }
+  .pqm__lead { font-family: var(--font-body); font-weight: 500; font-size: clamp(16px, 2vw, 19px); line-height: 1.55; color: var(--text-muted); max-width: 56ch; margin-top: 16px; }
+  .pqm__quote { margin: 40px 0 0; border-left: 4px solid var(--green-400); padding-left: 22px; max-width: 62ch; }
+  .pqm__quote p { font-family: var(--font-display); font-weight: 800; font-size: clamp(18px, 2.6vw, 24px); line-height: 1.35; color: var(--text-strong); }
+  .pqm__quote cite { display: block; font-family: var(--font-mono); font-style: normal; font-size: 11.5px; line-height: 1.6; color: var(--text-faint); margin-top: 14px; }
+  .pqm__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 40px; }
+  .pqm__card { background: var(--paper-0); border: 1px solid var(--paper-200); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); padding: 26px; }
+  .pqm__h { font-family: var(--font-display); font-weight: 800; font-size: 18px; color: var(--text-strong); }
+  .pqm__h--sp { margin-top: 22px; }
+  .pqm__math { margin: 16px 0 0; }
+  .pqm__row { display: flex; flex-direction: column; gap: 2px; padding: 12px 0; border-bottom: 1px solid var(--paper-200); }
+  .pqm__row:last-child { border-bottom: 0; padding-bottom: 0; }
+  .pqm__row dt { font-family: var(--font-body); font-weight: 500; font-size: 14px; color: var(--text-muted); }
+  .pqm__row dd { font-family: var(--font-display); font-weight: 800; font-size: 20px; color: var(--text-strong); margin: 0; }
+  .pqm__p { font-family: var(--font-body); font-weight: 500; font-size: 14.5px; line-height: 1.6; color: var(--text-body); margin-top: 10px; }
+  .pqm__src { font-family: var(--font-mono); font-size: 11px; color: var(--text-faint); margin-top: 12px; }
+  @media (max-width: 820px) { .pqm__grid { grid-template-columns: 1fr; } }
+</style>

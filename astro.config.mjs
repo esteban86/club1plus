@@ -21,6 +21,7 @@ export default defineConfig({
           /\/admin\/?$/, /\/bienvenida\/?$/, /\/welcome\/?$/,
           /\/gracias\/?$/, /\/thanks\/?$/, /\/ingresar\/?$/, /\/login\/?$/,
           /\/mi-espacio\/?$/, /\/my-space\/?$/, /\/fuentes-cuerpo\/?$/,
+          /\/comunidad\/?$/, /\/community\/?$/,
         ].some((re) => re.test(new URL(page).pathname)),
     }),
   ],

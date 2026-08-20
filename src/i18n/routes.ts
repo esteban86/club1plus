@@ -8,6 +8,7 @@ export const ROUTES = {
   evidencia:     { es: "/evidencia",     en: "/en/evidence" },
   beneficiarias: { es: "/beneficiarias", en: "/en/stories" },
   nosotros:      { es: "/nosotros",      en: "/en/about" },
+  diaDespues:    { es: "/el-dia-despues", en: "/en/the-day-after" },
   donar:         { es: "/donar",         en: "/en/donate" },
   gracias:       { es: "/gracias",       en: "/en/thanks" },
   privacidad:    { es: "/privacidad",    en: "/en/privacy" },

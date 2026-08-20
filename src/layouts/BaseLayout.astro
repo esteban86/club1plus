@@ -6,6 +6,7 @@ import hankenWoff2 from "@fontsource-variable/hanken-grotesk/files/hanken-grotes
 import bricolageWoff2 from "@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wght-normal.woff2?url";
 import { ClientRouter } from "astro:transitions";
 import Nav from "../components/sections/Nav.astro";
+import Solidaridad from "../components/sections/Solidaridad.astro";
 import Footer from "../components/sections/Footer.astro";
 import { getLangFromUrl, useTranslations, getRoute, otherLang } from "../i18n/utils";
 import type { RouteKey } from "../i18n/routes";
@@ -81,6 +82,7 @@ const jsonLd = {
   </head>
   <body>
     <a class="skip-link" href="#main">{t("a11y.skip")}</a>
+    <Solidaridad />
     <Nav routeKey={routeKey} />
     <main id="main">
       <slot />

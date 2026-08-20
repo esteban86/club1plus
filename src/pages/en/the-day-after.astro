@@ -1,0 +1,183 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Overline from "../../components/brand/Overline.astro";
+import Highlight from "../../components/brand/Highlight.astro";
+import Button from "../../components/brand/Button.astro";
+import { getRoute } from "../../i18n/utils";
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const modeloUrl = base + getRoute("modelo", "en");
+---
+<BaseLayout
+  routeKey="diaDespues"
+  title="The day after"
+  description="On 10 August 2026 a magnitude 7.4 earthquake struck the Colombian department with the highest monetary poverty rate. What happens over the next two years matters more than what happened in the first two weeks."
+>
+  <section class="ground-green section dda-hero">
+    <div class="container">
+      <Overline tone="dark">The day after</Overline>
+      <h1 class="display dda-hero__t">What saves lives doesn't arrive in the <Highlight variant="dark">emergency.</Highlight></h1>
+      <p class="dda-hero__l">
+        On 10 August 2026, a magnitude 7.4 earthquake centred on San José del Palmar struck the Colombian
+        department with the highest monetary poverty rate in the country. This page doesn't ask for money.
+        It explains why we exist.
+      </p>
+    </div>
+  </section>
+
+  <section class="ground-paper section">
+    <div class="container dda">
+      <p class="dda__k">Act one</p>
+      <h2 class="display dda__h">Armenia already taught us the answer.</h2>
+      <p class="dda__p">
+        On 25 January 1999, a magnitude 6.2 earthquake destroyed the city of Armenia, Colombia. It killed
+        921 people and collapsed more than 35,000 buildings. The whole country mobilised: donations,
+        convoys, shelters.
+      </p>
+      <p class="dda__p">
+        On 10 August 2026, a <strong>magnitude 7.4</strong> quake — far stronger — shook the same city again.
+        <strong>Nobody died. Not one building was reduced to rubble.</strong>
+      </p>
+      <blockquote class="dda__q">
+        <p>“We're better prepared now… we had no deaths and no building ended up as rubble.”</p>
+        <cite>Uriel Orjuela, president of the Quindío Society of Engineers · El País, 16 August 2026</cite>
+      </blockquote>
+      <p class="dda__p">
+        The difference wasn't the aid that arrived in January 1999. It was the <strong>27 years that
+        followed</strong>: seismic building codes, mandatory technical oversight, sustained rebuilding. Slow,
+        invisible work with no cameras on it. That's what saved lives.
+      </p>
+      <p class="dda__p dda__p--em">
+        What saves lives isn't what arrives in the emergency. It's what is sustained once the emergency stops
+        being news.
+      </p>
+    </div>
+  </section>
+
+  <section class="ground-ink section">
+    <div class="container dda dda--dark">
+      <p class="dda__k">Act two</p>
+      <h2 class="display dda__h">Moravia is the day after that Colombia never attended to.</h2>
+      <p class="dda__p">
+        The neighbourhood where we work didn't appear by accident. From the 1960s it was settled by families
+        displaced by rural violence who ended up building shacks on top of Medellín's municipal rubbish dump.
+        By 1983 some 17,000 people lived there in extreme precarity.
+      </p>
+      <p class="dda__p">
+        Nobody called that an emergency. It was the accumulated result of many emergencies that were attended
+        to for a few weeks and then forgotten.
+      </p>
+      <p class="dda__p dda__p--em">
+        We're not changing the subject. We work inside the ending of this film.
+      </p>
+    </div>
+  </section>
+
+  <section class="ground-paper section">
+    <div class="container dda">
+      <p class="dda__k">Act three</p>
+      <h2 class="display dda__h">Chocó was already in the trap before 10 August.</h2>
+      <div class="dda__stats">
+        <div class="dstat"><span class="dstat__v">65.3%</span><span class="dstat__l">of Chocó's population lives in monetary poverty — the highest rate in Colombia. The national average is 28.0%.</span></div>
+        <div class="dstat"><span class="dstat__v">44.3%</span><span class="dstat__l">live in extreme monetary poverty: 4.6 times the national average.</span></div>
+        <div class="dstat"><span class="dstat__v">94%</span><span class="dstat__l">of people living in Chocó households with three or more children under 12 are in poverty.</span></div>
+      </div>
+      <p class="dda__p">
+        But the figure that best describes a poverty trap is a different one. Between 2024 and 2025, extreme
+        poverty in Colombia fell by 2.1 percentage points. <strong>In Chocó it barely moved — 0.6 points</strong>
+        — a change the national statistics office itself does not consider statistically significant. And its
+        Gini coefficient, the highest in the country, didn't fall by a single hundredth.
+      </p>
+      <p class="dda__p dda__p--em">
+        The whole country improved and Chocó stood still. That was before the earthquake.
+      </p>
+      <p class="dda__src">Source: DANE, Monetary Poverty 2025, departmental results, published 12 August 2026.</p>
+    </div>
+  </section>
+
+  <section class="ground-paper-100 section">
+    <div class="container dda">
+      <p class="dda__k">What comes next</p>
+      <h2 class="display dda__h">Where we fit into all of this.</h2>
+      <p class="dda__p">
+        We are not a disaster-response organisation and we won't pretend to be one. In the first weeks what
+        saves lives is search and rescue, clean water, medical care and shelter — none of which you buy with
+        a monthly transfer. That's what the Red Cross, the national risk agency and the teams already on the
+        ground on 10 August are for.
+      </p>
+      <p class="dda__p">
+        Our work starts when theirs ends. The international evidence is consistent: <strong>two thirds of
+        everything that will be donated after a disaster has already been given by the second month, and by
+        month six giving has stopped.</strong> Rebuilding, meanwhile, takes four to six years. That gap is
+        where a family decides whether to sell the tool they work with, or whether a girl leaves school.
+      </p>
+      <p class="dda__p">
+        Our model — a sustained monthly income, with support, for women heading households — is built for
+        that gap. Today it operates in Moravia. <strong>And we are going to direct part of what we raise to
+        Chocó.</strong>
+      </p>
+      <p class="dda__p dda__p--em">
+        We are not going to run our own operation there, and we want to explain why.
+      </p>
+      <p class="dda__p">
+        In the worst-hit parts of the San Juan river basin markets are not functioning, several communities
+        can only be reached by river, and there are security risks an organisation our size cannot manage
+        alone. The World Food Programme — with vastly greater resources than ours — reached the same
+        conclusion: it is delivering food, not cash, in Chocó's remote communities, precisely because
+        without a functioning market money buys nothing.
+      </p>
+      <p class="dda__p">
+        What we can do is <strong>fund those already there</strong>. An organisation with a permanent
+        presence in the territory has what we lack: people who live there, acceptance built over years, and
+        the real ability to reach communities. We bring what we know how to do: the sustained monthly income
+        model, and the accounting for it.
+      </p>
+      <div class="dda__pledge reveal">
+        <h3 class="dda__ph">Three commitments about that money</h3>
+        <ol class="dda__pl">
+          <li><strong>Money marked for Chocó is only spent in Chocó.</strong> Separate account, statement published monthly, naming the partner organisation and the number of households reached.</li>
+          <li><strong>No existing contribution is reallocated without permission.</strong> If you're already a member, your contribution stays where it is unless you decide otherwise.</li>
+          <li><strong>We raise nothing for emergency relief.</strong> The Red Cross and the national risk agency are there for that — which is why we link to them above rather than compete with them.</li>
+        </ol>
+      </div>
+      <div class="dda__cta">
+        <Button href={modeloUrl} variant="dark" size="lg">How the model works →</Button>
+      </div>
+      <p class="dda__src">
+        Sources: Center for High Impact Philanthropy, University of Pennsylvania (post-disaster giving curve) ·
+        reconstruction estimates reported in the Colombian national press, August 2026 · DANE, 2025 ·
+        Colombian Geological Survey.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  .dda-hero__t { font-size: clamp(30px, 5.5vw, 52px); color: var(--ink-900); max-width: 18ch; margin-top: 14px; line-height: 1.08; padding-bottom: 0.1em; }
+  .dda-hero__l { font-family: var(--font-body); font-weight: 500; font-size: clamp(16px, 2.1vw, 19px); line-height: 1.55; color: var(--ink-900); opacity: 0.82; max-width: 58ch; margin-top: 18px; }
+  .dda { max-width: 720px; }
+  .dda__k { font-family: var(--font-mono); font-weight: 700; font-size: 11.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green-700); margin: 0; }
+  .dda--dark .dda__k { color: var(--green-400); }
+  .dda__h { font-size: clamp(26px, 4vw, 38px); color: var(--text-strong); max-width: 22ch; margin-top: 12px; line-height: 1.15; padding-bottom: 0.1em; }
+  .dda--dark .dda__h { color: var(--paper-50); }
+  .dda__p { font-family: var(--font-body); font-weight: 500; font-size: clamp(15px, 2vw, 17.5px); line-height: 1.65; color: var(--text-body); margin-top: 18px; }
+  .dda--dark .dda__p { color: var(--text-on-dark-muted); }
+  .dda__p strong { font-weight: 800; color: var(--text-strong); }
+  .dda--dark .dda__p strong { color: var(--paper-50); }
+  .dda__p--em { font-family: var(--font-display); font-weight: 800; font-size: clamp(18px, 2.6vw, 24px); line-height: 1.35; color: var(--text-strong); margin-top: 26px; }
+  .dda--dark .dda__p--em { color: var(--paper-50); }
+  .dda__q { margin: 26px 0 0; border-left: 4px solid var(--green-400); padding-left: 20px; }
+  .dda__q p { font-family: var(--font-display); font-weight: 800; font-size: clamp(17px, 2.4vw, 21px); line-height: 1.35; color: var(--text-strong); }
+  .dda__q cite { display: block; font-family: var(--font-mono); font-style: normal; font-size: 11.5px; line-height: 1.6; color: var(--text-faint); margin-top: 12px; }
+  .dda__stats { display: grid; gap: 16px; margin-top: 28px; }
+  .dstat { display: grid; grid-template-columns: 128px 1fr; gap: 18px; align-items: start; padding: 16px 0; border-bottom: 1px solid var(--paper-200); }
+  .dstat__v { font-family: var(--font-display); font-weight: 900; font-size: clamp(30px, 5vw, 40px); line-height: 1; color: var(--green-700); letter-spacing: -0.02em; }
+  .dstat__l { font-family: var(--font-body); font-weight: 500; font-size: 14.5px; line-height: 1.55; color: var(--text-body); }
+  .dda__pledge { background: var(--paper-0); border: 1px solid var(--paper-200); border-left: 4px solid var(--green-400); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); padding: 26px; margin-top: 30px; }
+  .dda__ph { font-family: var(--font-display); font-weight: 800; font-size: 19px; color: var(--text-strong); }
+  .dda__pl { margin: 14px 0 0; padding-left: 20px; display: grid; gap: 12px; }
+  .dda__pl li { font-family: var(--font-body); font-weight: 500; font-size: 14.5px; line-height: 1.6; color: var(--text-body); }
+  .dda__pl strong { font-weight: 800; color: var(--text-strong); }
+  .dda__cta { margin-top: 30px; }
+  .dda__src { font-family: var(--font-mono); font-size: 11px; line-height: 1.6; color: var(--text-faint); margin-top: 26px; }
+  @media (max-width: 620px) { .dstat { grid-template-columns: 1fr; gap: 6px; } }
+</style>

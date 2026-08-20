@@ -1,0 +1,47 @@
+---
+// Franja de reconocimiento del momento nacional tras el sismo del 10 de agosto de 2026.
+// NO pide dinero y NO enlaza a /donar: dirige a los canales oficiales de emergencia.
+// Se retira sola después de HASTA — para quitarla antes, borrar el componente de BaseLayout.
+import { getLangFromUrl } from "../../i18n/utils";
+
+const HASTA = new Date("2026-10-01T00:00:00-05:00");
+const visible = new Date() < HASTA;
+
+const lang = getLangFromUrl(Astro.url);
+const d = lang === "es"
+  ? {
+      texto: "Esta semana el país tiene el corazón puesto en el Chocó y el Eje Cafetero. Si quieres ayudar a las personas afectadas por el sismo, estos son los canales oficiales:",
+      cruz: "Cruz Roja Colombiana",
+      ungrd: "UNGRD",
+      cierre: "Nuestro trabajo es otro, y sigue igual: la pobreza estructural de las madres de Moravia, que no empezó el 10 de agosto.",
+      aria: "Información sobre el sismo del 10 de agosto de 2026",
+    }
+  : {
+      texto: "This week the country's heart is with Chocó and the coffee region. If you want to help people affected by the earthquake, these are the official channels:",
+      cruz: "Colombian Red Cross",
+      ungrd: "UNGRD",
+      cierre: "Our work is a different one, and it hasn't changed: the structural poverty of Moravia's mothers, which didn't start on August 10th.",
+      aria: "Information about the 10 August 2026 earthquake",
+    };
+---
+{visible && (
+  <aside class="sol" aria-label={d.aria}>
+    <div class="container sol__inner">
+      <p class="sol__txt">
+        {d.texto}{" "}
+        <a href="https://www.cruzrojacolombiana.org" target="_blank" rel="noopener noreferrer">{d.cruz} ↗</a>
+        <span aria-hidden="true"> · </span>
+        <a href="https://portal.gestiondelriesgo.gov.co" target="_blank" rel="noopener noreferrer">{d.ungrd} ↗</a>
+      </p>
+      <p class="sol__end">{d.cierre}</p>
+    </div>
+  </aside>
+)}
+<style>
+  .sol { background: var(--ink-900); border-bottom: 2px solid var(--green-400); padding: 14px 0; }
+  .sol__inner { display: flex; flex-direction: column; gap: 4px; }
+  .sol__txt { font-family: var(--font-body); font-weight: 500; font-size: 13.5px; line-height: 1.55; color: var(--paper-50); margin: 0; }
+  .sol__txt a { color: var(--green-400); text-decoration: none; font-weight: 700; border-bottom: 1px solid transparent; }
+  .sol__txt a:hover { border-bottom-color: var(--green-400); }
+  .sol__end { font-family: var(--font-body); font-weight: 500; font-size: 13px; line-height: 1.5; color: var(--text-on-dark-muted); margin: 0; }
+</style>
