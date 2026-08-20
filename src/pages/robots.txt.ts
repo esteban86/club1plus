@@ -4,6 +4,12 @@ import type { APIRoute } from "astro";
 // en astro.config.mjs (fuente única). Al fijar GH_USER/REPO, se actualiza solo.
 export const GET: APIRoute = ({ site }) => {
   const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+  // Staging: bloquear por completo. Es contenido en revisión.
+  if (import.meta.env.PUBLIC_IS_STAGING === "1") {
+    return new Response("User-agent: *\nDisallow: /\n", {
+      headers: { "Content-Type": "text/plain; charset=utf-8" },
+    });
+  }
   const lines = ["User-agent: *", "Allow: /", ""];
   if (site) {
     const origin = site.href.replace(/\/$/, "");

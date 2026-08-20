@@ -12,7 +12,11 @@ import { getLangFromUrl, useTranslations, getRoute, otherLang } from "../i18n/ut
 import type { RouteKey } from "../i18n/routes";
 
 interface Props { routeKey: RouteKey; title?: string; description?: string; noindex?: boolean; }
-const { routeKey, title, description, noindex = false } = Astro.props;
+const { routeKey, title, description, noindex: noindexProp = false } = Astro.props;
+// En staging TODO va noindex: es contenido en revisión y no debe competir
+// con clubdel1.org ni indexarse con datos aún sin cerrar.
+const IS_STAGING = import.meta.env.PUBLIC_IS_STAGING === "1";
+const noindex = noindexProp || IS_STAGING;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
