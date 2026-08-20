@@ -1,26 +1,31 @@
 # El Club del 1+ — Sitio web
 
-Sitio multipágina bilingüe (ES/EN) en Astro. Estático, desplegado en GitHub Pages.
-Donación vía Treli (sin backend). Fiel al design system "El Club del 1+".
+Sitio multipágina bilingüe (ES/EN) en Astro. Estático, desplegado en GitHub Pages bajo el
+dominio propio **clubdel1.org**. Donación vía Treli (sin backend). Fiel al design system
+"El Club del 1+".
 
 ## Desarrollo
 
 ```bash
 npm install
-npm run dev      # http://localhost:4321/club1plus/
+npm run dev      # http://localhost:4321/
 npm run check    # tipos (astro check)
 npm test         # vitest
 npm run build    # genera dist/
 ```
 
-## Despliegue (GitHub Pages)
+## Despliegue (GitHub Pages, dominio propio)
 
-1. Crear el repo en GitHub con el nombre **`club1plus`** (evita el `+`, no soportado
-   en nombres de repo de GitHub).
-2. En `astro.config.mjs`, fijá `GH_USER` con tu usuario/org de GitHub (`REPO` ya es
-   `club1plus`; es el único lugar — `robots.txt` y el sitemap se derivan de ahí).
-3. En el repo: Settings → Pages → Source = **GitHub Actions**.
-4. Push a `main`: el workflow `.github/workflows/deploy.yml` construye y publica.
+1. `astro.config.mjs` fija `SITE = "https://clubdel1.org"` — único lugar a ajustar si
+   cambia el dominio (`robots.txt` y el sitemap se derivan de ahí).
+2. `public/CNAME` contiene `clubdel1.org` — GitHub Pages lo necesita para servir el
+   dominio propio; no borrar.
+3. DNS en el proveedor del dominio (hoy GoDaddy): registros A del apex a las IPs de
+   GitHub Pages (`185.199.108.153`, `.109.153`, `.110.153`, `.111.153`) y `www` como
+   `CNAME` a `esteban86.github.io`.
+4. En el repo: Settings → Pages → Custom domain = `clubdel1.org` (ya fijado vía API;
+   "Enforce HTTPS" se habilita solo una vez GitHub valida el DNS).
+5. Push a `main`: el workflow `.github/workflows/deploy.yml` construye y publica.
 
 ## Editar contenido
 

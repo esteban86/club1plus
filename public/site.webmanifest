@@ -2,13 +2,13 @@
   "name": "El Club del 1+",
   "short_name": "Club del 1+",
   "description": "Cofinanciamos una renta básica para madres cabeza de familia en Medellín.",
-  "start_url": "/club1plus/",
-  "scope": "/club1plus/",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#F4F6F2",
   "theme_color": "#2BE06F",
   "icons": [
-    { "src": "/club1plus/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
-    { "src": "/club1plus/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
   ]
 }
