@@ -10,7 +10,7 @@
     "WOMPI_PUBLIC_KEY": "pub_test_REEMPLAZAR",
     "WOMPI_CURRENCY": "COP",
     "WOMPI_CHECKOUT_BASE": "https://checkout.wompi.co/p/",
-    "WOMPI_REDIRECT_URL": "https://esteban86.github.io/club1plus/gracias",
+    "WOMPI_REDIRECT_URL": "https://clubdel1.org/gracias",
     "MIN_AMOUNT_COP": "5000",
     "MAX_AMOUNT_COP": "50000000"
   }
