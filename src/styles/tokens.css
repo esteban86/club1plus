@@ -1,36 +1,46 @@
-/* tokens — portado de .ds-source/tokens (sin @import de fuentes) */
+/* tokens — portado del design system (Claude Design, rebrand 2026) */
 /* Colors — El Club del 1+
-   Brand axis: electric spring green + deep forest ink, with a warm
-   complementary pair (coral + marigold) drawn from the warmth of the
-   beneficiaries' photography. Green leads; warmth is a seasoning. */
+   Fuente de verdad: Manual de Marca (brandbook "Club del 1%", Oct 25).
+   Eje de marca: verde primavera eléctrico #00FF7F + tinta teal profunda #192D32,
+   sobre papel aqua-blanco frío. Los secundarios del brandbook (menta, hoja,
+   celeste, gris) dan contraste y dinamismo; coral + marigold quedan como
+   acentos cálidos sobre papel. */
 
 :root {
   /* ---- Brand green (primary) ---- */
-  --green-50:  #E6FCEE;
-  --green-100: #C2F7D6;
-  --green-200: #8DEFB3;
-  --green-300: #54E78D;
-  --green-400: #2BE06F;  /* hero green — the signature */
-  --green-500: #19C95E;  /* default interactive green */
-  --green-600: #11A94E;  /* hover */
-  --green-700: #0C8740;  /* press / on light */
-  --green-800: #0A6633;
+  --green-50:  #E9FFF4;
+  --green-100: #C4FFE0;
+  --green-200: #8AFFC4;
+  --green-300: #47FFA0;
+  --green-400: #00FF7F;  /* hero green — brandbook principal */
+  --green-500: #00DB6D;  /* default interactive green */
+  --green-600: #00B85B;  /* hover */
+  --green-700: #009449;  /* press / on light */
+  --green-800: #007038;  /* texto/enlaces verdes sobre papel (AA 5.9:1) */
 
-  /* ---- Forest ink (dark neutral, green-tinted — never pure black) ---- */
-  --ink-900: #0C1A13;  /* deepest — text on green, deep bg */
-  --ink-800: #0F1F17;  /* primary dark surface */
-  --ink-700: #13261C;  /* raised dark surface / cards on dark */
-  --ink-600: #1B3327;  /* hairlines & borders on dark */
-  --ink-500: #2A4736;  /* muted strokes on dark */
-  --ink-400: #4A6B57;  /* muted text on dark */
-  --ink-300: #7FA38E;  /* secondary text on dark */
+  /* ---- Forest ink (dark neutral, teal-tinted — never pure black) ---- */
+  --ink-900: #101E22;  /* deepest — text on green, deep bg */
+  --ink-800: #192D32;  /* primary dark surface */
+  --ink-700: #21393F;  /* raised dark surface / cards on dark */
+  --ink-600: #2C4A52;  /* hairlines & borders on dark */
+  --ink-500: #3B5E66;  /* muted strokes on dark */
+  --ink-400: #56797F;  /* muted text on dark */
+  --ink-300: #86A6AB;  /* secondary text on dark */
 
-  /* ---- Paper (light neutral, warm-cool off white) ---- */
+  /* ---- Paper (light neutral, cool off white) ---- */
   --paper-0:   #FFFFFF;
-  --paper-50:  #F4F6F2;  /* default light surface */
-  --paper-100: #ECEFE9;  /* light card / billboard background */
-  --paper-200: #DDE3D8;  /* light borders */
-  --paper-300: #C2CBBA;
+  --paper-50:  #F5F9F9;  /* default light surface */
+  --paper-100: #E6F0F0;  /* light card / billboard background */
+  --paper-200: #D3E3E3;  /* light borders */
+  --paper-300: #B6CFCF;
+
+  /* ---- Brandbook secundarios (contraste y dinamismo) ---- */
+  --mint-200:  #C7F0E8;  /* menta — soft fills, chips, callout bg */
+  --sky-200:   #AFDCE1;  /* celeste — secondary soft fill */
+  --leaf-500:  #73B72B;  /* verde hoja — contrapunto terroso al verde eléctrico */
+  --leaf-600:  #5E9A21;
+  --gray-400:  #939393;  /* gris — logo en grises, disabled */
+  --gray-500:  #808080;
 
   /* ---- Warm complementary accents (use sparingly) ---- */
   --coral-400: #FF6B4A;   /* alerts, urgency, energy */
@@ -56,13 +66,16 @@
 
   /* Text on light */
   --text-strong:  var(--ink-900);
-  --text-body:    #233A2C;
-  --text-muted:   #56705E;
-  --text-faint:   #62705A;  /* AA 4.5:1 sobre paper-50/100 (antes #87977E ≈ 2.9:1) */
+  --text-body:    #2A424A;
+  --text-muted:   #52696F;
+  /* El design system trae #7F949A, que da 3.0:1 sobre paper-50 y 2.7:1 sobre
+     paper-100 — reprueba AA. Se oscurece dentro de la misma familia teal para
+     llegar a 5.0:1 / 4.6:1 sin salirse de la paleta del brandbook. */
+  --text-faint:   #5E6E72;
 
   /* Text on dark */
   --text-on-dark-strong: var(--paper-50);
-  --text-on-dark:        #CFE0D4;
+  --text-on-dark:        #CFE2E0;
   --text-on-dark-muted:  var(--ink-300);
   --text-on-dark-brand:  var(--green-400);
 
@@ -72,13 +85,15 @@
   /* Borders & lines */
   --border-light:  var(--paper-200);
   --border-dark:   var(--ink-600);
-  --rule-on-green: rgba(12, 26, 19, 0.45);  /* the framing hairlines on green slides */
+  --rule-on-green: rgba(16, 30, 34, 0.45);  /* the framing hairlines on green slides */
 
   /* Interactive */
   --action:        var(--green-500);
   --action-hover:  var(--green-600);
   --action-press:  var(--green-700);
   --action-on:     var(--ink-900);
+  /* Verde legible como TEXTO sobre papel: green-700 se queda en 3.7:1. */
+  --action-text-on-light: var(--green-800);
 
   /* The signature "marker highlight" pair (keyword emphasis) */
   --marker-dark-bg:   var(--ink-900);   /* dark box behind text on green/light */
@@ -90,15 +105,17 @@
   --focus-ring: var(--green-400);
 }
 /* Typography — El Club del 1+
-   One voice: a heavy geometric grotesque (Hanken Grotesk) carries display AND
-   body. Headlines run black/extrabold and tight; body stays medium and open.
-   Space Mono handles data, dates, handles and fine print. */
+   CONFIRMADO por el Manual de Marca: Poppins es la única familia de marca
+   (textos digitales, documentos, impresos, web). Titulares en black (900) y
+   tracking cerrado; cuerpo en medium (500) y abierto. Space Mono sigue siendo
+   la voz para datos, fechas, handles y letra fina. */
 
 :root {
-  --font-display: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
-  --font-body:    "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Poppins", "Helvetica Neue", Arial, sans-serif;
+  --font-body:    "Poppins", "Helvetica Neue", Arial, sans-serif;
   --font-mono:    "Space Mono", ui-monospace, "SF Mono", Menlo, monospace;
-  --font-headline: "Bricolage Grotesque Variable", "Hanken Grotesk", sans-serif; /* titulares display */
+  /* Una sola familia de marca: los titulares usan la misma display. */
+  --font-headline: var(--font-display);
 
   /* Weights */
   --fw-regular:  400; /* @kind font */
@@ -175,6 +192,17 @@
   --maxw-prose:   62ch;
   --maxw-content: 1120px;
   --maxw-narrow:  640px;
+
+  /* ---- Proporciones (razón áurea, φ = 1.618) ----
+     Para COMPOSICIÓN: divisiones de dos columnas y recortes de imagen, donde φ
+     crea armonía real. NO para la escala tipográfica ni la grilla de 8px: ahí
+     ganan la legibilidad del cuerpo y la alineación a píxel. */
+  --ratio-golden:      1.618;      /* @kind other */ /* φ */
+  --ratio-golden-sqrt: 1.272;      /* @kind other */ /* √φ — medio paso más suave */
+  --aspect-golden:     1.618 / 1;  /* @kind other */ /* rectángulo áureo (apaisado) */
+  --aspect-golden-tall: 1 / 1.618; /* @kind other */ /* rectángulo áureo (vertical) */
+  /* Sección áurea a dos columnas: mayor | menor */
+  --split-golden: 1.618fr 1fr; /* @kind other */
 }
 /* Radius — El Club del 1+
    The brand is mostly square corners (sharp marker boxes, billboards) with
@@ -197,15 +225,20 @@
 
 :root {
   /* Elevation (light surfaces) */
-  --shadow-sm:  0 1px 2px rgba(12, 26, 19, 0.06), 0 1px 3px rgba(12, 26, 19, 0.08);
-  --shadow-md:  0 4px 12px rgba(12, 26, 19, 0.10), 0 2px 4px rgba(12, 26, 19, 0.06);
-  --shadow-lg:  0 16px 40px rgba(12, 26, 19, 0.16), 0 4px 12px rgba(12, 26, 19, 0.08);
+  --shadow-sm:  0 1px 2px rgba(16, 30, 34, 0.06), 0 1px 3px rgba(16, 30, 34, 0.08);
+  --shadow-md:  0 4px 12px rgba(16, 30, 34, 0.10), 0 2px 4px rgba(16, 30, 34, 0.06);
+  --shadow-lg:  0 16px 40px rgba(16, 30, 34, 0.16), 0 4px 12px rgba(16, 30, 34, 0.08);
+
+  /* Sombras de color de marca — reemplazan rgba() escritos a mano en componentes,
+     para que un cambio de paleta no deje sombras del verde viejo. */
+  --shadow-green-hover: 0 10px 26px rgba(0, 255, 127, 0.32);
+  --shadow-ink-hover:   0 10px 26px rgba(16, 30, 34, 0.28);
 
   /* Brand glow — emphasis only, on dark */
-  --glow-green: 0 0 0 4px rgba(43, 224, 111, 0.18), 0 8px 30px rgba(43, 224, 111, 0.25);
+  --glow-green: 0 0 0 4px rgba(0, 255, 127, 0.18), 0 8px 30px rgba(0, 255, 127, 0.25);
 
   /* Focus */
-  --focus-shadow: 0 0 0 3px rgba(43, 224, 111, 0.45);
+  --focus-shadow: 0 0 0 3px rgba(0, 255, 127, 0.45);
 
   /* Hand-drawn ellipse ring (the "circled keyword") — emulated as outline */
   --ring-emphasis: 2px solid var(--ink-900); /* @kind other */
@@ -219,13 +252,13 @@
   --dur-slow:   360ms; /* @kind other */
 
   /* Protection gradient for text over photos (top + bottom scrims) */
-  --scrim-bottom: linear-gradient(to top, rgba(12,26,19,0.85) 0%, rgba(12,26,19,0) 60%); /* @kind other */
-  --scrim-top:    linear-gradient(to bottom, rgba(12,26,19,0.7) 0%, rgba(12,26,19,0) 55%); /* @kind other */
+  --scrim-bottom: linear-gradient(to top, rgba(16,30,34,0.85) 0%, rgba(16,30,34,0) 60%); /* @kind other */
+  --scrim-top:    linear-gradient(to bottom, rgba(16,30,34,0.7) 0%, rgba(16,30,34,0) 55%); /* @kind other */
   /* Duotone green wash for photos */
-  --duotone-green: linear-gradient(rgba(43,224,111,0.55), rgba(43,224,111,0.55)); /* @kind other */
+  --duotone-green: linear-gradient(rgba(0,255,127,0.55), rgba(0,255,127,0.55)); /* @kind other */
 
   /* The "+" identity motif — repeating plus texture (suma / comunidad / crecer).
      Tile it as a background-image on flat surfaces. */
-  --pattern-plus-ink:   url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cg stroke='%230C1A13' stroke-width='2.4' stroke-linecap='round' opacity='0.13'%3E%3Cline x1='22' y1='14' x2='22' y2='30'/%3E%3Cline x1='14' y1='22' x2='30' y2='22'/%3E%3C/g%3E%3C/svg%3E"); /* @kind other */
-  --pattern-plus-green: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cg stroke='%232BE06F' stroke-width='2.4' stroke-linecap='round' opacity='0.16'%3E%3Cline x1='22' y1='14' x2='22' y2='30'/%3E%3Cline x1='14' y1='22' x2='30' y2='22'/%3E%3C/g%3E%3C/svg%3E"); /* @kind other */
+  --pattern-plus-ink:   url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cg stroke='%23101E22' stroke-width='2.4' stroke-linecap='round' opacity='0.13'%3E%3Cline x1='22' y1='14' x2='22' y2='30'/%3E%3Cline x1='14' y1='22' x2='30' y2='22'/%3E%3C/g%3E%3C/svg%3E"); /* @kind other */
+  --pattern-plus-green: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cg stroke='%2300FF7F' stroke-width='2.4' stroke-linecap='round' opacity='0.16'%3E%3Cline x1='22' y1='14' x2='22' y2='30'/%3E%3Cline x1='14' y1='22' x2='30' y2='22'/%3E%3C/g%3E%3C/svg%3E"); /* @kind other */
 }

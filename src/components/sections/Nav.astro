@@ -1,5 +1,5 @@
 ---
-import LogoBadge from "../brand/LogoBadge.astro";
+import LogoLockup from "../brand/LogoLockup.astro";
 import Button from "../brand/Button.astro";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
 import { getLangFromUrl, useTranslations, getRoute } from "../../i18n/utils";
@@ -21,8 +21,7 @@ const items: { k: RouteKey; label: string }[] = [
 <header class="nav">
   <div class="container nav__bar">
     <a class="nav__logo" href={link("home")} aria-label={t("site.title")}>
-      <LogoBadge size={40} variant="green" />
-      <span class="nav__name">El Club del 1+</span>
+      <LogoLockup height={40} form="horizontal" variant="green" />
     </a>
     <nav class="nav__links" aria-label={t("nav.primaryLabel")}>
       {items.map((i) => <a href={link(i.k)}>{i.label}</a>)}
@@ -74,19 +73,19 @@ const items: { k: RouteKey; label: string }[] = [
 <style>
   .nav { position: sticky; top: 0; z-index: 50; background: var(--paper-50); background: color-mix(in srgb, var(--paper-50) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border-light); }
   .nav__bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
-  .nav__logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-strong); }
-  .nav__name { font-family: var(--font-display); font-weight: 900; letter-spacing: -0.02em; font-size: 18px; }
+  /* El lockup ya contiene el nombre de marca: no lleva texto al lado. */
+  .nav__logo { display: inline-flex; align-items: center; text-decoration: none; color: var(--text-strong); }
   .nav__links { display: flex; gap: 22px; }
   .nav__links a { font-family: var(--font-display); font-weight: 700; font-size: 15px; text-decoration: none; color: var(--text-body); }
-  .nav__links a:hover { color: var(--green-700); }
+  .nav__links a:hover { color: var(--action-text-on-light); }
   .nav__actions { display: flex; align-items: center; gap: 12px; }
   .nav__space { font-family: var(--font-display); font-weight: 700; font-size: 15px; text-decoration: none; color: var(--text-body); }
-  .nav__space:hover { color: var(--green-700); }
+  .nav__space:hover { color: var(--action-text-on-light); }
   .nav__toggle { display: none; flex-direction: column; align-items: center; justify-content: center; gap: 4px; background: none; border: 0; padding: 8px; min-width: 44px; min-height: 44px; cursor: pointer; }
   .nav__toggle span { width: 22px; height: 2.5px; background: var(--ink-900); border-radius: 2px; }
   .nav__mobile { display: none; flex-direction: column; gap: 4px; padding: 12px clamp(20px,5vw,40px) 20px; border-top: 1px solid var(--border-light); }
   .nav__mobile a { font-family: var(--font-display); font-weight: 700; font-size: 17px; text-decoration: none; color: var(--text-body); padding: 10px 0; }
-  .nav__mobile-donate { color: var(--green-700) !important; }
+  .nav__mobile-donate { color: var(--action-text-on-light) !important; }
   .nav__mobile-lang { margin-top: 10px; }
   /* La píldora de idioma vive en otro componente (LanguageSwitcher): :global para alcanzarla,
      acotada al menú móvil. Tap target cómodo de 44px solo en móvil. */

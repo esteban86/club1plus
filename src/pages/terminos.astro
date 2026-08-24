@@ -1,0 +1,55 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getRoute } from "../i18n/utils";
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const transparenciaUrl = base + getRoute("home", "es") + "#transparencia";
+---
+<BaseLayout routeKey="terminos" title="Términos y condiciones" description="Términos y condiciones de uso y de aporte de El Club del 1+.">
+  <section class="ground-paper section">
+    <div class="container legal">
+      <p class="legal__draft">Borrador · pendiente de revisión legal antes del lanzamiento.</p>
+      <h1 class="display legal__title">Términos y condiciones</h1>
+      <p class="legal__meta">Última actualización: agosto de 2026</p>
+
+      <h2>1. Quiénes somos</h2>
+      <p><strong>El Club del 1+</strong> (fundación en proceso de constitución) opera este sitio para cofinanciar, entre socios, una renta básica mensual a madres cabeza de familia. Contacto: <a href="mailto:hola@clubdel1.org">hola@clubdel1.org</a>. Al usar este sitio o hacer un aporte, aceptas estos términos.</p>
+
+      <h2>2. Naturaleza del aporte</h2>
+      <p>Tu aporte es una <strong>donación voluntaria</strong>, no una compra de bienes o servicios ni una inversión. No genera contraprestación económica, participación societaria ni retorno financiero. El reparto de cada aporte (hoy 65% a las madres, 35% a la operación) está explicado en la sección de <a href={transparenciaUrl}>Transparencia</a> y puede ajustarse en el tiempo, siempre publicado en esa página.</p>
+
+      <h2>3. Aportes recurrentes</h2>
+      <p>Si eliges un aporte mensual, autorizas el cobro recurrente del monto elegido hasta que lo canceles. Puedes cancelar en cualquier momento escribiendo a <a href="mailto:hola@clubdel1.org">hola@clubdel1.org</a>; el cobro se detiene a partir del siguiente ciclo. La cancelación no da derecho a devolución de los aportes ya cobrados.</p>
+
+      <h2>4. Reembolsos</h2>
+      <p>Por su naturaleza de donación, los aportes <strong>no son reembolsables</strong>, salvo error de cobro (monto o frecuencia distintos a los que autorizaste) o duplicidad de transacción — en esos casos escríbenos y lo revisamos.</p>
+
+      <h2>5. Procesamiento de pagos</h2>
+      <p>Los pagos los procesa <strong>Wompi</strong>, bajo sus propios términos y condiciones. Nosotros no almacenamos los datos de tu tarjeta ni de tu cuenta bancaria.</p>
+
+      <h2>6. Recibo deducible</h2>
+      <p>Hoy <strong>no</strong> emitimos certificados de donación deducibles de renta: la fundación aún no cuenta con Régimen Tributario Especial (RTE) ante la DIAN. Actualizaremos este texto y el sitio en cuanto lo obtengamos.</p>
+
+      <h2>7. Uso del sitio</h2>
+      <p>El contenido de este sitio (textos, marca, diseño) es de El Club del 1+ y no puede reproducirse con fines comerciales sin autorización. Nos reservamos el derecho de suspender el acceso a quien use el sitio de forma fraudulenta o contraria a estos términos.</p>
+
+      <h2>8. Sin garantía de resultados específicos</h2>
+      <p>Compartimos evidencia y seguimiento de impacto de buena fe, pero no podemos garantizar resultados individuales específicos para cada beneficiaria — su situación depende de factores fuera de nuestro control.</p>
+
+      <h2>9. Ley aplicable</h2>
+      <p>Estos términos se rigen por las leyes de Colombia. Cualquier controversia se resolverá ante la jurisdicción competente en Medellín.</p>
+
+      <h2>10. Cambios</h2>
+      <p>Podemos actualizar estos términos; publicaremos la versión vigente en esta página.</p>
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  .legal { max-width: 70ch; }
+  .legal__draft { display: inline-block; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--coral-500); border: 1px solid var(--coral-400); border-radius: var(--radius-pill); padding: 4px 12px; }
+  .legal__title { font-size: clamp(28px, 4.5vw, 42px); color: var(--ink-900); margin-top: 18px; line-height: 1.1; padding-bottom: 0.1em; }
+  .legal__meta { font-family: var(--font-mono); font-size: 12px; color: var(--text-faint); margin-top: 8px; }
+  .legal h2 { font-family: var(--font-display); font-weight: 800; font-size: 20px; color: var(--ink-900); margin: 34px 0 8px; }
+  .legal p, .legal li { font-family: var(--font-body); font-weight: 500; font-size: 16px; line-height: 1.6; color: var(--text-body); }
+  .legal ul { margin: 8px 0 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
+  .legal a { color: var(--action-text-on-light); }
+</style>

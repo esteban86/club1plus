@@ -8,7 +8,6 @@ accent: green
 featured: false
 order: 1
 perks:
-  - Recibo deducible
   - Reporte de impacto trimestral
 urlMonthly: ""   # TODO: link Wompi
 urlOneTime: ""   # TODO: link Wompi

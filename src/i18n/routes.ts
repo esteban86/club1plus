@@ -11,6 +11,7 @@ export const ROUTES = {
   donar:         { es: "/donar",         en: "/en/donate" },
   gracias:       { es: "/gracias",       en: "/en/thanks" },
   privacidad:    { es: "/privacidad",    en: "/en/privacy" },
+  terminos:      { es: "/terminos",      en: "/en/terms" },
   // ── Demo interactiva (portal de socios, comunidad y admin) ──
   ingresar:      { es: "/ingresar",      en: "/en/login" },
   miEspacio:     { es: "/mi-espacio",    en: "/en/my-space" },

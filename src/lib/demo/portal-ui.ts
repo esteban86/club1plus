@@ -35,7 +35,7 @@ const L = {
     you: "Tú", funded: (p: number) => `${p}% financiada`, inFormation: "En formación",
     committedOf: (c: string, t: string) => `${c} de ${t} / mes`, withdraw: "Ocultar estos datos",
     aTitle: "Tus aportes", thDate: "Fecha", thRef: "Referencia", thAmount: "Monto", thStatus: "Estado", approved: "Aprobado",
-    total: "Total aportado", reciboT: "Último recibo", recurring: "Aporte recurrente", fee: "Comisión", toMothers: "Para las madres (65%)", toFund: "Sostiene la fundación (35%)", deductible: "Deducible de impuestos",
+    total: "Total aportado", reciboT: "Último recibo", recurring: "Aporte recurrente", fee: "Comisión", toMothers: "Para las madres (65%)", toFund: "Sostiene la fundación (35%)",
     rTitle: "Invita y multiplica", rBody: "Comparte tu enlace. Cuando alguien se hace socio, aparece en tu red — incluso varios niveles abajo.",
     copy: "Copiar", copied: "¡Copiado!", invited: "Invitados", convertedL: "Se hicieron socios", netTitle: "Tu red de referidos",
     legMember: "Socio activo", legPending: "Invitado (pendiente)", noRefs: "Aún no has invitado a nadie. ¡Comparte tu enlace y empieza tu red!",
@@ -67,7 +67,7 @@ const L = {
     you: "You", funded: (p: number) => `${p}% funded`, inFormation: "Forming",
     committedOf: (c: string, t: string) => `${c} of ${t} / mo`, withdraw: "Hide this data",
     aTitle: "Your contributions", thDate: "Date", thRef: "Reference", thAmount: "Amount", thStatus: "Status", approved: "Approved",
-    total: "Total contributed", reciboT: "Latest receipt", recurring: "Recurring contribution", fee: "Fee", toMothers: "To the mothers (65%)", toFund: "Sustains the foundation (35%)", deductible: "Tax-deductible",
+    total: "Total contributed", reciboT: "Latest receipt", recurring: "Recurring contribution", fee: "Fee", toMothers: "To the mothers (65%)", toFund: "Sustains the foundation (35%)",
     rTitle: "Invite and multiply", rBody: "Share your link. When someone becomes a member, they appear in your network — even several levels down.",
     copy: "Copy", copied: "Copied!", invited: "Invited", convertedL: "Became members", netTitle: "Your referral network",
     legMember: "Active member", legPending: "Invited (pending)", noRefs: "You haven't invited anyone yet. Share your link and start your network!",
@@ -261,7 +261,7 @@ export function initDashboard() {
       const chips = circle.entries.map((e) => {
         const you = e.memberId === m.id;
         const dot = D.TIERS[e.tierKey].accent;
-        const dotColor = dot === "green" ? "#19C95E" : dot === "coral" ? "#FF6B4A" : dot === "marigold" ? "#FFC23D" : "#0C1A13";
+        const dotColor = dot === "green" ? "#00DB6D" : dot === "coral" ? "#FF6B4A" : dot === "marigold" ? "#FFC23D" : "#101E22";
         return `<span class="pf-cofunder${you ? " pf-cofunder--you" : ""}"><span class="pf-cofunder__dot" style="background:${dotColor}"></span>${you ? t.you : esc(e.name)}</span>`;
       }).join("");
       const warm = ben.status === "in_formation" ? " pf-bar__fill--warm" : "";
@@ -327,8 +327,6 @@ export function initDashboard() {
         <div class="pf-setting"><span>${t.fee}</span><b>$0</b></div>
         <div class="pf-setting"><span>${t.toMothers}</span><b>${D.formatCop(toMothers, lang)}</b></div>
         <div class="pf-setting"><span>${t.toFund}</span><b>${D.formatCop(toFund, lang)}</b></div>
-        <div class="pf-spacer"></div>
-        <span class="pf-chip pf-chip--marigold">${t.deductible}</span>
       </div>
     </div>`;
   }
@@ -343,8 +341,8 @@ export function initDashboard() {
         <h3 class="pf-h">${t.netTitle}</h3>
         <div class="pf-graph-scroll">${renderGraphSVG(m.id)}</div>
         <div class="pf-legend">
-          <span><span class="swatch" style="background:#2BE06F"></span>${t.legMember}</span>
-          <span><span class="swatch" style="background:#fff;border:2px solid #19C95E"></span>${t.legPending}</span>
+          <span><span class="swatch" style="background:#00FF7F"></span>${t.legMember}</span>
+          <span><span class="swatch" style="background:#fff;border:2px solid #00DB6D"></span>${t.legPending}</span>
         </div>
       </div>` : `<div class="pf-card" style="margin-top:18px"><p class="pf-muted">${t.noRefs}</p></div>`;
     return `
@@ -463,11 +461,11 @@ export function renderGraphSVG(rootId: string, opts: { anonymizeAll?: boolean } 
     const x = px(n), y = py(n);
     const isRoot = n.id === rootId;
     const label = opts.anonymizeAll ? "" : (n.label.includes(".") ? n.label : firstName(n.label));
-    const fill = n.converted ? "#2BE06F" : "#FFFFFF";
-    const stroke = n.converted ? "#0C1A13" : "#19C95E";
+    const fill = n.converted ? "#00FF7F" : "#FFFFFF";
+    const stroke = n.converted ? "#101E22" : "#00DB6D";
     const dash = n.converted ? "" : ` stroke-dasharray="4 3"`;
     const rr = isRoot ? r + 4 : r;
-    const text = label ? `<text x="${x.toFixed(1)}" y="${y + rr + 15}" text-anchor="middle" font-family="'Space Mono', monospace" font-size="11" fill="#0C1A13">${esc(label)}</text>` : "";
+    const text = label ? `<text x="${x.toFixed(1)}" y="${y + rr + 15}" text-anchor="middle" font-family="'Space Mono', monospace" font-size="11" fill="#101E22">${esc(label)}</text>` : "";
     return `
       <g>
         <circle cx="${x.toFixed(1)}" cy="${y}" r="${rr}" fill="${fill}" stroke="${stroke}" stroke-width="${isRoot ? 3 : 2}"${dash} />

@@ -1,0 +1,89 @@
+---
+// Banner mínimo de consentimiento antes de cargar GA4 (Ley 1581 / Habeas Data — GA4
+// usa cookies/identificadores, así que no se carga sin una decisión explícita del visitante).
+// Si no hay PUBLIC_GA_MEASUREMENT_ID configurado, este componente no renderiza nada.
+import { getLangFromUrl, getRoute } from "../../i18n/utils";
+import { GA_MEASUREMENT_ID } from "../../lib/analytics";
+
+const lang = getLangFromUrl(Astro.url);
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const privacidadUrl = base + getRoute("privacidad", lang);
+
+const d = lang === "es"
+  ? {
+      text: "Usamos Google Analytics para entender cómo se usa el sitio. No se activa hasta que aceptes.",
+      link: "Ver privacidad",
+      accept: "Aceptar",
+      reject: "Rechazar",
+    }
+  : {
+      text: "We use Google Analytics to understand how the site is used. It stays off until you accept.",
+      link: "See privacy policy",
+      accept: "Accept",
+      reject: "Decline",
+    };
+---
+{GA_MEASUREMENT_ID && (
+  <div id="consent-banner" class="consent" data-ga-id={GA_MEASUREMENT_ID} hidden>
+    <div class="container consent__inner">
+      <p class="consent__txt">{d.text} <a href={privacidadUrl}>{d.link}</a></p>
+      <div class="consent__actions">
+        <button type="button" data-consent="deny" class="consent__btn consent__btn--ghost">{d.reject}</button>
+        <button type="button" data-consent="grant" class="consent__btn">{d.accept}</button>
+      </div>
+    </div>
+  </div>
+)}
+<script>
+  const KEY = "c1p_consent";
+
+  function loadGA(id: string) {
+    if ((window as any).__c1pGaLoaded) return;
+    (window as any).__c1pGaLoaded = true;
+    const s = document.createElement("script");
+    s.async = true;
+    s.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(id)}`;
+    document.head.appendChild(s);
+    (window as any).dataLayer = (window as any).dataLayer || [];
+    function gtag(...args: unknown[]) { (window as any).dataLayer.push(args); }
+    (window as any).gtag = gtag;
+    gtag("js", new Date());
+    gtag("config", id, { anonymize_ip: true });
+  }
+
+  function initConsentBanner() {
+    const banner = document.getElementById("consent-banner") as HTMLElement | null;
+    if (!banner) return;
+    const gaId = banner.dataset.gaId;
+    if (!gaId) return;
+
+    const stored = localStorage.getItem(KEY);
+    if (stored === "granted") { loadGA(gaId); return; }
+    if (stored === "denied") return;
+
+    banner.hidden = false;
+    if (banner.dataset.bound) return;
+    banner.dataset.bound = "1";
+    banner.querySelector<HTMLButtonElement>('[data-consent="grant"]')?.addEventListener("click", () => {
+      localStorage.setItem(KEY, "granted");
+      banner.hidden = true;
+      loadGA(gaId);
+    });
+    banner.querySelector<HTMLButtonElement>('[data-consent="deny"]')?.addEventListener("click", () => {
+      localStorage.setItem(KEY, "denied");
+      banner.hidden = true;
+    });
+  }
+  document.addEventListener("astro:page-load", initConsentBanner);
+</script>
+<style>
+  .consent { position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; background: var(--ink-900); border-top: 1px solid var(--ink-500); }
+  .consent__inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; padding-block: 14px; }
+  .consent__txt { font-family: var(--font-body); font-weight: 500; font-size: 13px; line-height: 1.5; color: var(--text-on-dark-muted); margin: 0; max-width: 62ch; }
+  .consent__txt a { color: var(--green-400); text-decoration: none; border-bottom: 1px solid transparent; }
+  .consent__txt a:hover { border-bottom-color: var(--green-400); }
+  .consent__actions { display: flex; gap: 10px; flex-shrink: 0; }
+  .consent__btn { font-family: var(--font-display); font-weight: 800; font-size: 13px; border-radius: var(--radius-pill); padding: 9px 18px; border: 1px solid var(--green-400); background: var(--green-400); color: var(--ink-900); cursor: pointer; }
+  .consent__btn--ghost { background: transparent; color: var(--text-on-dark-muted); border-color: var(--ink-500); }
+  .consent__btn--ghost:hover { color: var(--paper-50); border-color: var(--text-on-dark-muted); }
+</style>
