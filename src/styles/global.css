@@ -1,5 +1,12 @@
-@import "@fontsource-variable/hanken-grotesk";
-@import "@fontsource-variable/bricolage-grotesque";
+/* Poppins (subset latino) — familia única de marca según el Manual de Marca.
+   Se importan solo los pesos realmente usados; el subset devanagari de Poppins
+   se deja fuera a propósito por peso. */
+@import "@fontsource/poppins/latin-400.css";
+@import "@fontsource/poppins/latin-500.css";
+@import "@fontsource/poppins/latin-600.css";
+@import "@fontsource/poppins/latin-700.css";
+@import "@fontsource/poppins/latin-800.css";
+@import "@fontsource/poppins/latin-900.css";
 @import "@fontsource/space-mono/400.css";
 @import "@fontsource/space-mono/700.css";
 @import "./tokens.css";

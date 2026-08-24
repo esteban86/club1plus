@@ -261,7 +261,7 @@ export function initDashboard() {
       const chips = circle.entries.map((e) => {
         const you = e.memberId === m.id;
         const dot = D.TIERS[e.tierKey].accent;
-        const dotColor = dot === "green" ? "#19C95E" : dot === "coral" ? "#FF6B4A" : dot === "marigold" ? "#FFC23D" : "#0C1A13";
+        const dotColor = dot === "green" ? "#00DB6D" : dot === "coral" ? "#FF6B4A" : dot === "marigold" ? "#FFC23D" : "#101E22";
         return `<span class="pf-cofunder${you ? " pf-cofunder--you" : ""}"><span class="pf-cofunder__dot" style="background:${dotColor}"></span>${you ? t.you : esc(e.name)}</span>`;
       }).join("");
       const warm = ben.status === "in_formation" ? " pf-bar__fill--warm" : "";
@@ -341,8 +341,8 @@ export function initDashboard() {
         <h3 class="pf-h">${t.netTitle}</h3>
         <div class="pf-graph-scroll">${renderGraphSVG(m.id)}</div>
         <div class="pf-legend">
-          <span><span class="swatch" style="background:#2BE06F"></span>${t.legMember}</span>
-          <span><span class="swatch" style="background:#fff;border:2px solid #19C95E"></span>${t.legPending}</span>
+          <span><span class="swatch" style="background:#00FF7F"></span>${t.legMember}</span>
+          <span><span class="swatch" style="background:#fff;border:2px solid #00DB6D"></span>${t.legPending}</span>
         </div>
       </div>` : `<div class="pf-card" style="margin-top:18px"><p class="pf-muted">${t.noRefs}</p></div>`;
     return `
@@ -461,11 +461,11 @@ export function renderGraphSVG(rootId: string, opts: { anonymizeAll?: boolean } 
     const x = px(n), y = py(n);
     const isRoot = n.id === rootId;
     const label = opts.anonymizeAll ? "" : (n.label.includes(".") ? n.label : firstName(n.label));
-    const fill = n.converted ? "#2BE06F" : "#FFFFFF";
-    const stroke = n.converted ? "#0C1A13" : "#19C95E";
+    const fill = n.converted ? "#00FF7F" : "#FFFFFF";
+    const stroke = n.converted ? "#101E22" : "#00DB6D";
     const dash = n.converted ? "" : ` stroke-dasharray="4 3"`;
     const rr = isRoot ? r + 4 : r;
-    const text = label ? `<text x="${x.toFixed(1)}" y="${y + rr + 15}" text-anchor="middle" font-family="'Space Mono', monospace" font-size="11" fill="#0C1A13">${esc(label)}</text>` : "";
+    const text = label ? `<text x="${x.toFixed(1)}" y="${y + rr + 15}" text-anchor="middle" font-family="'Space Mono', monospace" font-size="11" fill="#101E22">${esc(label)}</text>` : "";
     return `
       <g>
         <circle cx="${x.toFixed(1)}" cy="${y}" r="${rr}" fill="${fill}" stroke="${stroke}" stroke-width="${isRoot ? 3 : 2}"${dash} />

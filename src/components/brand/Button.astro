@@ -35,8 +35,8 @@ const extra = href ? { href, ...(rest.target ? { rel: "noopener noreferrer" } : 
   .btn--outline-on-dark { background: transparent; color: var(--green-400); border-color: var(--green-400); }
   .btn--ghost { background: transparent; color: var(--text-strong); }
   .btn:hover { filter: brightness(0.96); transform: translateY(-2px); }
-  .btn--primary:hover { box-shadow: 0 10px 26px rgba(43, 224, 111, 0.32); }
-  .btn--dark:hover { box-shadow: 0 10px 26px rgba(12, 26, 19, 0.28); }
+  .btn--primary:hover { box-shadow: var(--shadow-green-hover); }
+  .btn--dark:hover { box-shadow: var(--shadow-ink-hover); }
   .btn:active { transform: translateY(0) scale(0.97); }
   @media (prefers-reduced-motion: reduce) { .btn:hover, .btn:active { transform: none; } }
 </style>

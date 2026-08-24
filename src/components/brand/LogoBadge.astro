@@ -1,12 +1,18 @@
 ---
-// LogoBadge — insignia "El Club del 1+". Anillo verde, domo oscuro con "1+" y
-// banda inferior con "club". Construcción en proporción áurea (φ) sobre malla
-// 200×200, R=94: el círculo se parte en su sección áurea — domo 61,8% (arriba)
-// y banda 38,2% (abajo), divisor en y=122.
+// LogoBadge — insignia "El Club del 1+", el uso primario (piezas corporativas).
 //
-// variant "green": anillo verde + domo ink (default). Para fondos OSCUROS o claro-neutros.
-// variant "dark":  anillo ink + domo verde (invertido). Para fondos VERDES.
-// glow: halo suave para fondos oscuros. Default false.
+// MEDIDAS de la planimetría del manual, sobre malla 200×200 con R = 100:
+//  · El disco verde va a SANGRE (r = 100, sin anillo exterior).
+//  · El domo de tinta es un disco a 0,85 R recortado en 0,635 del diámetro (y = 127).
+//  · "club" se apoya en la banda inferior; el "+" va a la misma altura que el "1"
+//    y con esquinas rectas (el + es el glifo protagonista del rebrand).
+// Para tamaños chicos (favicon, avatares) usar el isotipo: LogoLockup form="isotipo".
+//
+// variant "green": disco verde + domo tinta (default). Es la marca canónica y
+//                  funciona sobre papel y sobre tinta.
+// variant "dark":  disco tinta con anillo verde + 1+ y "club" verdes (invertida).
+//                  Para fondos VERDES, donde el disco verde se perdería.
+// glow: halo suave; ayuda a despegar la marca sobre fondos oscuros. Default false.
 interface Props { size?: number; variant?: "green" | "dark"; glow?: boolean; class?: string; }
 const { size = 72, variant = "green", glow = false, class: cls = "" } = Astro.props;
 const uid = "lb-" + Math.random().toString(36).slice(2, 8);
@@ -21,7 +27,7 @@ const uid = "lb-" + Math.random().toString(36).slice(2, 8);
   style="display:inline-block;overflow:visible"
 >
   <defs>
-    <clipPath id={`dome-${uid}`}><rect x="0" y="0" width="200" height="122" /></clipPath>
+    <clipPath id={`dome-${uid}`}><rect x="0" y="0" width="200" height="127" /></clipPath>
     {glow && (
       <filter id={`glow-${uid}`} x="-40%" y="-40%" width="180%" height="180%">
         <feGaussianBlur stdDeviation="7" />
@@ -29,22 +35,23 @@ const uid = "lb-" + Math.random().toString(36).slice(2, 8);
     )}
   </defs>
 
-  {glow && <circle class="logo__glow" cx="100" cy="100" r="92" opacity="0.5" filter={`url(#glow-${uid})`} />}
+  {glow && <circle class="logo__glow" cx="100" cy="100" r="97" opacity="0.5" filter={`url(#glow-${uid})`} />}
 
-  {/* anillo + banda inferior (un disco) */}
-  <circle class="logo__ring" cx="100" cy="100" r="94" />
-  {/* domo — disco interior (r=84) recortado al divisor áureo */}
-  <circle class="logo__dome" cx="100" cy="100" r="84" clip-path={`url(#dome-${uid})`} />
+  {/* disco a sangre */}
+  <circle class="logo__disc" cx="100" cy="100" r="100" />
+  {variant === "dark" && <circle class="logo__ring" cx="100" cy="100" r="96" fill="none" stroke-width="5" />}
+  {/* domo — disco interior (r=85) recortado en y=127 */}
+  <circle class="logo__dome" cx="100" cy="100" r="85" clip-path={`url(#dome-${uid})`} />
 
   {/* "1+" ópticamente centrado en el domo */}
-  <text class="logo__txt logo__1plus" x="72" y="99" text-anchor="middle" font-weight="900" font-size="86" letter-spacing="-4">1</text>
+  <text class="logo__txt logo__1plus" x="64" y="116" text-anchor="middle" font-weight="900" font-size="90" letter-spacing="-4">1</text>
   <g class="logo__1plus">
-    <rect x="122" y="39" width="16" height="58" rx="4" />
-    <rect x="101" y="60" width="58" height="16" rx="4" />
+    <rect x="115" y="51.5" width="20" height="66" />
+    <rect x="92" y="74.5" width="66" height="20" />
   </g>
 
   {/* "club" ópticamente centrado en la banda */}
-  <text class="logo__txt logo__club" x="100" y="170" text-anchor="middle" font-weight="900" font-size="46" letter-spacing="-1.5">club</text>
+  <text class="logo__txt logo__club" x="100" y="171" text-anchor="middle" font-weight="900" font-size="46" letter-spacing="-1.5">club</text>
 </svg>
 
 <style>
@@ -53,13 +60,14 @@ const uid = "lb-" + Math.random().toString(36).slice(2, 8);
   .logo__txt { font-family: var(--font-display); }
   .logo__glow { fill: var(--green-400); }
 
-  .logo--green .logo__ring  { fill: var(--green-400); }
-  .logo--green .logo__dome  { fill: var(--ink-900); }
+  .logo--green .logo__disc  { fill: var(--green-400); }
+  .logo--green .logo__dome  { fill: var(--ink-800); }
   .logo--green .logo__1plus { fill: var(--green-400); }
-  .logo--green .logo__club  { fill: var(--ink-900); }
+  .logo--green .logo__club  { fill: var(--ink-800); }
 
-  .logo--dark .logo__ring  { fill: var(--ink-900); }
-  .logo--dark .logo__dome  { fill: var(--green-400); }
-  .logo--dark .logo__1plus { fill: var(--ink-900); }
+  .logo--dark .logo__disc  { fill: var(--ink-800); }
+  .logo--dark .logo__ring  { stroke: var(--green-400); }
+  .logo--dark .logo__dome  { fill: var(--ink-900); }
+  .logo--dark .logo__1plus { fill: var(--green-400); }
   .logo--dark .logo__club  { fill: var(--green-400); }
 </style>

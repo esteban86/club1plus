@@ -386,7 +386,7 @@ const nodes = c.nodes.map((n, i) => ({ cls: nodeCls[i], ...n }));
 <!-- 6 · CERTEZA -->
 <section class="ground-paper ec-sec">
   <div class="ec-wrap">
-    <span class="reveal"><Overline color="var(--green-700)">{c.certOver}</Overline></span>
+    <span class="reveal"><Overline color="var(--action-text-on-light)">{c.certOver}</Overline></span>
     <h2 class="display ec-h reveal">{c.certHPre}<Highlight>{c.certHWord}</Highlight></h2>
     <p class="ec-lead reveal">{c.certLeadA}<strong>{c.certLeadStrong}</strong>{c.certLeadB}</p>
     <div class="ec-steps reveal">
@@ -572,7 +572,7 @@ const nodes = c.nodes.map((n, i) => ({ cls: nodeCls[i], ...n }));
   .ec-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); margin-top: 48px; border: 2px solid var(--ink-900); border-radius: 14px; overflow: hidden; }
   .ec-step { padding: 22px; border-right: 1px solid var(--paper-200); background: var(--paper-0); }
   .ec-step--last { background: var(--green-400); border-right: none; }
-  .ec-step__n { font-family: var(--font-mono); font-weight: 700; font-size: 13px; color: var(--green-700); }
+  .ec-step__n { font-family: var(--font-mono); font-weight: 700; font-size: 13px; color: var(--action-text-on-light); }
   .ec-step--last .ec-step__n { color: var(--ink-900); }
   .ec-step__t { font-family: var(--font-display); font-weight: 800; font-size: 18px; color: var(--ink-900); margin: 12px 0 6px; }
   .ec-step__d { font-family: var(--font-body); font-weight: 500; font-size: 14px; line-height: 1.45; color: var(--text-muted); }

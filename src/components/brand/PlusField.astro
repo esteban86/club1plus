@@ -19,7 +19,7 @@ const { tone = "ink", class: cls = "" } = Astro.props;
     const parent = canvas.parentElement as HTMLElement;
     const ctx = canvas.getContext("2d");
     if (!parent || !ctx) return;
-    const stroke = canvas.dataset.tone === "paper" ? "12, 26, 19" : "12, 26, 19"; // ink RGB
+    const stroke = "16, 30, 34"; // ink-900 RGB
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     let w = 0, h = 0, dpr = 1, particles: P[] = [], raf = 0, running = false, t = 0;
