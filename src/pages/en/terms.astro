@@ -1,0 +1,55 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getRoute } from "../../i18n/utils";
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const transparencyUrl = base + getRoute("home", "en") + "#transparencia";
+---
+<BaseLayout routeKey="terminos" title="Terms & conditions" description="Terms and conditions of use and contribution for El Club del 1+.">
+  <section class="ground-paper section">
+    <div class="container legal">
+      <p class="legal__draft">Draft · pending legal review before launch.</p>
+      <h1 class="display legal__title">Terms & conditions</h1>
+      <p class="legal__meta">Last updated: August 2026</p>
+
+      <h2>1. Who we are</h2>
+      <p><strong>El Club del 1+</strong> (foundation being incorporated) operates this site to pool member contributions into a monthly basic income for female heads of household. Contact: <a href="mailto:hola@clubdel1.org">hola@clubdel1.org</a>. By using this site or making a contribution, you accept these terms.</p>
+
+      <h2>2. Nature of the contribution</h2>
+      <p>Your contribution is a <strong>voluntary donation</strong>, not a purchase of goods or services and not an investment. It carries no economic consideration, ownership stake, or financial return. How each contribution is split (today 65% to the mothers, 35% to operations) is explained in the <a href={transparencyUrl}>Transparency</a> section and may change over time — always published there.</p>
+
+      <h2>3. Recurring contributions</h2>
+      <p>If you choose a monthly contribution, you authorize recurring charges of the chosen amount until you cancel. You may cancel at any time by writing to <a href="mailto:hola@clubdel1.org">hola@clubdel1.org</a>; charges stop from the next cycle. Cancellation does not entitle you to a refund of contributions already charged.</p>
+
+      <h2>4. Refunds</h2>
+      <p>Given their nature as donations, contributions are <strong>non-refundable</strong>, except for a charging error (an amount or frequency different from what you authorized) or a duplicate transaction — write to us and we'll review it.</p>
+
+      <h2>5. Payment processing</h2>
+      <p>Payments are processed by <strong>Wompi</strong>, under its own terms and conditions. We do not store your card or bank account details.</p>
+
+      <h2>6. Tax-deductible receipt</h2>
+      <p>We do <strong>not</strong> currently issue tax-deductible donation certificates: the foundation does not yet hold Special Tax Regime (RTE) status with the DIAN. We will update this text and the site once we obtain it.</p>
+
+      <h2>7. Use of the site</h2>
+      <p>The content of this site (text, brand, design) belongs to El Club del 1+ and may not be reproduced for commercial purposes without authorization. We reserve the right to suspend access for anyone using the site fraudulently or in violation of these terms.</p>
+
+      <h2>8. No guarantee of specific outcomes</h2>
+      <p>We share evidence and impact tracking in good faith, but we cannot guarantee specific individual outcomes for each beneficiary — her situation depends on factors beyond our control.</p>
+
+      <h2>9. Governing law</h2>
+      <p>These terms are governed by the laws of Colombia. Any dispute will be resolved before the competent courts in Medellín.</p>
+
+      <h2>10. Changes</h2>
+      <p>We may update these terms; the current version will always be published on this page.</p>
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  .legal { max-width: 70ch; }
+  .legal__draft { display: inline-block; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--coral-500); border: 1px solid var(--coral-400); border-radius: var(--radius-pill); padding: 4px 12px; }
+  .legal__title { font-size: clamp(28px, 4.5vw, 42px); color: var(--ink-900); margin-top: 18px; line-height: 1.1; padding-bottom: 0.1em; }
+  .legal__meta { font-family: var(--font-mono); font-size: 12px; color: var(--text-faint); margin-top: 8px; }
+  .legal h2 { font-family: var(--font-display); font-weight: 800; font-size: 20px; color: var(--ink-900); margin: 34px 0 8px; }
+  .legal p, .legal li { font-family: var(--font-body); font-weight: 500; font-size: 16px; line-height: 1.6; color: var(--text-body); }
+  .legal ul { margin: 8px 0 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
+  .legal a { color: var(--green-700); }
+</style>

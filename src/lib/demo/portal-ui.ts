@@ -35,7 +35,7 @@ const L = {
     you: "Tú", funded: (p: number) => `${p}% financiada`, inFormation: "En formación",
     committedOf: (c: string, t: string) => `${c} de ${t} / mes`, withdraw: "Ocultar estos datos",
     aTitle: "Tus aportes", thDate: "Fecha", thRef: "Referencia", thAmount: "Monto", thStatus: "Estado", approved: "Aprobado",
-    total: "Total aportado", reciboT: "Último recibo", recurring: "Aporte recurrente", fee: "Comisión", toMothers: "Para las madres (65%)", toFund: "Sostiene la fundación (35%)", deductible: "Deducible de impuestos",
+    total: "Total aportado", reciboT: "Último recibo", recurring: "Aporte recurrente", fee: "Comisión", toMothers: "Para las madres (65%)", toFund: "Sostiene la fundación (35%)",
     rTitle: "Invita y multiplica", rBody: "Comparte tu enlace. Cuando alguien se hace socio, aparece en tu red — incluso varios niveles abajo.",
     copy: "Copiar", copied: "¡Copiado!", invited: "Invitados", convertedL: "Se hicieron socios", netTitle: "Tu red de referidos",
     legMember: "Socio activo", legPending: "Invitado (pendiente)", noRefs: "Aún no has invitado a nadie. ¡Comparte tu enlace y empieza tu red!",
@@ -67,7 +67,7 @@ const L = {
     you: "You", funded: (p: number) => `${p}% funded`, inFormation: "Forming",
     committedOf: (c: string, t: string) => `${c} of ${t} / mo`, withdraw: "Hide this data",
     aTitle: "Your contributions", thDate: "Date", thRef: "Reference", thAmount: "Amount", thStatus: "Status", approved: "Approved",
-    total: "Total contributed", reciboT: "Latest receipt", recurring: "Recurring contribution", fee: "Fee", toMothers: "To the mothers (65%)", toFund: "Sustains the foundation (35%)", deductible: "Tax-deductible",
+    total: "Total contributed", reciboT: "Latest receipt", recurring: "Recurring contribution", fee: "Fee", toMothers: "To the mothers (65%)", toFund: "Sustains the foundation (35%)",
     rTitle: "Invite and multiply", rBody: "Share your link. When someone becomes a member, they appear in your network — even several levels down.",
     copy: "Copy", copied: "Copied!", invited: "Invited", convertedL: "Became members", netTitle: "Your referral network",
     legMember: "Active member", legPending: "Invited (pending)", noRefs: "You haven't invited anyone yet. Share your link and start your network!",
@@ -327,8 +327,6 @@ export function initDashboard() {
         <div class="pf-setting"><span>${t.fee}</span><b>$0</b></div>
         <div class="pf-setting"><span>${t.toMothers}</span><b>${D.formatCop(toMothers, lang)}</b></div>
         <div class="pf-setting"><span>${t.toFund}</span><b>${D.formatCop(toFund, lang)}</b></div>
-        <div class="pf-spacer"></div>
-        <span class="pf-chip pf-chip--marigold">${t.deductible}</span>
       </div>
     </div>`;
   }

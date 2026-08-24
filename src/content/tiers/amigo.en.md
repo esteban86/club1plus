@@ -8,7 +8,6 @@ accent: green
 featured: false
 order: 1
 perks:
-  - Tax-deductible receipt
   - Quarterly impact report
 urlMonthly: ""   # TODO: real Wompi link
 urlOneTime: ""   # TODO: real Wompi link
