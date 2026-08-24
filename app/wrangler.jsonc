@@ -1,0 +1,43 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "club1plus-app",
+  "compatibility_date": "2026-08-23",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true, "head_sampling_rate": 1 },
+  "assets": { "directory": "./dist" },
+
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "club1plus",
+      "database_id": "d83cbc80-6a40-4fd3-b45e-3c374ed2c4da",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "kv_namespaces": [
+    {
+      "binding": "KV",
+      "id": "2861ab4cb47e4319b6832b8c8fe6fc8d"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "PHOTOS",
+      "bucket_name": "club1plus-photos"
+    }
+  ],
+
+  // Secretos (nunca en este archivo):
+  //   wrangler secret put WOMPI_PUBLIC_KEY
+  //   wrangler secret put WOMPI_INTEGRITY_SECRET
+  //   wrangler secret put WOMPI_EVENTS_SECRET
+  //   wrangler secret put RESEND_API_KEY
+  //   wrangler secret put TURNSTILE_SECRET_KEY
+  "vars": {
+    "PUBLIC_TURNSTILE_SITE_KEY": "REEMPLAZAR"
+  },
+
+  "routes": [
+    { "pattern": "app.clubdel1.org", "custom_domain": true }
+  ]
+}

@@ -1,0 +1,18 @@
+---
+// Placeholder — la app real de socios se construye a lo largo de las Fases 3-9
+// del plan (auth, portal, admin). Este endpoint solo confirma que el Worker
+// está vivo y conectado a D1/KV/R2 mientras se construye el resto.
+import { env } from "cloudflare:workers";
+const { results } = await env.DB.prepare("SELECT COUNT(*) as n FROM members").all();
+const memberCount = (results[0] as { n: number }).n;
+---
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>El Club del 1+ — app</title>
+  </head>
+  <body>
+    <p>El Club del 1+ — en construcción. Socios registrados: {memberCount}</p>
+  </body>
+</html>

@@ -4,6 +4,8 @@ node_modules/
 # Build output
 dist/
 .astro/
+.wrangler/
+worker-configuration.d.ts
 
 # Design system source material (reference only — not part of the repo)
 .ds-source/
