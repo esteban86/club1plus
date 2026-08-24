@@ -1,18 +1,40 @@
 ---
+// AvatarRing — retrato circular con el tratamiento de anillo / disco verde de
+// la marca. Se usa para beneficiarias y equipo.
+//
+// NOTA sobre `name`: este componente pinta SOLO la foto, a propósito. En el
+// design system el componente también rotula (nombre + caption debajo), pero
+// aquí todas las páginas ya rotulan por su cuenta y con mejor semántica
+// (`<figcaption>` en /nosotros, `<p class="story__name">` en Stories). Añadir
+// el bloque de rótulo duplicaría el nombre en todos los usos actuales.
+// `name` se usa únicamente para sacar la inicial del placeholder cuando no hay
+// foto. No lo "restaures" desde el design system sin quitar antes los rótulos
+// de las páginas.
 interface Props { src?: string; alt?: string; size?: number; treatment?: "ring" | "disc" | "plain"; name?: string; }
 const { src, alt = "", size = 96, treatment = "ring", name } = Astro.props;
 const initial = (name ?? "·").slice(0, 1);
+// Borde proporcional al tamaño (mínimo 3px): un valor fijo se veía grueso en
+// avatares pequeños y fino en los grandes.
+const ringWidth = Math.max(3, Math.round(size * 0.05));
 ---
-<span class:list={["avatar", `avatar--${treatment}`]} style={`width:${size}px;height:${size}px`}>
+<span
+  class:list={["avatar", `avatar--${treatment}`]}
+  style={`width:${size}px;height:${size}px;--ring-w:${ringWidth}px`}
+>
   <span class="avatar__inner">
     {src ? <img src={src} alt={alt} width={size} height={size} loading="lazy" decoding="async" /> : <span class="avatar__ph" style={`font-size:${Math.round(size * 0.34)}px`}>{initial}</span>}
   </span>
 </span>
 <style>
   .avatar { position: relative; display: inline-block; flex: none; border-radius: var(--radius-circle); }
-  .avatar--disc { background: var(--green-400); padding: 8%; }
-  .avatar__inner { display: block; width: 100%; height: 100%; border-radius: var(--radius-circle); overflow: hidden; background: var(--ink-700); }
-  .avatar--ring .avatar__inner { border: 4px solid var(--green-400); }
+  /* El disco crece HACIA AFUERA (como en el design system): así `size` es
+     siempre el tamaño de la foto, y no cambia según el tratamiento. */
+  .avatar--disc::before {
+    content: ""; position: absolute; inset: -8%;
+    border-radius: var(--radius-circle); background: var(--green-400);
+  }
+  .avatar__inner { position: relative; display: block; width: 100%; height: 100%; border-radius: var(--radius-circle); overflow: hidden; background: var(--ink-700); }
+  .avatar--ring .avatar__inner { border: var(--ring-w) solid var(--green-400); }
   .avatar__inner img { width: 100%; height: 100%; object-fit: cover; }
   .avatar__ph { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; font-family: var(--font-display); font-weight: 800; color: var(--text-on-dark-muted); }
 </style>
