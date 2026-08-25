@@ -25,7 +25,11 @@ const altOther = new URL(base + getRoute(routeKey, otherLang(lang)), Astro.site)
 const xDefault = new URL(base + getRoute(routeKey, "es"), Astro.site).href;
 // Tarjeta social por idioma: el titular va quemado en el PNG, así que cada
 // idioma necesita el suyo (si no, la previsualización en inglés sale en español).
-const ogImage = new URL(base + (lang === "en" ? "/og-default-en.png" : "/og-default.png"), Astro.site).href;
+// ?v= : Facebook/otros crawlers cachean la imagen por URL exacta, no por su
+// contenido — sin esto, "Scrape Again" refresca el HTML pero no el binario de
+// la imagen. Súbele el número cada vez que cambie el PNG.
+const ogImageVersion = "3";
+const ogImage = new URL(base + (lang === "en" ? "/og-default-en.png" : "/og-default.png") + `?v=${ogImageVersion}`, Astro.site).href;
 const ogImageAlt = lang === "en"
   ? "El Club del 1+ — The best way to end poverty is by creating wealth."
   : "El Club del 1+ — La mejor forma de eliminar la pobreza es creando riqueza.";
